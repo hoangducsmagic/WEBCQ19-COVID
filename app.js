@@ -1,12 +1,19 @@
 const express = require('express')
 const path = require('path')
-const demoRouter=require('./routes/demoRoutes')
+const demoRouter = require('./routes/demoRoutes')
+const { create } =require( 'express-handlebars');
 
 // Start express app
 const app = express();
 
 // Set up view engine
-app.set('view engine', 'pug');
+const hbs = create({
+    helpers: {
+        // helper functions
+    }
+});
+app.engine('handlebars', hbs.engine);
+app.set("view engine", "handlebars");
 app.set('views', path.join(__dirname, 'views'));
 
 // Serving static files
