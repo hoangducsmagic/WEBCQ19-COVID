@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path')
 const demoRouter = require('./routes/demoRoutes')
+const patientRouter = require('./routes/patientRoutes')
+const productRouter = require('./routes/productRoutes')
 const { create } =require( 'express-handlebars');
 
 // Start express app
@@ -20,6 +22,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routers
+app.use('/patients', patientRouter);
+app.use('/products', productRouter);
 app.use('/', demoRouter);
+
 
 module.exports = app;
