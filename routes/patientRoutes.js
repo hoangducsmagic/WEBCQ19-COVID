@@ -8,6 +8,6 @@ router.get('/create', patientController.dummy);
 router.post('/create', patientController.dummy);
 router.get('/edit', patientController.dummy);
 router.put('/edit', patientController.dummy);
-router.get('/', patientController.dummy);
+router.get('/', patientController.showPatientList);
 
 module.exports = router;
