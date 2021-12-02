@@ -32,11 +32,12 @@
 					</tr>
 				</thead>
 				<tbody>
+					{{#each patients}}
 					<tr>
-						<th scope="row">1</th>
-						<td>Nguyễn Văn A</td>
-						<td>F0</td>
-						<td>@mdo</td>
+						<th scope="row">{{this.patientId}}</th>
+						<td>{{this.patientName}}</td>
+						<td>F{{this.patientId}}</td>
+						<td>{{this.facilityName}}</td>
 						<td class="text-center">
 							<button type="button" class="btn btn-primary">Chi tiết</button>
 						</td>
@@ -44,18 +45,7 @@
 							<button type="button" class="btn btn-warning">Chỉnh sửa</button>
 						</td>
 					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Trần Văn B</td>
-						<td>F1</td>
-						<td>@fat</td>
-						<td class="text-center">
-							<button type="button" class="btn btn-primary">Chi tiết</button>
-						</td>
-						<td class="text-center">
-							<button type="button" class="btn btn-warning">Chỉnh sửa</button>
-						</td>
-					</tr>
+					{{/each}}
 				</tbody>
 			</table>
 		</div>
