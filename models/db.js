@@ -9,7 +9,6 @@ const pool = new Pool({
     },
 });
 
-
 pool.connect()
     .then(() => {
         console.log("✅ Successfully connect to PostgreSQL");
@@ -23,8 +22,6 @@ exports.getQuery = function (sqlQuery) {
         pool.query(sqlQuery, (err, res) => {
             if (!err) resolve(res.rows);
             else reject(err);
-        }) 
-    })
-}
-
-    
+        });
+    });
+};
