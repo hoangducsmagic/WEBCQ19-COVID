@@ -32,6 +32,8 @@ app.set("views", path.join(__dirname, "views"));
 // Routers
 app.use("/patients", patientRouter);
 app.use("/products", productRouter);
+app.use("/statistic", statisticRouter);
+app.use("/productPackages", productPackageRouter);
 
 app.get("/", (req, res) => {
     res.redirect("/patients");

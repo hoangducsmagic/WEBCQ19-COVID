@@ -1,6 +1,5 @@
 const { Pool } = require("pg");
 
-
 // set up PostgreSQL database
 const connectionString = process.env.PG_CONNECTION_STRING;
 const pool = new Pool({
@@ -8,6 +7,7 @@ const pool = new Pool({
     ssl: {
         rejectUnauthorized: false,
     },
+    
 });
 
 pool.connect()
@@ -22,6 +22,19 @@ exports.getQuery = function (sqlQuery) {
     return new Promise((resolve, reject) => {
         pool.query(sqlQuery, (err, res) => {
             if (!err) resolve(res.rows);
+            // else reject(err);
+        });
+    });
+};
+
+exports.executeQuery = function (sqlQuery) {
+    return new Promise((resolve) => {
+        pool.query(sqlQuery, (err, res) => {
+            if (!err) {
+                console.log("Query successfully executed");
+                resolve();
+            }
+            // else reject(err);
         });
     });
 };
