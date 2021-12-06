@@ -5,6 +5,7 @@ const patientRouter = require('./routes/patientRoutes');
 const productRouter = require('./routes/productRoutes');
 const { create } = require('express-handlebars');
 
+require('./models/db')
 // Start express app
 const app = express();
 
