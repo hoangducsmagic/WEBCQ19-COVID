@@ -12,10 +12,12 @@ async function getAllPatients() {
 
 async function getRelatedById(patientId) {
     var query = `
-    SELECT pr.main_patient_id as "id1", p1.name as "name1", p1.status as "status1", pr.related_patient_id as "id2", p2.name as "name2", p2.status as "status2"
+    SELECT pr.main_patient_id as "id1", p1.name as "name1", p1.status as "status1", pr.related_patient_id as "id2", p2.name as "name2", p2.status as "status2", f1.name as "facility1", f2.name as "facility2"
     FROM patientrelation pr
     JOIN patient p1 on pr.main_patient_id=p1.patient_id
     JOIN patient p2 on pr.related_patient_id=p2.patient_id
+    JOIN facility f1 on p1.current_facility_id=f1.facility_id
+    JOIN facility f2 on p2.current_facility_id=f2.facility_id
     WHERE main_patient_id='${patientId}' OR related_patient_id='${patientId}'
     `;
 
@@ -28,10 +30,12 @@ async function getRelatedById(patientId) {
             related.patientId = person.id2;
             related.patientName = person.name2;
             related.patientStatus = person.status2;
+            related.facilityName = person.facility2;
         } else {
             related.patientId = person.id1;
             related.patientName = person.name1;
             related.patientStatus = person.status1;
+            related.facilityName = person.facility1
         }
         res.push(related);
     }

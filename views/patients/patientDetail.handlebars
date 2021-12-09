@@ -14,12 +14,12 @@
 					<h6>Nơi đang điều trị:</h6>
 				</div>
 				<div class="col-4">
-					<h6>Nguyễn Văn A</h6>
-					<h6>123456</h6>
-					<h6>1/1/1990</h6>
-					<h6>An Hòa, Bảo Lộc, Lâm Đồng</h6>
-					<h6>F1</h6>
-					<h6>Facility_Name</h6>
+					<h6>{{patientName}}</h6>
+					<h6>{{patientCitizenId}}</h6>
+					<h6>{{patientBirthday}}</h6>
+					<h6>{{wardName}}, {{districtName}}, {{provinceName}}</h6>
+					<h6>F{{patientStatus}}</h6>
+					<h6>{{facilityName}}</h6>
 				</div>
 				<div class="col-3"></div>
 			</div>
@@ -38,34 +38,19 @@
 						</tr>
 					</thead>
 					<tbody>
+						{{#each relatedList}}
 						<tr>
-							<th scope="row">1</th>
-							<td>Nguyễn Văn A</td>
-							<td>F2</td>
-							<td>@mdo</td>
+							<th scope="row">{{this.patientId}}</th>
+							<td>{{this.patientName}}</td>
+							<td>F{{this.patientStatus}}</td>
+							<td>{{this.facilityName}}</td>
 							<td class="text-center">
-								<a href="#"></a>
-								<button type="button" class="btn btn-primary">Chi tiết</button>
+								<a href="/patients/detail/{{this.patientId}}">
+									<button type="button" class="btn btn-primary">Chi tiết</button>
+								</a>
 							</td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Jacob</td>
-							<td>Thornton</td>
-							<td>@fat</td>
-							<td class="text-center">
-								<button type="button" class="btn btn-primary">Chi tiết</button>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>Larry</td>
-							<td>the Bird</td>
-							<td>@twitter</td>
-							<td class="text-center">
-								<button type="button" class="btn btn-primary">Chi tiết</button>
-							</td>
-						</tr>
+						{{/each}}
 					</tbody>
 				</table>
 			</div>
