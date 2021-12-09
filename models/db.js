@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const pgp = require('pg-promise')({capSQL: true});
 
 // set up PostgreSQL database
 const connectionString = process.env.PG_CONNECTION_STRING;
@@ -8,6 +9,13 @@ const pool = new Pool({
         rejectUnauthorized: false,
     },
     
+});
+
+const db= pgp({
+    connectionString,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 
 pool.connect()
@@ -27,6 +35,10 @@ exports.getQuery = function (sqlQuery) {
     });
 };
 
+
+module.exports.db = db;
+module.exports.pgp = pgp;
+
 exports.executeQuery = function (sqlQuery) {
     return new Promise((resolve) => {
         pool.query(sqlQuery, (err, res) => {
@@ -38,3 +50,4 @@ exports.executeQuery = function (sqlQuery) {
         });
     });
 };
+

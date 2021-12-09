@@ -6,6 +6,7 @@ const statisticRouter = require("./routes/statisticRoutes");
 const productPackageRouter = require("./routes/productPackageRoutes");
 const { create } = require("express-handlebars");
 
+require('./models/db')
 // Start express app
 const app = express();
 
