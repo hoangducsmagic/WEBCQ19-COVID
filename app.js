@@ -1,8 +1,9 @@
 const express = require("express");
 const path = require("path");
-const demoRouter = require("./routes/demoRoutes");
 const patientRouter = require("./routes/patientRoutes");
 const productRouter = require("./routes/productRoutes");
+const statisticRouter = require("./routes/statisticRoutes");
+const productPackageRouter = require("./routes/productPackageRoutes");
 const { create } = require("express-handlebars");
 
 // Start express app
