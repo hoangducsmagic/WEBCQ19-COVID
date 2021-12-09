@@ -1,0 +1,154 @@
+{{> manageNavP}}
+		<div class="container">
+			<form action="" method="">
+				<div class="row justify-content-center my-3">
+					<h2>Thêm bệnh nhân</h2>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="name" class="col-sm-2 col-form-label"
+						><h6>Họ tên:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="inputName"
+							name="name"
+							placeholder="Họ và tên"
+						/>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="citizenID" class="col-sm-2 col-form-label"
+						><h6>CMND:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="inputCitizenID"
+							name="citizenID"
+							placeholder="CMND"
+						/>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="dob" class="col-sm-2 col-form-label"
+						><h6>Ngày sinh:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input type="date" class="form-control" id="inputDOB" name="dob" />
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="address" class="col-sm-2 col-form-label"
+						><h6>Địa chỉ:</h6>
+					</label>
+					<div class="col-sm-2">
+						<select class="form-control" id="ward" name="ward">
+							<option value="" disabled selected>Phường/xã</option>
+							<option value="">Phường An Thạnh</option>
+							<option value="">Phường Đông Hòa</option>
+						</select>
+					</div>
+					<div class="col-sm-2">
+						<select class="form-control" id="district" name="district">
+							<option value="" disabled selected>Quận/huyện</option>
+							<option>Quận 1</option>
+							<option>Quận Thủ Đức</option>
+						</select>
+					</div>
+					<div class="col-sm-2">
+						<select class="form-control" id="province" name="province">
+							<option value="" disabled selected>Tỉnh/thành phố</option>
+							<option value="">TP.Hồ Chí Minh</option>
+							<option value="">Tỉnh Khánh Hòa</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="status" class="col-sm-2 col-form-label"
+						><h6>Trạng thái:</h6>
+					</label>
+					<div class="col-sm-3">
+						<select class="form-control" id="status" name="status">
+							<option>F1</option>
+							<option>F2</option>
+							<option>F3</option>
+							<option>-1</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="facility" class="col-sm-2 col-form-label"
+						><h6>Cơ sở điều trị:</h6></label
+					>
+					<div class="col-sm-3">
+						<select name="facility" id="facility" class="form-control">
+							<option>Bệnh viện Đa khoa Thủ Đức</option>
+							<option>Bệnh viện Chợ Rẫy</option>
+							<option>-1</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<h3>Thêm người liên đới</h3>
+				</div>
+
+				<div class="row justify-content-center">
+					<table class="table w-50">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Họ tên</th>
+								<th scope="col">Trạng thái</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">1</th>
+								<td>Nguyễn Văn A</td>
+								<td>F0</td>
+
+								<td class="text-center">
+									<input
+										type="checkbox"
+										name="patient1ID"
+										value="1"
+										class="form-check-input"
+									/>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">2</th>
+								<td>Trần Văn B</td>
+								<td>F1</td>
+								<td class="text-center">
+									<input
+										type="checkbox"
+										name="patient2ID"
+										value="2"
+										class="form-check-input"
+									/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="row justify-content-center">
+					<button class="btn btn-primary" type="submit">Thêm bệnh nhân</button>
+				</div>
+			</form>
+		</div>

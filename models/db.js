@@ -8,6 +8,7 @@ const pool = new Pool({
     ssl: {
         rejectUnauthorized: false,
     },
+    
 });
 
 const db= pgp({
@@ -29,10 +30,24 @@ exports.getQuery = function (sqlQuery) {
     return new Promise((resolve, reject) => {
         pool.query(sqlQuery, (err, res) => {
             if (!err) resolve(res.rows);
-            else reject(err);
-        }) 
-    })
-}
+            // else reject(err);
+        });
+    });
+};
+
 
 module.exports.db = db;
 module.exports.pgp = pgp;
+
+exports.executeQuery = function (sqlQuery) {
+    return new Promise((resolve) => {
+        pool.query(sqlQuery, (err, res) => {
+            if (!err) {
+                console.log("Query successfully executed");
+                resolve();
+            }
+            // else reject(err);
+        });
+    });
+};
+
