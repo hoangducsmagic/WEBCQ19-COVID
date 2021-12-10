@@ -12,5 +12,5 @@ document.getElementById("submitBtn").onclick = function (e) {
             newStatus: document.getElementById("status").value,
             newFacility: document.getElementById("facility").value,
         }),
-    });
+    }).then(() => { window.location.href = `/patients/detail/${patientId}` })
 };

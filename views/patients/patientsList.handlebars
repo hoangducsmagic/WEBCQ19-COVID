@@ -1,13 +1,18 @@
 {{> manageNavP}}
+
 	<div class="container">
 			<div class="row">
 				<div class="col-8">
-					<form class="form-inline my-2">
+					<form class="form-inline my-2" method="get" action="/patients">
 						<input
 							class="form-control mr-sm-2 w-75"
 							type="search"
+							name="keyword"
 							placeholder="Tìm kiếm bệnh nhân"
 							aria-label="Search"
+							{{#if keyword}}
+							value="{{keyword}}"
+							{{/if}}
 						/>
 						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
 							Tìm kiếm
@@ -38,7 +43,13 @@
 					<tr>
 						<th scope="row">{{this.patientId}}</th>
 						<td>{{this.patientName}}</td>
-						<td>F{{this.patientStatus}}</td>
+						{{#ifEqual this.patientStatus -1}}
+							<td>Khỏi bệnh</td>
+						{{/ifEqual}}
+						{{#ifNotEqual this.patientStatus -1}}
+							<td>F{{this.patientStatus}}</td>
+						{{/ifNotEqual}}
+
 						<td>{{this.facilityName}}</td>
 						<td class="text-center">
 							<a href="/patients/detail/{{this.patientId}}">
