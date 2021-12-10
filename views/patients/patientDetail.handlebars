@@ -24,6 +24,10 @@
 					{{#ifNotEqual patientStatus -1}}
 						<h6>F{{patientStatus}}</h6>
 					{{/ifNotEqual}}
+
+					
+
+
 					<h6>{{facilityName}}</h6>
 				</div>
 				<div class="col-3"></div>
@@ -47,7 +51,12 @@
 						<tr>
 							<th scope="row">{{this.patientId}}</th>
 							<td>{{this.patientName}}</td>
-							<td>F{{this.patientStatus}}</td>
+							{{#ifEqual this.patientStatus -1}}
+								<td>Khỏi bệnh</td>
+							{{/ifEqual}}
+							{{#ifNotEqual this.patientStatus -1}}
+								<td>F{{this.patientStatus}}</td>
+							{{/ifNotEqual}}
 							<td>{{this.facilityName}}</td>
 							<td class="text-center">
 								<a href="/patients/detail/{{this.patientId}}">

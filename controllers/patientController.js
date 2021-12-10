@@ -41,15 +41,27 @@ async function showEditPage(req, res) {
 
 // [PUT] /patients/edit
 async function updatePatient(req, res) {
-    var currentData = Patient.getPatientById(req.body.patientId);
+    var today = new Date().toISOString().split('T')[0];
+    var currentData = await Patient.getPatientById(req.body.patientId);
     // change facility
     await Patient.changeFacility(
         req.body.patientId,
         currentData.facilityId,
-        req.body.newFacility
+        req.body.newFacility,
+        today
     );
 
     // change status
+    await Patient.changeStatus(
+        req.body.patientId,
+        currentData.patientStatus,
+        req.body.newStatus,
+        today
+    );
+    
+    res.send(); // redirect is doing in js file
+    
+    
 }
 
 async function getLocationData(req, res) {

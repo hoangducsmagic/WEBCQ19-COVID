@@ -1,7 +1,7 @@
 const db = require("./db");
 
 function patientIdGeneration() {
-    return `PA${Date.now().toString(16)}`
+    return `PT${Date.now().toString(16)}`
 }
 
 async function getAllPatients() {
@@ -71,29 +71,11 @@ async function getPatientInfo(patientId) {
     return patientInfo;
 }
 
-async function setStatus(patientId, newStatus) {
-    var currentStatusQuery = `SELECT status FROM patient WHERE patient_id='${patientId}'`;
-    var raw = await db.getQuery(currentStatusQuery);
 
-    var currentStatus = raw[0].status;
 
-    if (newStatus <= currentStatus) return;
-    var updateQuery = `UPDATE patient SET status=${newStatus} WHERE patient_id='${patientId}'`;
-    await db.executeQuery(updateQuery);
-
-    var relatedPersons = await getRelatedById(patientId);
-    for (let person of relatedPersons) {
-        if (person.patientStatus > currentStatus)
-            setStatus(
-                person.patientId,
-                person.patientStatus - (currentStatus - newStatus)
-            );
-    }
-}
-
-async function changeFacility(patientId, oldFacility, newFacility) {
+async function changeFacility(patientId, oldFacility, newFacility,date) {
     if (oldFacility == newFacility) return;
-
+    var newTransferId=Date.now().toString(16);
     var query1 = `
         UPDATE facility SET current_amount=current_amount-1 WHERE facility_id='${oldFacility}'
     `
@@ -106,6 +88,12 @@ async function changeFacility(patientId, oldFacility, newFacility) {
         UPDATE patient SET current_facility_id='${newFacility}' WHERE patient_id='${patientId}'
     `
     await db.executeQuery(query3);
+    
+    var query4 = `
+        INSERT INTO transferhistory (transfer_id,patient_id,from_facility_id,to_facility_id,date)
+        VALUES ('${newTransferId}','${patientId}','${oldFacility}','${newFacility}','${date}')
+    `
+    await db.executeQuery(query4);
 }
 
 async function addPatient(data) {
@@ -138,6 +126,91 @@ async function addPatient(data) {
         `
         await db.executeQuery(relatedQuery);
     }
+}
+
+async function setStatus(patientId, status) {
+    var query = `
+        UPDATE patient SET status=${status} WHERE patient_id='${patientId}'
+    `
+    await db.executeQuery(query);
+}
+
+async function addStatusHistory(patientId, oldStatus, newStatus, date) {
+    var newStatusChangeId = Date.now().toString(16);
+    var statusChangeQuery = `
+    INSERT INTO statushistory (status_change_id,patient_id,status_from,status_to,date)
+    VALUES ('${newStatusChangeId}','${patientId}',${oldStatus},${newStatus},'${date}')
+    `
+    await db.executeQuery(statusChangeQuery);
+}
+
+async function updateStatus(patient, oldStatus, newStatus,date) {   
+    // Đây là hàm đệ quy dùng trong chuyển từ F lớn sang F nhỏ
+    var delta = oldStatus - newStatus;
+    if (delta<=0) return;
+    await setStatus(patient, newStatus);
+    await addStatusHistory(patient, oldStatus, newStatus, date);
+    var relatedList = await getRelatedById(patient);
+    for (let person of relatedList) {
+        if (person.patientStatus > oldStatus) {
+            updateStatus(person.patientId,person.patientStatus,person.patientStatus-delta)
+        }
+    }
+}
+
+async function unDoubt(parentId, currentId, currentStatus, date) {
+    var relatedList = await getRelatedById(currentId);
+    if (currentId == parentId) {
+        await cured(currentId, date);
+    } else {
+        var tmp = true;
+        
+        for (let person of relatedList) {
+            if (person.patientId != parentId && person.patientStatus != -1 && person.patientStatus < currentStatus) {
+                tmp = false;
+                break;
+            }
+        }
+        if (tmp == false) return;
+        await cured(currentId, date);
+    }
+    for (let person of relatedList) {
+        if (person.patientStatus > currentStatus) {
+            unDoubt(currentId, person.patientId,person.patientStatus,date);
+        }
+    }
+}
+
+async function cured(patientId, date) {   // khỏi bệnh
+    var patientInfo = await getPatientById(patientId);
+    await setStatus(patientId, -1);
+    await addStatusHistory(patientId, patientInfo.patientStatus, -1, date);
+    var facilityQuery = `
+        UPDATE facility
+        SET current_amount=current_amount-1
+        WHERE facility_id='${patientInfo.facilityId}'
+    `
+    await db.executeQuery(facilityQuery);
+}
+
+async function changeStatus(patientId, oldStatus, newStatus,date) {
+    // ============= F0 sang khỏi bệnh==================
+    if (oldStatus == 0 && newStatus == -1) {
+        await cured(patientId, date);
+        return;
+    }
+
+    // ============= F lớn sang F nhỏ================== 
+    if (oldStatus > newStatus && newStatus != -1) {
+        updateStatus(patientId, oldStatus, newStatus, date);
+        return;
+    }    
+
+    // ============= Fx sang khỏi bệnh================== 
+    if (oldStatus > 0 && newStatus == -1) {
+        unDoubt(patientId, patientId, oldStatus,date);
+        return;
+    }    
 
 }
 
@@ -146,7 +219,7 @@ module.exports = {
     getRelatedById,
     getPatientInfo,
     getPatientById,
-    setStatus,
+    changeStatus,
     changeFacility,
     addPatient
 };
