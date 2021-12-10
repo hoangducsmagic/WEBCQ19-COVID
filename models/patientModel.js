@@ -4,12 +4,17 @@ function patientIdGeneration() {
     return `PT${Date.now().toString(16)}`
 }
 
-async function getAllPatients() {
+async function getAllPatients(keyword) {
     var query = `
     SELECT p.patient_id as "patientId", p.name as "patientName", p.status as "patientStatus", f.name as "facilityName"
     FROM patient p
     JOIN facility f on p.current_facility_id=f.facility_id
     `;
+    if (keyword) {
+        if (keyword != '') {
+            query+=` WHERE khongdau(lower(p.name)) ~ '${keyword}'`
+        }
+    }
     var data = await db.getQuery(query);
     return { patients: data };
 }
