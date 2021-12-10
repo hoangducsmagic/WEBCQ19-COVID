@@ -1,0 +1,58 @@
+{{> manageNavP}}
+
+		<div class="container">
+			<form action="">
+				<div class="row justify-content-center">
+					<h1>Thống kê số ca mắc theo thời gian</h1>
+				</div>
+				<div class="row form-group my-2">
+					<label for="inputFromDate" class="col-sm-1 col-form-label">Từ:</label>
+					<div class="col-sm-3">
+						<input
+							type="date"
+							class="form-control"
+							id="inputFromDate"
+							name="inputFromDate"
+						/>
+					</div>
+				</div>
+				<div class="row form-group my-2">
+					<label for="inputToDate" class="col-sm-1 col-form-label">Đến:</label>
+					<div class="col-sm-3">
+						<input
+							type="date"
+							class="form-control"
+							id="inputToDate"
+							name="inputToDate"
+						/>
+					</div>
+				</div>
+				<div class="row form-group">
+					<button type="submit" class="btn btn-success">♻ Làm mới</button>
+				</div>
+			</form>
+
+			<div class="row justify-content-center my-5">
+				<table class="table w-75">
+					<thead>
+						<tr>
+							<th scope="col">STT</th>
+							<th scope="col">Trạng thái</th>
+							<th scope="col">Số lượng ca</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>F0</td>
+							<td>1932</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>F1</td>
+							<td>2341</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
