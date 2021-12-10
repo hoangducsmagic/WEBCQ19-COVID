@@ -15,9 +15,11 @@
 					</form>
 				</div>
 				<div class="col-4 text-center my-2">
-					<button type="button" class="btn btn-success">
-						+ Thêm bệnh nhân
-					</button>
+					<a href="/patients/create">
+						<button type="button" class="btn btn-success">
+							+ Thêm bệnh nhân
+						</button>
+					</a>
 				</div>
 			</div>
 			<table class="table">
@@ -44,7 +46,9 @@
 							</a>
 						</td>
 						<td class="text-center">
-							<button type="button" class="btn btn-warning">Chỉnh sửa</button>
+							<a href="/patients/edit/{{this.patientId}}">
+								<button type="button" class="btn btn-warning">Chỉnh sửa</button>
+							</a>
 						</td>
 					</tr>
 					{{/each}}

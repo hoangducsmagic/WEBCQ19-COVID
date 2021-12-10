@@ -1,6 +1,6 @@
 {{> manageNavP}}
 		<div class="container">
-			<form action="" method="">
+			<form>
 				<div class="row justify-content-center">
 					<h2>Điều chỉnh trạng thái</h2>
 				</div>
@@ -14,9 +14,9 @@
 						<h6>Địa chỉ:</h6>
 					</div>
 					<div class="col-4">
-						<h6>Nguyễn Văn A</h6>
-						<h6>123456</h6>
-						<h6>1/1/1990</h6>
+						<h6>{{patientName}}</h6>
+						<h6>{{patientCitizenId}}</h6>
+						<h6>{{patientBirthday}}</h6>
 						<h6>An Hòa, Bảo Lộc, Lâm Đồng</h6>
 					</div>
 					<div class="col-3"></div>
@@ -29,10 +29,11 @@
 					</label>
 					<div class="col-sm-3">
 						<select class="form-control" id="status" name="status">
-							<option>F1</option>
-							<option>F2</option>
-							<option>F3</option>
-							<option>-1</option>
+							<option value="0" {{#ifEqual patientStatus 0}}selected{{/ifEqual}}>F0</option>
+							<option value="1" {{#ifEqual patientStatus 1}}selected{{/ifEqual}}>F1</option>
+							<option value="2" {{#ifEqual patientStatus 2}}selected{{/ifEqual}}>F2</option>
+							<option value="3" {{#ifEqual patientStatus 3}}selected{{/ifEqual}}>F3</option>
+							<option value="-1" {{#ifEqual patientStatus -1}}selected{{/ifEqual}}>Khỏi bệnh</option>
 						</select>
 					</div>
 				</div>
@@ -44,15 +45,18 @@
 					>
 					<div class="col-sm-3">
 						<select name="facility" id="facility" class="form-control">
-							<option>Bệnh viện Đa khoa Thủ Đức</option>
-							<option>Bệnh viện Chợ Rẫy</option>
-							<option>-1</option>
+							{{#each facilities}}
+							<option value="{{this.facility_id}}" {{#ifEqual this.facility_id ../facilityId}}selected{{/ifEqual}} {{#ifEqual this.capability this.current_amount}}disabled{{/ifEqual}}>{{this.name}}</option>
+							{{/each}}
 						</select>
 					</div>
 				</div>
 
 				<div class="row justify-content-center">
-					<button class="btn btn-primary" type="submit">Lưu thay đổi</button>
+					<button class="btn btn-primary" id="submitBtn" type="submit">Lưu thay đổi</button>
 				</div>
 			</form>
 		</div>
+
+	<h1 id="patientId" style="display: none">{{patientId}}</h1>
+	<script src="/js/patients/editPatientScript.js"></script>

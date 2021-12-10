@@ -1,5 +1,12 @@
-
 const Patient = require("../models/patientModel");
+const Facility = require("../models/facilityModel");
+const Location = require("../models/locationModel");
+
+async function dummy(req, res) {
+    var data = await getAllPatients();
+    console.log(data);
+    res.send("dummy");
+}
 
 // [GET] /patients/
 async function showPatientList(req, res) {
@@ -10,14 +17,67 @@ async function showPatientList(req, res) {
 // [GET] /patients/detail/:id
 async function showPatientDetail(req, res) {
     var data = await Patient.getPatientInfo(req.params.id);
-    res.send(data);
-    // res.render('patients/patientsList',data)
+    res.render("patients/patientDetail", data);
 }
 
-async function dummy(req, res) {
-    var data = await getAllPatients();
-    console.log(data);
-    res.send("dummy");
+// [GET] /patients/create
+async function showAddPage(req, res) {
+    var provinces = await Location.getAllProvinces();
+    var facilities = await Facility.getAllFacilities();
+    var patients = await Patient.getAllPatients();
+    res.render("patients/addPatient", {
+        provinces,
+        facilities,
+        patients:patients.patients
+    });
 }
 
-module.exports = { dummy, showPatientList, showPatientDetail };
+// [GET] /patients/edit/:id
+async function showEditPage(req, res) {
+    var data = await Patient.getPatientById(req.params.id);
+    var facilities = await Facility.getAllFacilities();
+    res.render("patients/editPatient", { ...data, facilities });
+}
+
+// [PUT] /patients/edit
+async function updatePatient(req, res) {
+    var currentData = Patient.getPatientById(req.body.patientId);
+    // change facility
+    await Patient.changeFacility(
+        req.body.patientId,
+        currentData.facilityId,
+        req.body.newFacility
+    );
+
+    // change status
+}
+
+async function getLocationData(req, res) {
+    if (req.query.province) {
+        var districts = await Location.getAllDistricts(req.query.province);
+        res.send(districts);
+        return;
+    } else if (req.query.district) {
+        var wards = await Location.getAllWards(req.query.district);
+        res.send(wards);
+        return;
+    }
+    res.send(null);
+}
+
+async function addPatient(req, res) {
+    console.log(req.body);
+    await Patient.addPatient(req.body);
+    res.redirect('/patients');
+}
+
+module.exports = {
+    dummy,
+    showPatientList,
+    showPatientDetail,
+    showAddPage,
+    showEditPage,
+    updatePatient,
+    getLocationData,
+    addPatient
+};
