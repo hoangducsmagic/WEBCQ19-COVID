@@ -22,6 +22,9 @@ exports.getQuery = function (sqlQuery) {
     return new Promise((resolve, reject) => {
         pool.query(sqlQuery, (err, res) => {
             if (!err) resolve(res.rows);
+            else {
+                console.log(err);
+            }
             // else reject(err);
         });
     });
@@ -33,6 +36,8 @@ exports.executeQuery = function (sqlQuery) {
             if (!err) {
                 console.log("Query successfully executed");
                 resolve();
+            } else {
+                console.log(err);
             }
             // else reject(err);
         });

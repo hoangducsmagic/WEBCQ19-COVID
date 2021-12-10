@@ -22,7 +22,9 @@ app.use(express.static(path.join(__dirname, "public")));
 // Set up view engine
 const hbs = create({
     helpers: {
-        // helper functions
+        ifEqual(a, b, option) { if (a == b) return option.fn(this) },
+        ifNotEqual(a, b, option) { if (a != b) return option.fn(this) },
+        ifLessThan(a,b,option) { if (a<b) return option.fn(this) },
     },
     defaultLayout: "main",
 });

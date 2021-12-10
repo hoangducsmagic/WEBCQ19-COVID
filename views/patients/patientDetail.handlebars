@@ -18,7 +18,12 @@
 					<h6>{{patientCitizenId}}</h6>
 					<h6>{{patientBirthday}}</h6>
 					<h6>{{wardName}}, {{districtName}}, {{provinceName}}</h6>
-					<h6>F{{patientStatus}}</h6>
+					{{#ifEqual patientStatus -1}}
+						<h6>Khỏi bệnh</h6>
+					{{/ifEqual}}
+					{{#ifNotEqual patientStatus -1}}
+						<h6>F{{patientStatus}}</h6>
+					{{/ifNotEqual}}
 					<h6>{{facilityName}}</h6>
 				</div>
 				<div class="col-3"></div>
