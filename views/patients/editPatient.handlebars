@@ -29,10 +29,10 @@
 					</label>
 					<div class="col-sm-3">
 						<select class="form-control" id="status" name="status">
-							<option value="0" {{#ifEqual patientStatus 0}}selected{{/ifEqual}}>F0</option>
-							<option value="1" {{#ifEqual patientStatus 1}}selected{{/ifEqual}}>F1</option>
-							<option value="2" {{#ifEqual patientStatus 2}}selected{{/ifEqual}}>F2</option>
-							<option value="3" {{#ifEqual patientStatus 3}}selected{{/ifEqual}}>F3</option>
+							{{#ifLessThanOrEqual 0 patientStatus}}<option value="0" {{#ifEqual patientStatus 0}}selected{{/ifEqual}}>F0</option>{{/ifLessThanOrEqual}}
+							{{#ifLessThanOrEqual 1 patientStatus}}<option value="1" {{#ifEqual patientStatus 1}}selected{{/ifEqual}}>F1</option>{{/ifLessThanOrEqual}}
+							{{#ifLessThanOrEqual 2 patientStatus}}<option value="2" {{#ifEqual patientStatus 2}}selected{{/ifEqual}}>F2</option>{{/ifLessThanOrEqual}}
+							{{#ifLessThanOrEqual 3 patientStatus}}<option value="3" {{#ifEqual patientStatus 3}}selected{{/ifEqual}}>F3</option>{{/ifLessThanOrEqual}}
 							<option value="-1" {{#ifEqual patientStatus -1}}selected{{/ifEqual}}>Khỏi bệnh</option>
 						</select>
 					</div>

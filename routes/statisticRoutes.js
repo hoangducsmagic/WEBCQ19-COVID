@@ -3,9 +3,9 @@ const statisticController = require('../controllers/statisticController');
 
 const router = express.Router();
 
-router.get('/totalCases', statisticController.dummy); // người từng trạng thái theo thời gian
-router.get('/statusChange', statisticController.dummy);   // chuyển trạng thái
-router.post('/packageConsumption', statisticController.dummy); // tiêu thụ gói
-router.get('/productConsumption', statisticController.dummy); // tiêu thụ sản phẩm
+router.get('/totalCases', statisticController.showTotalCasesPage); // người từng trạng thái theo thời gian
+router.get('/statusChange', statisticController.showStatusChangePage);   // chuyển trạng thái
+router.get('/packageConsumption', statisticController.showPackageConsumptionPage); // tiêu thụ gói
+router.get('/productConsumption', statisticController.showProductConsumptionPage); // tiêu thụ sản phẩm
 
 module.exports = router;
