@@ -13,6 +13,7 @@
 							class="form-control"
 							id="inputFromDate"
 							name="inputFromDate"
+							{{#if dateFrom}}value="{{dateFrom}}"{{/if}}
 						/>
 					</div>
 				</div>
@@ -24,6 +25,7 @@
 							class="form-control"
 							id="inputToDate"
 							name="inputToDate"
+							{{#if dateTo}}value="{{dateTo}}"{{/if}}
 						/>
 					</div>
 				</div>
@@ -42,17 +44,21 @@
 						</tr>
 					</thead>
 					<tbody>
+						
+						{{#each statusList}}
 						<tr>
-							<th scope="row">1</th>
-							<td>F0</td>
-							<td>1932</td>
+							<th scope="row">{{@index}}</th>
+							{{#ifEqual this.status -1}}
+								<td>Khỏi bệnh</td>
+							{{/ifEqual}}
+							{{#ifNotEqual this.status -1}}
+								<td>F{{this.status}}</td>
+							{{/ifNotEqual}}
+							<td>{{this.amount}}</td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>F1</td>
-							<td>2341</td>
-						</tr>
+						{{/each}}
 					</tbody>
 				</table>
+				{{#ifEqual statusList.length 0}}<p>Không có dữ liệu thống kê trong thời gian này</p>{{/ifEqual}}
 			</div>
 		</div>
