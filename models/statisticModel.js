@@ -36,4 +36,30 @@ async function getStatusChangeData(dateFrom,dateTo) {
     }
 }
 
-module.exports={getStatusChangeData}
+async function getTotalCases(dateFrom, dateTo) {
+    var subQuery = `
+    SELECT patient_id, MAX(date) as "maxdate"
+	FROM statushistory
+	WHERE true
+    `
+    if (dateFrom) subQuery += ` AND date>='${dateFrom}'`;
+    if (dateTo) subQuery += ` AND date<='${dateTo}'`;
+    subQuery += ` GROUP BY patient_id`;
+
+    var mainQuery = `
+        SELECT a.status_to as "status", COUNT(*) as "amount"
+        FROM statushistory a
+        JOIN (${subQuery}) b
+        ON a.patient_id=b.patient_id AND a.date=b.maxdate
+        WHERE true
+    `
+    if (dateFrom) mainQuery += ` AND date>='${dateFrom}'`;
+    if (dateTo) mainQuery += ` AND date<='${dateTo}'`;
+    mainQuery += ` GROUP BY a.status_to	ORDER BY a.status_to` 
+
+    var data = await db.getQuery(mainQuery);
+    
+    return data;
+}
+
+module.exports={getStatusChangeData,getTotalCases}

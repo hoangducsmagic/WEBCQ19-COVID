@@ -46,6 +46,7 @@
 							<th scope="col">Tên bệnh nhân</th>
 							<th scope="col">Từ trạng thái</th>
 							<th scope="col">Chuyển sang</th>
+							<th scope="col">Ngày chuyển</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -60,9 +61,11 @@
 							{{#ifNotEqual this.statusTo -1}}
 								<td>F{{this.statusTo}}</td>
 							{{/ifNotEqual}}
+							<td>{{this.date}}</td>
 						</tr>
 						{{/each}}
 					</tbody>
 				</table>
+				{{#ifEqual changedList.length 0}}<p>Không có dữ liệu thống kê trong thời gian này</p>{{/ifEqual}}
 			</div>
 		</div>
