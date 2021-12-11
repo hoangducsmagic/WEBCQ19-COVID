@@ -3,8 +3,8 @@ const productPackageController = require('../controllers/productPackageControlle
 
 const router  =  express.Router();
 
-router.get('/', productPackageController.dummy); // danh sách gói
-router.get('/detail/:id', productPackageController.dummy); // chi tiết gói
+router.get('/', productPackageController.listProductPackage); // danh sách gói
+router.get('/detail/:id', productPackageController.productPackageDetail); // chi tiết gói
 router.post('/create', productPackageController.dummy); // thêm gói
 router.get('/edit', productPackageController.dummy); // thông tin để chỉnh sửa
 router.put('/edit', productPackageController.dummy); // thông tin để chỉnh sửa
