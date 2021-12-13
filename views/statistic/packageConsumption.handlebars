@@ -13,16 +13,13 @@
 						</tr>
 					</thead>
 					<tbody>
+						{{#each packageConsumptionList}}
 						<tr>
-							<th scope="row">1</th>
-							<td>Gói rau củ quả 1</td>
-							<td>15</td>
+							<th scope="row">{{this.packageId}}</th>
+							<td>{{this.packageName}}</td>
+							<td>{{this.soldAmount}}</td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Gói thịt 1</td>
-							<td>34</td>
-						</tr>
+						{{/each}}
 					</tbody>
 				</table>
 			</div>
