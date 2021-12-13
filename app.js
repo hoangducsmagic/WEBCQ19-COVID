@@ -1,10 +1,13 @@
 const express = require("express");
 const path = require("path");
+const { create } = require("express-handlebars");
+
 const patientRouter = require("./routes/patientRoutes");
 const productRouter = require("./routes/productRoutes");
 const statisticRouter = require("./routes/statisticRoutes");
 const productPackageRouter = require("./routes/productPackageRoutes");
-const { create } = require("express-handlebars");
+const managerRouter = require("./routes/managerRoutes");
+const facilityRouter = require("./routes/facilityRoutes");
 
 require('./models/db')
 // Start express app
@@ -39,6 +42,9 @@ app.use("/patients", patientRouter);
 app.use("/products", productRouter);
 app.use("/statistic", statisticRouter);
 app.use("/productPackages", productPackageRouter);
+
+app.use("/managers",managerRouter);
+app.use("/facilities",facilityRouter);
 
 app.get("/", (req, res) => {
     res.redirect("/patients");

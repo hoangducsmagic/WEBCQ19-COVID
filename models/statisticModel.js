@@ -64,10 +64,10 @@ async function getTotalCases(dateFrom, dateTo) {
 
 async function getProductConsumption() {
     var query=`
-    SELECT g.groceries_id as "groceriesId", g.name as "groceriesName", SUM(o.order_amount) as "soldAmount", g.unit as "groceriesUnit"
-    FROM order_details o
-    JOIN groceries g on g.groceries_id=o.groceries_id 
-    GROUP BY g.groceries_id, g.name, g.unit
+    SELECT g.product_id as "productId", g.name as "productName", SUM(o.order_amount) as "soldAmount", g.unit as "productUnit"
+    FROM order_detail o
+    JOIN product g on g.product_id=o.product_id 
+    GROUP BY g.product_id, g.name, g.unit
     `
     var data = await db.getQuery(query);
     return data;
@@ -75,10 +75,10 @@ async function getProductConsumption() {
 
 async function getPackageConsumption() {
     var query=`
-    SELECT g.groceries_pack_id as "packageId", g.name as "packageName", COUNT(*) as "soldAmount"
+    SELECT g.productpackage_id as "packageId", g.name as "packageName", COUNT(*) as "soldAmount"
     FROM "order" o
-    JOIN groceries_pack g on g.groceries_pack_id=o.groceries_pack_id 
-    GROUP BY g.groceries_pack_id, g.name
+    JOIN productpackage g on g.productpackage_id=o.productpackage_id 
+    GROUP BY g.productpackage_id, g.name
     `
     var data = await db.getQuery(query);
     return data;
