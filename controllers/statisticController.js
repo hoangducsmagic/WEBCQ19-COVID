@@ -26,7 +26,7 @@ async function showStatusChangePage(req, res) {
     var data = await Statistic.getStatusChangeData(dateFrom, dateTo);
 
     res.render("statistic/statusChange", {
-        changedList: data,
+        ...data,
         dateFrom,
         dateTo,
     });
