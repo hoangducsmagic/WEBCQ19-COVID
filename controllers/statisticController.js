@@ -5,7 +5,8 @@ async function showPackageConsumptionPage(req, res) {
 }
 
 async function showProductConsumptionPage(req, res) {
-    res.render("statistic/productConsumption");
+    var data = await Statistic.getProductConsumption();
+    res.render("statistic/productConsumption", { productConsumptionList:data});
 }
 
 async function showTotalCasesPage(req, res) {

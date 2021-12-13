@@ -14,18 +14,14 @@
 						</tr>
 					</thead>
 					<tbody>
+						{{#each productConsumptionList}}
 						<tr>
-							<th scope="row">1</th>
-							<td>Cải xanh</td>
-							<td>18</td>
-							<td>kg</td>
+							<th scope="row">{{this.groceriesId}}</th>
+							<td>{{this.groceriesName}}</td>
+							<td>{{this.soldAmount}}</td>
+							<td>{{this.groceriesUnit}}</td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>Thịt bò Wagyu</td>
-							<td>34</td>
-							<td>kg</td>
-						</tr>
+						{{/each}}
 					</tbody>
 				</table>
 			</div>
