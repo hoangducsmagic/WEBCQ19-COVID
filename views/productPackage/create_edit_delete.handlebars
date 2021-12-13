@@ -1,0 +1,123 @@
+
+<div id="dialog-modal">
+    <a href="#" class="dialog-modal-close-out"></a>
+    <div class="dialog-modal-body">
+        <a class="dialog-modal-close fa fa-times-circle" href="#" style=" font-size: 20px; color: rgb(97, 4, 4);"></a>
+        <div class="notice"><h3>Bạn muốn xóa</h3></div>
+        <div class="answer">
+            <a href="#">NO</a>
+            <a id="delete-products-comfirm">YES</a>
+        </div>
+    </div>
+</div>
+
+
+<form name="delete-product-form" method="POST"></form>
+
+
+<main class="crud-product">
+    <div class="main">
+
+      <form action="/products/store" method="POST">
+        <div class="add-product-header">
+            <h3 class="heading-add-product">Thêm gói</h3>
+
+            <div class="spacer"></div>
+        </div>
+
+
+        <div class="add-product-body">
+            <div class="form-group">
+                <label for="name" class="form-label">Tên gói</label>
+                <input id="name" name="name" type="text" placeholder="VD: Chuột XYZ" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="productlist" class="form-label">Danh sách sản phẩm</label>
+                <input id="productlist" name="productlist" type="text" placeholder="" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="form-label">Mức giới hạn số lượng</label>
+                <input id="" name="price" type="text" placeholder="" class="form-control">
+                <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+            <label for="image" class="form-label">Mức giới hạn gói</label>
+            <input id="image" name="image" type="text" placeholder="" class="form-control">
+            <span class="form-message"></span>
+            </div>
+
+            <div class="form-group">
+            <label for="date" class="form-label">Thời gian gới hạn</label>
+            <input id="date" name="date" type="text" placeholder="" class="form-control">
+            <span class="form-message"></span>
+            </div>
+        </div>
+
+        <div class="add-product-button">
+            <div class="add-product-textarea">
+                <div class="form-group">
+                <label for="description" class="form-label">Mô tả</label>
+                <textarea id="description" name="description" type="text" placeholder="Nhập mô tả sản phẩm" class="form-control"></textarea>
+                <span class="form-message"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="form-submit" id="delete-products-comfirm">Thêm</button>
+        </div>
+
+
+
+
+
+      </form>
+
+
+    </div>
+
+
+
+    <div>
+        <h1 class="heading-my-product">Sản Phẩm Của Tôi</h1>
+           
+    </div>
+    <div class="trash"><a href="/trash">Thùng Rác:</a> {{deletedCount}}</div>
+    <table class="product-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên gói</th>
+            <th>Danh sách sản phẩm</th>
+            <th>Mức giới hạn số lượng</th>
+            <th>Mức giới hạn gói</th>
+            <th>Thời gian giới hạn</th>
+        </tr>
+        </thead>
+        {{#each productPackage}}
+        <tbody>
+        <tr class="{{this._id}}">
+            <td>{{sum @index 1}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.description}}</td>
+            <td><img src="{{this.image}}" alt="" style="height: 50px; width:80px;"></td>
+            <td>{{this.price}}$</td>
+            <td>
+                <a href="#dialog-modal" data-id="{{this._id}}" class="get-id-edit">Sửa</a>
+                <a href="#dialog-modal" data-id="{{this._id}}" class="get-id-delete">Xóa</a>
+            </td>
+        </tr>
+        {{else}}
+        <tr>
+            <td colspan="6">Bạn Chưa Đăng Sản Phẩm Học Nào. </td>
+        </tr>
+        {{/each}}
+       </tbody>
+    </table>
+
+
+</main>
+
