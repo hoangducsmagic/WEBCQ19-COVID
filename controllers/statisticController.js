@@ -1,7 +1,8 @@
 const Statistic = require("../models/statisticModel");
 
 async function showPackageConsumptionPage(req, res) {
-    res.render("statistic/packageConsumption");
+    var data = await Statistic.getPackageConsumption();
+    res.render("statistic/packageConsumption",{packageConsumptionList:data});
 }
 
 async function showProductConsumptionPage(req, res) {

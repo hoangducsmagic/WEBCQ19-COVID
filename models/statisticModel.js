@@ -73,4 +73,17 @@ async function getProductConsumption() {
     return data;
 }
 
-module.exports = { getStatusChangeData, getTotalCases, getProductConsumption };
+async function getPackageConsumption() {
+    var query=`
+    SELECT g.groceries_pack_id as "packageId", g.name as "packageName", COUNT(*) as "soldAmount"
+    FROM "order" o
+    JOIN groceries_pack g on g.groceries_pack_id=o.groceries_pack_id 
+    GROUP BY g.groceries_pack_id, g.name
+    `
+    var data = await db.getQuery(query);
+    return data;
+
+}
+
+
+module.exports = { getStatusChangeData, getTotalCases, getProductConsumption ,getPackageConsumption};
