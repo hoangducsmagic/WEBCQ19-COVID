@@ -30,10 +30,10 @@
                             Sắp xếp
                         </a>
                         <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
-                            <a class='dropdown-item' href='/productPackages?sort=Price&by=asc{{s}}{{min}}{{max}}'>Giá tăng</a>
-                            <a class='dropdown-item' href='/productPackages?sort=Price&by=desc{{s}}{{min}}{{max}}'>Giá Giảm</a>
-                            <a class='dropdown-item' href='/productPackages?sort=Name&by=asc{{s}}{{min}}{{max}}'>Tên (a-z)</a>
-                            <a class='dropdown-item' href='/productPackages?sort=Name&by=desc{{s}}{{min}}{{max}}'>Tên (z-a)</a>
+                            <a class='dropdown-item' href='/productPackages?sort=quantity&by=asc{{s}}{{min}}{{max}}'>Số nhu yếu phẩm trong gói tăng</a>
+                            <a class='dropdown-item' href='/productPackages?sort=quantity&by=desc{{s}}{{min}}{{max}}'>Số nhu yếu phẩm trong gói Giảm</a>
+                            <a class='dropdown-item' href='/productPackages?sort=name&by=asc{{s}}{{min}}{{max}}'>Tên (a-z)</a>
+                            <a class='dropdown-item' href='/productPackages?sort=name&by=desc{{s}}{{min}}{{max}}'>Tên (z-a)</a>
                         </div>
                     </div>
                     <div class='nav-item dropdown'>
@@ -49,9 +49,9 @@
                         </a>
                         <form class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                             <input name="s" value="{{search}}" hidden>
-                            <label>Giá thấp nhất</label><br>
+                            <label>Số sản phẩm trong gói ít nhât</label><br>
                             <input name="min"><br>
-                            <label>Giá cao nhất</label><br>
+                            <label>Số sản phẩm trong gó nhiều nhất</label><br>
                             <input name="max"><br>
                             <button type="submit">Áp dụng</button>
                         </form>
@@ -61,7 +61,7 @@
             {{#if doNotList}}
             <div class="row">
                 <div class="col text-center">
-                    <h1>Không tìm thấy gói sản phẩm</h1>
+                    <h1>Không tìm thấy gói nhu yếu phẩm</h1>
                 </div>
             </div>
             {{else}}
@@ -70,13 +70,12 @@
                 <div class="col-md-4">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                            <a href="/productPackages/detail/{{ProductPackage_ID}}">
-                                <h5 class="card-title">{{Name}}</h5>
+                            <a href="/productPackages/detail/{{productpackage_id}}">
+                                <h5 class="card-title">{{name}}</h5>
                             </a>
-                            <p class="card-text">{{PriceTotal}} vnđ</p>
-                            <p class="card-text">{{Limit_For_Person}}</p>
-                            <p class="card-text">{{Limit_Time}}</p>
-                            <a href="#" class="btn btn-primary">Thêm vào giỏ hàng</a>
+                            <p class="card-text">{{quantity}} nhu yếu phẩm</p>
+                            <p class="card-text">Giới hạn {{limit_per_person}} gói cho mỗi người trong thời gian {{time_limit}} ngày</p>
+                            <a href="/productPackages/detail/{{productpackage_id}}" class="btn btn-primary">chi tiết</a>
                         </div>
                     </div>
                 </div>

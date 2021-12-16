@@ -8,7 +8,7 @@
 							class="form-control mr-sm-2 w-75"
 							type="search"
                             name="s"
-							placeholder="Tìm kiếm nhu yếu phẩm"
+							placeholder="Tìm kiếm gói nhu yếu phẩm"
 							aria-label="Search"
 						/>
                         <input name="min" value="{{minS}}" hidden>
@@ -30,10 +30,10 @@
                             Sắp xếp
                         </a>
                         <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
-                            <a class='dropdown-item' href='/productPackages?sort=Price&by=asc{{s}}{{min}}{{max}}'>Giá tăng</a>
-                            <a class='dropdown-item' href='/productPackages?sort=Price&by=desc{{s}}{{min}}{{max}}'>Giá Giảm</a>
-                            <a class='dropdown-item' href='/productPackages?sort=Name&by=asc{{s}}{{min}}{{max}}'>Tên (a-z)</a>
-                            <a class='dropdown-item' href='/productPackages?sort=Name&by=desc{{s}}{{min}}{{max}}'>Tên (z-a)</a>
+                            <a class='dropdown-item' href='/productPackages?sort=quantity&by=asc{{s}}{{min}}{{max}}'>Số nhu yếu phẩm trong gói tăng</a>
+                            <a class='dropdown-item' href='/productPackages?sort=quantity&by=desc{{s}}{{min}}{{max}}'>Số nhu yếu phẩm trong gói Giảm</a>
+                            <a class='dropdown-item' href='/productPackages?sort=name&by=asc{{s}}{{min}}{{max}}'>Tên (a-z)</a>
+                            <a class='dropdown-item' href='/productPackages?sort=name&by=desc{{s}}{{min}}{{max}}'>Tên (z-a)</a>
                         </div>
                     </div>
                     <div class='nav-item dropdown'>
@@ -49,24 +49,19 @@
                         </a>
                         <form class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
                             <input name="s" value="{{search}}" hidden>
-                            <label>Giá thấp nhất</label><br>
+                            <label>Số sản phẩm trong gói ít nhât</label><br>
                             <input name="min"><br>
-                            <label>Giá cao nhất</label><br>
+                            <label>Số sản phẩm trong gó nhiều nhất</label><br>
                             <input name="max"><br>
                             <button type="submit">Áp dụng</button>
                         </form>
                     </div>
 				</div>
-				<div class="col-4 text-center my-2">
-					<button type="button" class="btn btn-success">
-						+ Thêm gói nhu yếu phẩm
-					</button>
-				</div>
 			</div>
             {{#if doNotList}}
             <div class="row">
                 <div class="col text-center">
-                    <h1>Không tìm thấy gói sản phẩm</h1>
+                    <h1>Không tìm thấy gói nhu yếu phẩm</h1>
                 </div>
             </div>
             {{else}}
@@ -79,11 +74,9 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tên gói</th>
-                                        <th scope="col" class="text-center">ID các sản phẩm</th>
-                                        <th scope="col" class="text-center">Số lượng mỗi sản phẩm</th>
-                                        <th scope="col">Tổng giá</th>
+                                        <th scope="col" class="text-center">Số nhu yếu phẩm</th>
                                         <th scope="col" class="text-center">Giới hạn cho mỗi người</th>
-                                        <th scope="col" class="text-center">Thời gian sử dụng</th>
+                                        <th scope="col" class="text-center">Thời gian giới hạn</th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                     </tr>
@@ -91,23 +84,13 @@
                                 <tbody>
                                     {{#each listProductPackage}}
                                     <tr>
-                                        <th scope="col">{{ProductPackage_ID}}</th>
-                                        <th scope="col">{{Name}}</th>
-                                        <th scope="col" class="text-center">
-                                                {{#each Product_ID_List}}
-                                                    <a href='/products/detail/{{this}}'>{{this}}</a><br>
-                                                {{/each}}
-                                        </th>
-                                        <th scope="col" class="text-center">
-                                                {{#each Product_Quantity_List}}
-                                                    <a>{{this}}</a><br>
-                                                {{/each}}
-                                        </th>
-                                        <th scope="col" class="text-center">{{PriceTotal}}</th>
-                                        <th scope="col" class="text-center">{{Limit_For_One_Person}}</th>
-                                        <th scope="col" class="text-center">{{Limit_Time}}</th>
-                                        <th scope="col"><a href="/productPackages/detail/{{ProductPackage_ID}}"><button class="btn btn-primary">Chi tiết</button></a></th>
-                                        <th scope="col"><a href="/productPackages/edit/{{ProductPackage_ID}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
+                                        <th scope="col">{{productpackage_id}}</th>
+                                        <th scope="col">{{name}}</th>
+                                        <th scope="col" class="text-center">{{quantity}}</th>
+                                        <th scope="col" class="text-center">{{limit_per_person}}gói</th>
+                                        <th scope="col" class="text-center">{{time_limit}}ngày</th>
+                                        <th scope="col"><a href="/productPackages/detail/{{productpackage_id}}"><button class="btn btn-primary">Chi tiết</button></a></th>
+                                        <th scope="col"><a href="/productPackages/edit/{{productpackage_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
                                     </tr>
                                     {{/each}}
                                 </tbody>
