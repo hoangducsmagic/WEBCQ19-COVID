@@ -30,10 +30,10 @@
                             Sắp xếp
                         </a>
                         <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
-                            <a class='dropdown-item' href='/products?sort=Price&by=asc{{s}}{{min}}{{max}}'>Giá tăng</a>
-                            <a class='dropdown-item' href='/products?sort=Price&by=desc{{s}}{{min}}{{max}}'>Giá Giảm</a>
-                            <a class='dropdown-item' href='/products?sort=Name&by=asc{{s}}{{min}}{{max}}'>Tên (a-z)</a>
-                            <a class='dropdown-item' href='/products?sort=Name&by=desc{{s}}{{min}}{{max}}'>Tên (z-a)</a>
+                            <a class='dropdown-item' href='/products?sort=price&by=asc{{s}}{{min}}{{max}}'>Giá tăng</a>
+                            <a class='dropdown-item' href='/products?sort=price&by=desc{{s}}{{min}}{{max}}'>Giá Giảm</a>
+                            <a class='dropdown-item' href='/products?sort=name&by=asc{{s}}{{min}}{{max}}'>Tên (a-z)</a>
+                            <a class='dropdown-item' href='/products?sort=name&by=desc{{s}}{{min}}{{max}}'>Tên (z-a)</a>
                         </div>
                     </div>
                     <div class='nav-item dropdown'>
@@ -66,7 +66,7 @@
             {{#if doNotList}}
             <div class="row">
                 <div class="col text-center">
-                    <h1>Không tìm thấy sản phẩm</h1>
+                    <h1>Không tìm thấy nhu yếu phẩm</h1>
                 </div>
             </div>
             {{else}}
@@ -89,21 +89,21 @@
                                 <tbody>
                                     {{#each listProduct}}
                                     <tr>
-                                        <th scope="col">{{Product_ID}}</th>
-                                        <th scope="col">{{Name}}</th>
+                                        <th scope="col">{{product_id}}</th>
+                                        <th scope="col">{{name}}</th>
                                         <th scope="col">
                                             <div class="row">
-                                                {{#each Images}}
+                                                {{#each images}}
                                                 <div class="col">
-                                                    <img src={{this}} class="w10"/>
+                                                    <img src={{url}} class="w10"/>
                                                 </div>
                                                 {{/each}}
                                             </div>
                                         </th>
-                                        <th scope="col">{{Price}}</th>
-                                        <th scope="col">{{Quantitative}}</th>
-                                        <th scope="col"><a href="/products/detail/{{Product_ID}}"><button class="btn btn-primary">Chi tiết</button></a></th>
-                                        <th scope="col"><a href="/products/edit/{{Product_ID}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
+                                        <th scope="col">{{price}}</th>
+                                        <th scope="col">{{unit}}</th>
+                                        <th scope="col"><a href="/products/detail/{{product_id}}"><button class="btn btn-primary">Chi tiết</button></a></th>
+                                        <th scope="col"><a href="/products/edit/{{product_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
                                     </tr>
                                     {{/each}}
                                 </tbody>

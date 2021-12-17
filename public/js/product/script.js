@@ -1,4 +1,3 @@
 function setImage(x){
-    console.log(x);
-    $("#img").attr('src', x);
+    $("#img"+x.name).attr('src', x.src);
 }

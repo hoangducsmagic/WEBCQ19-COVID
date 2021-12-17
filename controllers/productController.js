@@ -5,13 +5,13 @@ exports.dummy = (req,res) => {
 }
 
 exports.listProduct = async (req, res) => {
-    const price = ` where "Price" >` + (req.query.min || 0) + ` and "Price" <` + (req.query.max || 1000000000);
-    let s = ` and lower(khongdau("Name")) like lower(khongdau('%` + req.query.s+`%'))`;
+    const price = ` where price >` + (req.query.min || 0) + ` and price <` + (req.query.max || 1000000000);
+    let s = ` and lower(khongdau(name)) like lower(khongdau('%` + req.query.s+`%'))`;
     if (!req.query.s) s=``;
     let sort =  `order by khongdau("`+req.query.sort+`") `+ (req.query.by||``);
-    if (req.query.sort && req.query.sort === "Price")
-        sort =  `order by "`+req.query.sort+`" `+ (req.query.by||``);
-    if (!req.query.sort) sort=``;
+    if (req.query.sort && req.query.sort === 'price')
+        sort =  `order by `+req.query.sort+` `+ (req.query.by||``);
+    if (!req.query.sort) sort =  `order by product_id`;
     const perPage = req.query.perPage || 30;
     const page = req.query.page || '1';
     const qPage = ` limit ` + perPage + ` offset ` + (parseInt(req.query.page-1)*parseInt(perPage) || 0);
@@ -43,13 +43,4 @@ exports.listProduct = async (req, res) => {
     });
     else 
     res.render('products/productListManage', {doNotList: true});
-}
-
-exports.productDetail = async (req, res) => {
-    const id = req.params.id;
-    const product = await productModel.productDetail(parseInt(id));
-    if (product)
-    res.render('products/productDetail', {product: product[0]});
-    else
-    res.render('products/productDetail', {doNot: true});
 }

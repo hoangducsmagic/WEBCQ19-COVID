@@ -24,12 +24,12 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="col">{{productPackage.ProductPackage_ID}}</th>
-                                        <th scope="col">{{productPackage.Name}}</th>
-                                        <th scope="col" class="text-center">{{productPackage.PriceTotal}}</th>
-                                        <th scope="col" class="text-center">{{productPackage.Limit_For_One_Person}}</th>
-                                        <th scope="col" class="text-center">{{productPackage.Limit_Time}}</th>
-                                        <th scope="col"><a href="/productPackages/edit/{{productPackage.ProductPackage_ID}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
+                                        <th scope="col">{{productPackage.productpackage_id}}</th>
+                                        <th scope="col">{{productPackage.name}}</th>
+                                        <th scope="col" class="text-center"></th>
+                                        <th scope="col" class="text-center">{{productPackage.limit_per_person}}</th>
+                                        <th scope="col" class="text-center">{{productPackage.time_limit}}</th>
+                                        <th scope="col"><a href="/productPackages/edit/{{productPackage.productpackage_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -46,25 +46,23 @@
                 {{#each listProduct}}
                 <div class="col-md-4">
                     <div class="card" style="width: 18rem;">
-                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                            <a href="/products/detail/{{Product_ID}}">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                <img class="d-block w-100" src="{{Images}}" alt="First slide">
-                                </div>
-                                {{#each Images}}
-                                <div class="carousel-item">
-                                <img class="d-block w-100" src="{{this}}">
-                                </div>
-                                {{/each}}
+                        <div class="container">
+                            <div class="row">
+                                <img class="d-block w-100" src="{{image.url}}" id="img{{product_id}}" onmouseenter="setImage(this)"> 
                             </div>
-                            </a>
+                            <div class="row py-2">
+                                    {{#each images}}
+                                    <div class="col">
+                                    <img class="d-block w10" src="{{url}}" onmouseenter="setImage(this)" name="{{product_id}}">
+                                    </div>
+                                    {{/each}}
+                            </div>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{Name}}</h5>
-                            <p class="card-text">{{Price}}vnđ</p>
-                            <p class="card-text">{{Quantitative}}</p>
-                            <a href="#" class="btn btn-primary">x{{Quantity}}</a>
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{price}}vnđ</p>
+                            <p class="card-text">{{unit}}</p>
+                            <p class="card-text">số lượng <input min="0" max="{{max_amount}}" value="1" type="number"></p>
                         </div>
                     </div>
                 </div>
@@ -72,3 +70,5 @@
             </div>
             {{/if}}
 		</div>
+
+<script src='/js/product/script.js'></script>
