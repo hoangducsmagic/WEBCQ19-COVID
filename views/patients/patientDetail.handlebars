@@ -1,71 +1,139 @@
 {{> manageNavP}}
-		<div class="container">
-			<div class="row mt-3 justify-content-center">
-				<h2>Thông tin bệnh nhân</h2>
-			</div>
-			<div class="row my-3">
-				<div class="col-4"></div>
-				<div class="col-2">
-					<h6>Họ tên:</h6>
-					<h6>CMND:</h6>
-					<h6>Năm sinh:</h6>
-					<h6>Địa chỉ:</h6>
-					<h6>Trạng thái hiện tại:</h6>
-					<h6>Nơi đang điều trị:</h6>
+			<div class="container">
+			<div class="row my-3 no-gutters">
+				<div class="col-lg-6">
+					<h2 class="mb-4">Thông tin bệnh nhân</h2>
+
+					<div class="row">
+						<div class="col-4">
+							<h6>Họ tên:</h6>
+							<h6>CMND:</h6>
+							<h6>Năm sinh:</h6>
+							<h6>Địa chỉ:</h6>
+							<h6>Trạng thái hiện tại:</h6>
+							<h6>Nơi đang điều trị:</h6>
+						</div>
+						<div class="col-8">
+							<h6>{{patientName}}</h6>
+							<h6>{{patientCitizenId}}</h6>
+							<h6>{{patientBirthday}}</h6>
+							<h6>{{wardName}}, {{districtName}}, {{provinceName}}</h6>
+							{{#ifEqual patientStatus -1}}
+							<h6>Khỏi bệnh</h6>
+							{{/ifEqual}} {{#ifNotEqual patientStatus -1}}
+							<h6>F{{patientStatus}}</h6>
+							{{/ifNotEqual}}
+							<h6>{{facilityName}}</h6>
+						</div>
+					</div>
 				</div>
-				<div class="col-4">
-					<h6>{{patientName}}</h6>
-					<h6>{{patientCitizenId}}</h6>
-					<h6>{{patientBirthday}}</h6>
-					<h6>{{wardName}}, {{districtName}}, {{provinceName}}</h6>
-					{{#ifEqual patientStatus -1}}
-						<h6>Khỏi bệnh</h6>
-					{{/ifEqual}}
-					{{#ifNotEqual patientStatus -1}}
-						<h6>F{{patientStatus}}</h6>
-					{{/ifNotEqual}}
 
-					
+				<!-- Danh sách người liên đới -->
+				<div class="col-lg-6">
+					<h3>Danh sách người liên đới</h3>
 
-
-					<h6>{{facilityName}}</h6>
+					<table class="table table-responsive" style="max-height: 300px">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Họ tên</th>
+								<th scope="col">Trạng thái</th>
+								<th scope="col">Nơi đang điều trị</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#each relatedList}}
+							<tr>
+								<th scope="row">{{this.patientId}}</th>
+								<td>{{this.patientName}}</td>
+								{{#ifEqual this.patientStatus -1}}
+								<td>Khỏi bệnh</td>
+								{{/ifEqual}} {{#ifNotEqual this.patientStatus -1}}
+								<td>F{{this.patientStatus}}</td>
+								{{/ifNotEqual}}
+								<td>{{this.facilityName}}</td>
+								<td class="text-center">
+									<a href="/patients/detail/{{this.patientId}}">
+										<button type="button" class="btn btn-primary btn-sm p-1">
+											Chi tiết
+										</button>
+									</a>
+								</td>
+							</tr>
+							{{/each}}
+						</tbody>
+					</table>
 				</div>
-				<div class="col-3"></div>
 			</div>
+
+			<!-- Lịch sử chuyển trạng thái -->
 			<div class="row mb-3">
-				<h3>Danh sách người liên đới</h3>
+				<h3>Lịch sử chuyển trạng thái</h3>
 			</div>
 			<div class="row justify-content-center">
-				<table class="table w-75">
-					<thead>
-						<tr>
-							<th scope="col">ID</th>
-							<th scope="col">Họ tên</th>
-							<th scope="col">Trạng thái</th>
-							<th scope="col">Nơi đang điều trị</th>
-							<th scope="col"></th>
-						</tr>
-					</thead>
-					<tbody>
-						{{#each relatedList}}
-						<tr>
-							<th scope="row">{{this.patientId}}</th>
-							<td>{{this.patientName}}</td>
-							{{#ifEqual this.patientStatus -1}}
-								<td>Khỏi bệnh</td>
-							{{/ifEqual}}
-							{{#ifNotEqual this.patientStatus -1}}
-								<td>F{{this.patientStatus}}</td>
-							{{/ifNotEqual}}
-							<td>{{this.facilityName}}</td>
-							<td class="text-center">
-								<a href="/patients/detail/{{this.patientId}}">
-									<button type="button" class="btn btn-primary">Chi tiết</button>
-								</a>
-							</td>
-						</tr>
-						{{/each}}
-					</tbody>
-				</table>
+				<div class="table-responsive" style="max-height: 250px">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Từ trạng thái</th>
+								<th scope="col">Chuyển sang</th>
+								<th scope="col">Ngày chuyển</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>F2</td>
+								<td>F1</td>
+								<td>2021-12-12</td>
+							</tr>
+							<tr>
+								<td>F2</td>
+								<td>F1</td>
+								<td>2021-12-12</td>
+							</tr>
+							<tr>
+								<td>F1</td>
+								<td>F0</td>
+								<td>2021-12-20</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Lịch sử chuyển nơi điều trị -->
+			<div class="row mb-3">
+				<h3>Lịch sử chuyển nơi điều trị</h3>
+			</div>
+			<div class="row justify-content-center">
+				<div class="table-responsive" style="max-height: 250px">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Chuyển cơ sở từ</th>
+								<th scope="col">Đến</th>
+								<th scope="col">Ngày chuyển</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Bệnh viện Chợ Rẫy</td>
+								<td>Khu cách ly số 1</td>
+								<td>2021-12-12</td>
+							</tr>
+							<tr>
+								<td>Khu cách ly số 1</td>
+								<td>Bệnh viện giã chiến Thủ Đức</td>
+								<td>2021-12-20</td>
+							</tr>
+							<tr>
+								<td>Khu cách ly số 1</td>
+								<td>Bệnh viện giã chiến Thủ Đức</td>
+								<td>2021-12-20</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
