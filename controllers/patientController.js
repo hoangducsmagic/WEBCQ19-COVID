@@ -11,7 +11,7 @@ async function dummy(req, res) {
 // [GET] /patients/
 async function showPatientList(req, res) {
     
-    var data = await Patient.getAllPatients(req.query.keyword);
+    var data = await Patient.getAllPatients(req.query);
     res.render("patients/patientsList", { ...data,keyword:req.query.keyword });
 }
 

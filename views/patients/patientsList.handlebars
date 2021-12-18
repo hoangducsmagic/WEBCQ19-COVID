@@ -32,11 +32,11 @@
 				Sắp xếp
 				</button>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">Họ tên: A-Z</a>
-					<a class="dropdown-item" href="#">Họ tên: Z-A</a>
+					<a class="dropdown-item" href="/patients?sortby=patientName&order=asc&keyword={{keyword}}">Họ tên: A-Z</a>
+					<a class="dropdown-item" href="/patients?sortby=patientName&order=desc&keyword={{keyword}}">Họ tên: Z-A</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Trạng thái: Nhỏ đến lớn</a>
-					<a class="dropdown-item" href="#">Trạng thái: Lớn đến nhỏ</a>
+					<a class="dropdown-item" href="/patients?sortby=patientStatus&order=asc&keyword={{keyword}}">Trạng thái: Nhỏ đến lớn</a>
+					<a class="dropdown-item" href="/patients?sortby=patientStatus&order=desc&keyword={{keyword}}">Trạng thái: Lớn đến nhỏ</a>
 				</div>
 			</div>
 			<table class="table">
@@ -77,4 +77,6 @@
 					{{/each}}
 				</tbody>
 			</table>
+			<p style="text-align: center; display: {{#if patients}}none{{else}}block{{/if}};">Không có bệnh nhân nào trong hệ thống</p>
+
 		</div>
