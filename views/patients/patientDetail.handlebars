@@ -64,6 +64,7 @@
 							{{/each}}
 						</tbody>
 					</table>
+					<p style="display: {{#if relatedList}}none{{else}}block{{/if}};">Không có người liên quan</p>
 				</div>
 			</div>
 
@@ -82,23 +83,20 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each statusChangeList}}
 							<tr>
-								<td>F2</td>
-								<td>F1</td>
-								<td>2021-12-12</td>
+								<td>F{{this.statusFrom}}</td>
+								{{#ifEqual this.statusTo -1}}
+								<td>Khỏi bệnh</td>
+								{{/ifEqual}} {{#ifNotEqual this.statusTo -1}}
+								<td>F{{this.statusTo}}</td>
+								{{/ifNotEqual}}
+								<td>{{this.date}}</td>
 							</tr>
-							<tr>
-								<td>F2</td>
-								<td>F1</td>
-								<td>2021-12-12</td>
-							</tr>
-							<tr>
-								<td>F1</td>
-								<td>F0</td>
-								<td>2021-12-20</td>
-							</tr>
+							{{/each}}
 						</tbody>
 					</table>
+					<p style="text-align: center; display: {{#if statusChangeList}}none{{else}}block{{/if}};">Không có lịch sử chuyển trạng thái</p>
 				</div>
 			</div>
 
@@ -117,23 +115,17 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each facilityChangeList}}
 							<tr>
-								<td>Bệnh viện Chợ Rẫy</td>
-								<td>Khu cách ly số 1</td>
-								<td>2021-12-12</td>
+								<td>{{this.facilityFromName}}</td>
+								<td>{{this.facilityToName}}</td>
+								<td>{{this.date}}</td>
 							</tr>
-							<tr>
-								<td>Khu cách ly số 1</td>
-								<td>Bệnh viện giã chiến Thủ Đức</td>
-								<td>2021-12-20</td>
-							</tr>
-							<tr>
-								<td>Khu cách ly số 1</td>
-								<td>Bệnh viện giã chiến Thủ Đức</td>
-								<td>2021-12-20</td>
-							</tr>
+							{{/each}}
 						</tbody>
 					</table>
+					<p style="text-align: center; display: {{#if facilityChangeList}}none{{else}}block{{/if}};">Không có lịch sử chuyển nơi điều trị</p>
+
 				</div>
 			</div>
 		</div>

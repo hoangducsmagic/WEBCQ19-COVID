@@ -67,11 +67,39 @@ async function getPatientById(patientId) {
     return data[0];
 }
 
+async function getStatusChangeById(patientId) {
+    var query = `
+        SELECT status_change_id as "statusChangeId", status_from as "statusFrom", status_to as "statusTo", to_char(date,'dd/mm/yyyy') as "date"
+        FROM statushistory
+        WHERE patient_id='${patientId}' AND status_from<>-1
+    `
+
+    var data = await db.getQuery(query);
+    return data;
+}
+
+async function getFacilityChangeById(patientId) {
+    var query = `
+        SELECT t.transfer_id as "transferId", ff.name as "facilityFromName", ft.name as "facilityToName", to_char(t.date,'dd/mm/yyyy') as "date"
+        FROM transferhistory t
+        JOIN facility ff ON t.from_facility_id=ff.facility_id
+        JOIN facility ft ON t.to_facility_id=ft.facility_id
+        WHERE patient_id='${patientId}'
+    `
+
+    var data = await db.getQuery(query);
+    return data;
+}
+
 async function getPatientInfo(patientId) {
     var patientInfo = await getPatientById(patientId);
     var relatedInfo = await getRelatedById(patientId);
-
-    patientInfo.relatedList = relatedInfo;
+    var statusChangeInfo = await getStatusChangeById(patientId);
+    var facilityChangeInfo = await getFacilityChangeById(patientId);
+        
+    if (relatedInfo.length>0) patientInfo.relatedList = relatedInfo;
+    if (statusChangeInfo.length>0) patientInfo.statusChangeList = statusChangeInfo;
+    if (facilityChangeInfo.length>0) patientInfo.facilityChangeList = facilityChangeInfo;
 
     return patientInfo;
 }
