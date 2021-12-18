@@ -4,7 +4,8 @@ function patientIdGeneration() {
     return `PT${Date.now().toString(16)}`
 }
 
-async function getAllPatients(keyword) {
+async function getAllPatients(requestQuery) {
+    var { keyword, sortby, order } = requestQuery;
     var query = `
     SELECT p.patient_id as "patientId", p.name as "patientName", p.status as "patientStatus", f.name as "facilityName"
     FROM patient p
@@ -14,6 +15,18 @@ async function getAllPatients(keyword) {
         if (keyword != '') {
             query+=` WHERE khongdau(lower(p.name)) ~ '${keyword}'`
         }
+    }
+    if (sortby) {
+        switch (sortby) {
+            case 'patientName':
+                query += ` ORDER BY p.name`;
+                break;
+            case 'patientStatus':
+                query += ` ORDER BY p.status`;
+                break;
+        }
+
+        query += ` ${order.toUpperCase()}`;
     }
     var data = await db.getQuery(query);
     return { patients: data };
