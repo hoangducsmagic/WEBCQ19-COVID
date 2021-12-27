@@ -5,7 +5,9 @@ function patientIdGeneration() {
 }
 
 async function getAllPatients(requestQuery) {
-    var { keyword, sortby, order } = requestQuery;
+    if (requestQuery)
+        var { keyword, sortby, order } = requestQuery;
+
     var query = `
     SELECT p.patient_id as "patientId", p.name as "patientName", p.status as "patientStatus", f.name as "facilityName"
     FROM patient p
@@ -165,13 +167,18 @@ async function addPatient(data) {
     `
     await db.executeQuery(facilityQuery);
 
-    for(let related of data.relatedPersons){
-        let relatedQuery = `
-            INSERT INTO patientrelation (main_patient_id,related_patient_id)
-            VALUES ('${newPatientId}','${related}')
-        `
-        await db.executeQuery(relatedQuery);
+    if (data.relatedPersons && typeof data.relatedPersons != 'array')
+        data.relatedPersons = [data.relatedPersons];
+    if (data.relatedPersons) {
+        for(let related of data.relatedPersons){
+            let relatedQuery = `
+                INSERT INTO patientrelation (main_patient_id,related_patient_id)
+                VALUES ('${newPatientId}','${related}')
+            `
+            await db.executeQuery(relatedQuery);
+        }
     }
+    
 }
 
 async function setStatus(patientId, status) {
