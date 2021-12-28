@@ -7,6 +7,7 @@ const productRouter = require("./routes/productRoutes");
 const statisticRouter = require("./routes/statisticRoutes");
 const productPackageRouter = require("./routes/productPackageRoutes");
 const facilityRouter = require("./routes/facilityRoutes");
+const managerRouter = require("./routes/managerRoutes");
 
 require('./models/db')
 // Start express app
@@ -42,6 +43,7 @@ app.use("/products", productRouter);
 app.use("/statistic", statisticRouter);
 app.use("/productPackages", productPackageRouter);
 app.use("/facilities",facilityRouter);
+app.use("/managers",managerRouter);
 
 app.get("/", (req, res) => {
     res.redirect("/patients");
