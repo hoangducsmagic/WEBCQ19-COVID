@@ -3,7 +3,7 @@ const db = require('./db')
 async function getAccountHistory(username) {
     var res = {};
     var statusHistoryQuery = `
-        SELECT p.name as "patientName", s.status_from as "statusFrom", s.status_to as "statusTo",to_char(s.date,'dd/mm/yyyy') as "date"
+        SELECT p.name as "patientName", s.status_from as "statusFrom", s.status_to as "statusTo", to_char(s.date,'dd/mm/yyyy') as "date"
         FROM statushistory s
         JOIN patient p on s.patient_id=p.patient_id
         WHERE s.changer_username='${username}' AND s.status_from<>-1
@@ -11,12 +11,12 @@ async function getAccountHistory(username) {
     res.statusChangeHistory = await db.getQuery(statusHistoryQuery);
 
     var statusHistoryQuery = `
-        SELECT p.name as "patientName", ff.sname as "fromFacility", tf.name as "toFacility",to_char(t.date,'dd/mm/yyyy') as "date"
+        SELECT p.name as "patientName", ff.name as "fromFacility", tf.name as "toFacility",to_char(t.date,'dd/mm/yyyy') as "date"
         FROM transferhistory t
-        JOIN patient p on s.patient_id=p.patient_id
+        JOIN patient p on t.patient_id=p.patient_id
         JOIN facility ff on ff.facility_id=t.from_facility_id
         JOIN facility tf on tf.facility_id=t.to_facility_id
-        WHERE s.changer_username='${username}'
+        WHERE t.changer_username='${username}'
     `
     res.facilityChangeHistory = await db.getQuery(statusHistoryQuery);
 
