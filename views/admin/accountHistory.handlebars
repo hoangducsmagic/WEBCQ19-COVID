@@ -21,22 +21,23 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each statusChangeHistory}}
 							<tr>
-								<td>1</td>
-								<td>Nguyễn Văn A</td>
-								<td>F2</td>
-								<td>F1</td>
-								<td>2021-12-12</td>
+								<td>{{@index}}</td>
+								<td>{{this.patientName}}</td>
+								<td>{{this.statusFrom}}</td>
+								
+								{{#ifEqual this.statusTo -1}}
+								<td>Khỏi bệnh</td>
+								{{/ifEqual}} {{#ifNotEqual this.statusTo -1}}
+								<td>F{{this.statusTo}}</td>
+								{{/ifNotEqual}}
+								<td>{{this.date}}</td>
 							</tr>
-							<tr>
-								<td>1</td>
-								<td>Trần Thị B</td>
-								<td>F2</td>
-								<td>F1</td>
-								<td>2021-12-12</td>
-							</tr>
+							{{/each}}
 						</tbody>
 					</table>
+					<p style="text-align: center; display: {{#if statusChangeHistory}}none{{else}}block{{/if}};">Không có lịch sử chuyển trạng thái</p>
 				</div>
 			</div>
 
@@ -57,22 +58,18 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each facilityChangeHistory}}
 							<tr>
-								<td>1</td>
-								<td>Nguyễn Văn A</td>
-								<td>Bệnh viện Chợ Rẫy</td>
-								<td>Khu cách ly số 1</td>
-								<td>2021-12-12</td>
+								<td>{{@index}}</td>
+								<td>{{this.patientName}}</td>
+								<td>{{this.fromFacility}}</td>
+								<td>{{this.toFacility}}</td>
+								<td>{{this.date}}</td>
 							</tr>
-							<tr>
-								<td>1</td>
-								<td>Trần Thị B</td>
-								<td>Khu cách ly số 1</td>
-								<td>Bệnh viện giã chiến Thủ Đức</td>
-								<td>2021-12-20</td>
-							</tr>
+							{{/each}}
 						</tbody>
 					</table>
+					<p style="text-align: center; display: {{#if facilityChangeHistory}}none{{else}}block{{/if}};">Không có lịch sử chuyển nơi điều trị</p>
 				</div>
 			</div>
 
@@ -91,18 +88,16 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each productChangeHistory}}
 							<tr>
-								<td>1</td>
-								<td>Sản phẩm 1</td>
-								<td>2021-12-12</td>
+								<td>{{@index}}</td>
+								<td>{{this.productName}}</td>
+								<td>{{this.date}}</td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>Sản phẩm 2</td>
-								<td>2021-12-13</td>
-							</tr>
+							{{/each}}
 						</tbody>
 					</table>
+					<p style="text-align: center; display: {{#if productChangeHistory}}none{{else}}block{{/if}};">Không có lịch sử chỉnh sửa sản phẩm</p>
 				</div>
 			</div>
 			<!-- Lịch sử chỉnh sửa gói sản phẩm -->
@@ -120,18 +115,16 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each packageChangeHistory}}
 							<tr>
-								<td>1</td>
-								<td>Gói 1</td>
-								<td>2021-12-12</td>
+								<td>{{@index}}</td>
+								<td>{{this.packageName}}</td>
+								<td>{{this.date}}</td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>Gói 2</td>
-								<td>2021-12-13</td>
-							</tr>
+							{{/each}}
 						</tbody>
 					</table>
+					<p style="text-align: center; display: {{#if packageChangeHistory}}none{{else}}block{{/if}};">Không có lịch sử chỉnh sửa gói sản phẩm</p>
 				</div>
 			</div>
 		</div>

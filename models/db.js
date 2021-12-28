@@ -33,7 +33,19 @@ exports.getQuery = function (sqlQuery) {
             else {
                 console.log(err);
             }
-            // else reject(err);
+           
+        });
+    });
+};
+
+exports.getOne = function (sqlQuery) {
+    return new Promise((resolve, reject) => {
+        pool.query(sqlQuery, (err, res) => {
+            if (!err) resolve(res.rows[0]);
+            else {
+                console.log(err);
+            }
+            
         });
     });
 };

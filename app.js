@@ -6,8 +6,8 @@ const patientRouter = require("./routes/patientRoutes");
 const productRouter = require("./routes/productRoutes");
 const statisticRouter = require("./routes/statisticRoutes");
 const productPackageRouter = require("./routes/productPackageRoutes");
-const managerRouter = require("./routes/managerRoutes");
 const facilityRouter = require("./routes/facilityRoutes");
+const managerRouter = require("./routes/managerRoutes");
 
 require('./models/db')
 // Start express app
@@ -42,12 +42,15 @@ app.use("/patients", patientRouter);
 app.use("/products", productRouter);
 app.use("/statistic", statisticRouter);
 app.use("/productPackages", productPackageRouter);
-
-app.use("/managers",managerRouter);
 app.use("/facilities",facilityRouter);
+app.use("/managers",managerRouter);
 
 app.get("/", (req, res) => {
     res.redirect("/patients");
 });
+
+app.get('/check', (req, res) => {
+    res.render('admin/accountHistory');
+})
 
 module.exports = app;
