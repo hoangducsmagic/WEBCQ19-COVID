@@ -1,6 +1,9 @@
 const express = require("express");
 const path = require("path");
 const { create } = require("express-handlebars");
+const session = require("express-session");
+const cookieParser = require('cookie-parser');
+const passport = require('./middleware/passport');
 
 const patientRouter = require("./routes/patientRoutes");
 const productRouter = require("./routes/productRoutes");
@@ -8,6 +11,7 @@ const statisticRouter = require("./routes/statisticRoutes");
 const productPackageRouter = require("./routes/productPackageRoutes");
 const facilityRouter = require("./routes/facilityRoutes");
 const managerRouter = require("./routes/managerRoutes");
+const accountRouter = require("./routes/accountRoutes");
 
 require('./models/db')
 // Start express app
@@ -22,6 +26,12 @@ app.use(
 
 // Serving static files
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(cookieParser());
+
+app.use(session({secret:  process.env.SESSION_SECRET}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Set up view engine
 const hbs = create({
@@ -44,6 +54,7 @@ app.use("/statistic", statisticRouter);
 app.use("/productPackages", productPackageRouter);
 app.use("/facilities",facilityRouter);
 app.use("/managers",managerRouter);
+app.use('/account', accountRouter)
 
 app.get("/", (req, res) => {
     res.redirect("/patients");
