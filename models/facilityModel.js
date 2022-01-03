@@ -22,7 +22,7 @@ async function addFacility(facilityName, capacity, currentAmount) {
 
 async function getFacilityById(facilityId) {
     var query=`
-        SELECT faclity_id as "facilityId", name, current_amount as "currentAmount", capacity
+        SELECT facility_id as "facilityId", name, current_amount as "currentAmount", capacity
         FROM facility
         WHERE facility_id='${facilityId}'
     `

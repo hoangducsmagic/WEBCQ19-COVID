@@ -1,6 +1,6 @@
 {{> adminNavP}}
 		<div class="container">
-			<form action="" method="">
+			<form action="/facilities/edit/{{facilityId}}?_method=PUT" method="post">
 				<div class="row justify-content-center my-3">
 					<h2>Chỉnh sửa cơ sở điều trị</h2>
 				</div>
@@ -11,7 +11,7 @@
 						><h6>Tên hiện tại:</h6>
 					</label>
 					<div class="col-sm-3">
-						<h6 class="form-control">Bệnh viện nhiệt đới 1</h6>
+						<h6 class="form-control">{{name}}</h6>
 					</div>
 				</div>
 
@@ -21,7 +21,7 @@
 						<h6>Sức chứa hiện tại:</h6>
 					</label>
 					<div class="col-sm-3">
-						<h6 class="form-control">1000</h6>
+						<h6 class="form-control">{{capacity}}</h6>
 					</div>
 				</div>
 
@@ -35,7 +35,7 @@
 							type="text"
 							class="form-control"
 							id="inputNewFacilityName"
-							name="currentAmount"
+							name="facilityName"
 							placeholder="Tên mới"
 						/>
 					</div>
@@ -48,10 +48,11 @@
 					</label>
 					<div class="col-sm-3">
 						<input
-							type="text"
+							type="number"
+							min={{currentAmount}}
 							class="form-control"
 							id="inputNewCapacity"
-							name="currentAmount"
+							name="capacity"
 							placeholder="Sức chứa mới"
 						/>
 					</div>

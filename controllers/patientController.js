@@ -1,6 +1,7 @@
 const Patient = require("../models/patientModel");
 const Facility = require("../models/facilityModel");
 const Location = require("../models/locationModel");
+const accountM=require('../models/accountModel')
 
 async function dummy(req, res) {
     var data = await getAllPatients();
@@ -79,7 +80,7 @@ async function getLocationData(req, res) {
 }
 
 async function addPatient(req, res) {
-    console.log(req.body);
+    await accountM.add({ username: req.body.citizenID, password: req.body.citizenID }, 'patient');
     await Patient.addPatient(req.body);
     res.redirect('/patients');
 }

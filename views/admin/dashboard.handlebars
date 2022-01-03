@@ -5,7 +5,7 @@
 			</div>
 			<div class="row">
 				<div class="col-4 my-2">
-					<a href="">
+					<a href="/facilities/create">
 						<button type="button" class="btn btn-success">
 							+ Thêm cơ sở điều trị
 						</button>
@@ -23,17 +23,19 @@
 						</tr>
 					</thead>
 					<tbody>
+						{{#each facilities}}
 						<tr>
-							<td>Bệnh viện nhiệt đới</td>
-							<td>1000</td>
+							<td>{{name}}</td>
+							<td>{{capacity}}</td>
 							<td class="text-center">
-								<a href="">
+								<a href="/facilities/edit/{{facility_id}}">
 									<button type="button" class="btn btn-warning">
 										Chỉnh sửa
 									</button>
 								</a>
 							</td>
 						</tr>
+						{{/each}}
 					</tbody>
 				</table>
 			</div>
@@ -55,18 +57,20 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each managers}}
 							<tr>
-								<td>khoakg2000</td>
+								<td>{{username}}</td>
 								<td>Manager</td>
-								<td>Locked</td>
+								<td>{{#if locked}}Locked{{else}}-{{/if}}</td>
 								<td class="text-center">
-									<a href="">
+									<a href="managers/{{username}}/accountHistory">
 										<button type="button" class="btn btn-info">
 											Lịch sử hoạt động
 										</button>
 									</a>
 								</td>
 							</tr>
+							{{/each}}
 						</tbody>
 					</table>
 				</div>

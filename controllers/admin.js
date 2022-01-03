@@ -1,4 +1,6 @@
 const Patient = require("../models/adminModel");
+const Facility = require('../models/facilityModel')
+const Manager = require('../models/managerModel')
 
 async function dummy(req, res) {
     var data = await lockUser();
@@ -12,7 +14,18 @@ async function lockUser(req, res) {
     res.render("admin/lockUser", { ...data,keyword:req.query.keyword });
 }
 
+async function showDashboard(req, res) {
+    var facilities = await Facility.getAllFacilities();
+    var managers = await Manager.getAllManagers();
+    res.render('admin/dashboard', {
+        facilities,
+        managers
+    })
+}
+
 module.exports = {
     dummy,
-    showPatientList,
+    //showPatientList,
+    lockUser,
+    showDashboard
 };
