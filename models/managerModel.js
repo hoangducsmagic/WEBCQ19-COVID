@@ -38,4 +38,13 @@ async function getAccountHistory(username) {
     return res;
 }
 
-module.exports = { getAccountHistory }
+async function getAllManagers() {
+    var query = `
+        SELECT *
+        FROM account
+    `
+    var data = await db.getQuery(query);
+    return data;
+}
+
+module.exports = { getAccountHistory ,getAllManagers}

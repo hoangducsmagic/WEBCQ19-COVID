@@ -9,16 +9,26 @@ async function showCreateFacilityPage(req, res) {
 }
 
 async function createFacility(req, res) {
-    const { facilityName, capacity, currentAmount } = req.body;
-    await Facility.addFacility(facilityName, capacity, currentAmount);
-    res.redirect('/facilities');
+    const { facilityName, capacity } = req.body;
+
+    await Facility.addFacility(facilityName, capacity, 0);
+    res.redirect('/admin');
 }
 
 async function updateFacility(req, res) {
+    
     const facilityId = req.params.id;
     const { facilityName, capacity } = req.body;
     await Facility.updateFacility(facilityId, facilityName, capacity);
-    res.redirect('/facilities');
+    res.redirect('/admin');
 }
 
-module.exports={dummy,showCreateFacilityPage,createFacility,updateFacility}
+async function showUpdateFacilityPage(req, res) {
+    var facilityInfo = await Facility.getFacilityById(req.params.id);
+    res.render('admin/editFacility', {
+        ...facilityInfo,
+        facilityId:req.params.id
+    })
+}
+
+module.exports={dummy,showCreateFacilityPage,createFacility,updateFacility,showUpdateFacilityPage}
