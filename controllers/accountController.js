@@ -16,7 +16,7 @@ exports.add = async (req, res) =>{
         username: req.body.username,
         password: req.body.password
     }
-    if (await accountModel.add(user, 'manage'))
+    if (await accountModel.add(user, 'manager'))
     res.redirect('/account/login');
     else
     res.redirect('/account/signup?error=tài khoản đã được sử dụng');
@@ -25,7 +25,7 @@ exports.add = async (req, res) =>{
 exports.changePassword = (req, res) =>{
     if (!req.user)
     {res.redirect('/account/login'); return;}
-    res.render('account/changePassword', {error: req.query.error});
+    res.render('account/changePassword', {error: req.query.error, username: req.user.username});
 }
 
 exports.postChangePassword = async (req, res) =>{
@@ -41,6 +41,8 @@ exports.postChangePassword = async (req, res) =>{
 }
 
 exports.checkFirstLogin = async(req, res) =>{
+    if (!req.user)
+        return res.redirect('/');
     const checkFirstLogin = await accountModel.checkLogin(req.user.username,req.user.username);
     if (checkFirstLogin)
     res.redirect('/account/changePassword');

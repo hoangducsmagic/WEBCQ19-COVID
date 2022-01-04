@@ -2,6 +2,7 @@ const {db, pgp} = require('./db');
 const _db = require('./db');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const nFetch = require('node-fetch');
 
 exports.checkLogin =async (username, password) => {
     const table = new pgp.helpers.TableName({table: 'account', schema: 'public'})
@@ -41,6 +42,16 @@ exports.add = async (user, role) =>{
             } catch(e){console.log(e)}
         });
     })
+    if (role === 'patient'){
+        await nFetch('https:/mysterious-coast-09473.herokuapp.com/account/signup', {method: 'POST',
+        headers: {"Accept": "application/json","Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: user.username,
+            password: user.password
+        }),
+        }).then(async(response)=>{})
+    return null;
+    }
     return true;
 }
 
@@ -60,6 +71,13 @@ exports.changePassword = async (user) =>{
         }
         return null;
     } catch(e){console.log(e)}
+}
+
+exports.checkAdmin = async () =>{
+    const user = await _db.getQuery(`select * from account where role = 'admin'`);
+    if (user.length > 0) 
+        return true;
+    return null;
 }
 
 exports.get = async (username) =>{

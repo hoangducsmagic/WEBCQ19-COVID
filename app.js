@@ -14,6 +14,8 @@ const facilityRouter = require("./routes/facilityRoutes");
 const managerRouter = require("./routes/managerRoutes");
 const accountRouter = require("./routes/accountRoutes");
 const adminRouter = require("./routes/adminRoutes");
+const mdwAdmin = require('./middleware/init/admin');
+const mdwAccount = require('./middleware/init/account');
 
 require('./models/db')
 // Start express app
@@ -52,14 +54,14 @@ app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "views"));
 
 // Routers
-app.use("/patients", patientRouter);
-app.use("/products", productRouter);
-app.use("/statistic", statisticRouter);
-app.use("/productPackages", productPackageRouter);
-app.use("/facilities",facilityRouter);
-app.use("/managers",managerRouter);
-app.use('/account', accountRouter);
-app.use('/admin', adminRouter);
+app.use("/patients", mdwAdmin.checkAdmin, mdwAccount.checkLogin, patientRouter);
+app.use("/products", mdwAdmin.checkAdmin, mdwAccount.checkLogin, productRouter);
+app.use("/statistic", mdwAdmin.checkAdmin, mdwAccount.checkLogin, statisticRouter);
+app.use("/productPackages", mdwAdmin.checkAdmin, mdwAccount.checkLogin, productPackageRouter);
+app.use("/facilities", mdwAdmin.checkAdmin, mdwAccount.checkLogin, facilityRouter);
+app.use("/managers", mdwAdmin.checkAdmin, mdwAccount.checkLogin, managerRouter);
+app.use('/account', mdwAdmin.checkAdmin, accountRouter);
+app.use('/admin', mdwAccount.checkLogin, adminRouter);
 
 app.get("/", (req, res) => {
     res.redirect("/patients");
