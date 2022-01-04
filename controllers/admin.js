@@ -1,6 +1,7 @@
 const Patient = require("../models/adminModel");
 const Facility = require('../models/facilityModel')
 const Manager = require('../models/managerModel')
+const accountModel = require('../models/accountModel');
 
 async function dummy(req, res) {
     var data = await lockUser();
@@ -9,12 +10,15 @@ async function dummy(req, res) {
 }
 
 async function lockUser(req, res) {
-    
+    if (req.user.role!='admin')
+        return res.redirect('/');
     var data = await admin.lockUser(req.query);
     res.render("admin/lockUser", { ...data,keyword:req.query.keyword });
 }
 
 async function showDashboard(req, res) {
+    if (req.user.role!='admin')
+        return res.redirect('/');
     var facilities = await Facility.getAllFacilities();
     var managers = await Manager.getAllManagers();
     res.render('admin/dashboard', {
@@ -23,9 +27,26 @@ async function showDashboard(req, res) {
     })
 }
 
+async function create(req, res) {
+    res.render('account/signup',{ error: req.query.error});
+}
+
+async function postCreate(req, res) {
+    const user = {
+        username: req.body.username,
+        password: req.body.password
+    }
+    if (await accountModel.add(user, 'admin'))
+    res.redirect('/account/login');
+    else
+    res.redirect('/admin/create?error=tài khoản đã được sử dụng');
+}
+
 module.exports = {
     dummy,
     //showPatientList,
     lockUser,
-    showDashboard
+    showDashboard,
+    create,
+    postCreate
 };
