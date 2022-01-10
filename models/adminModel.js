@@ -9,6 +9,4 @@ async function lockUser(accountId) {
     return data;
 }
 
-module.exports = {
-    lockUser
-}
+module.exports={lockUser}
