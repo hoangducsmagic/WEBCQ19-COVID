@@ -9,12 +9,10 @@ class OrderController {
 }
 
 async function showOrder(req, res) {
-    let total = 0;
-    for (let col1 in $("priceUnit") &&  col2 in $("amountUnit")) {
-        total = total + (priceUnit[col1] * amountUnit[col2]);
-    }
-    res.render('order/', {total
-    })
+    var data = await admin.lockUser(req.query);
+    res.render("order/", { ...data,keyword:req.query.keyword });
 }
 
-module.exports = new OrderController();
+module.exports = {
+    showOrder
+}
