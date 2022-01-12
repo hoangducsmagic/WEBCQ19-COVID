@@ -7,11 +7,13 @@ exports.login = (req, res) =>{
 }
 
 exports.signup = (req, res) =>{
-    if (req.user)
-    {res.redirect('/'); return;}
+    if (req.user.role != 'admin')
+        return res.redirect('/');
     res.render('account/signup',{ error: req.query.error});
 }
 exports.add = async (req, res) =>{
+    if (req.user.role != 'admin')
+        return res.redirect('/');
     const user = {
         username: req.body.username,
         password: req.body.password
@@ -48,4 +50,20 @@ exports.checkFirstLogin = async(req, res) =>{
     res.redirect('/account/changePassword');
     else
     res.redirect('/')
+}
+
+exports.loginPayment = (req, res) =>{
+    if (!req.user) return res.redirect('/');
+    // console.log(req.cookies.token);
+    res.render('payment/loginPayment',{ error: req.query.error});
+}
+
+exports.postLoginPayment =async (req, res) =>{
+    if (!req.user) return res.redirect('/');
+    const token = await accountModel.loginPayment(req.body);
+    console.log(token)
+    res.cookie('token', token);
+    if (req.query.url)
+        return res.redirect(req.query.url);
+    res.redirect('/');
 }

@@ -63,11 +63,13 @@ app.use("/managers", mdwAdmin.checkAdmin, mdwAccount.checkLogin, managerRouter);
 app.use('/account', mdwAdmin.checkAdmin, accountRouter);
 app.use('/admin', mdwAccount.checkLogin, adminRouter);
 
-app.get("/", (req, res) => {
-    res.redirect("/patients");
+app.get("/", mdwAdmin.checkAdmin, mdwAccount.checkLogin, (req, res) => {
+    if (req.user.role === 'manager') return res.redirect("/patients");
+    if (req.user.role === 'admin') return res.redirect('/admin');
+    res.redirect('/products');
 });
 
-app.get('/check', (req, res) => {
+app.get('/check', mdwAdmin.checkAdmin, mdwAccount.checkLogin, (req, res) => {
     res.render('admin/accountHistory');
 })
 

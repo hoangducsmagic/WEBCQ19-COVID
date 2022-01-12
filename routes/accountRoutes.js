@@ -22,4 +22,8 @@ router.post('/changePassword', accountController.postChangePassword);
 
 router.get('/checkFirstLogin', accountController.checkFirstLogin);
 
+router.get('/loginPayment', accountController.loginPayment);
+
+router.post('/loginPayment', accountController.postLoginPayment);
+
 module.exports = router;
