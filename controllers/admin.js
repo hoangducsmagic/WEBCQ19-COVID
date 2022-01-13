@@ -1,4 +1,4 @@
-const Patient = require("../models/adminModel");
+const Admin = require("../models/adminModel");
 const Facility = require('../models/facilityModel')
 const Manager = require('../models/managerModel')
 
@@ -10,7 +10,7 @@ async function dummy(req, res) {
 
 async function lockUser(req, res) {
     
-    var data = await admin.lockUser(req.query);
+    var data = await Admin.lockUser(req.query);
     res.render("admin/lockUser", { ...data,keyword:req.query.keyword });
 }
 

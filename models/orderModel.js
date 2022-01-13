@@ -1,6 +1,6 @@
 const db = require('./db');
 
-async function showTotalPrice(orderId) {
+async function showOrder(orderId) {
     let query = `
         UPDATE SET total = SUM(p.price*p.unit) FROM order 
         INNER JOIN productpackage pp ON productpackage_id == pp.productpackage_id
