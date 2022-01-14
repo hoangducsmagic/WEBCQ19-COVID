@@ -14,14 +14,12 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each debtList}}
 							<tr>
-								<td>Nguyễn Văn Công A</td>
-								<td>10000đ</td>
+								<td>{{patientName}}</td>
+								<td>{{dept}}đ</td>
 							</tr>
-							<tr>
-								<td>Trần Minh B</td>
-								<td>300000đ</td>
-							</tr>
+							{{/each}}
 						</tbody>
 					</table>
 				</div>
@@ -43,12 +41,14 @@
 							</tr>
 						</thead>
 						<tbody>
+							{{#each boughtList}}
 							<tr>
-								<td>Nguyễn Văn Công A</td>
-								<td>Gói Covid 1</td>
-								<td>10000đ</td>
-								<td>2022-1-1</td>
+								<td>{{patientName}}</td>
+								<td>{{packageName}}</td>
+								<td>{{total}}đ</td>
+								<td>{{date}}</td>
 							</tr>
+							{{/each}}
 							<tr>
 								<td>Trần Minh B</td>
 								<td>Gói Sinh Viên</td>

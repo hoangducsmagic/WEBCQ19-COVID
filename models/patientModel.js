@@ -274,5 +274,5 @@ module.exports = {
     getPatientById,
     changeStatus,
     changeFacility,
-    addPatient
+    addPatient,
 };
