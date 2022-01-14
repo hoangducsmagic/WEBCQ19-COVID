@@ -32,9 +32,19 @@ async function showStatusChangePage(req, res) {
     });
 }
 
+async function showPaymentStatisticPage(req,res){
+    const debtList=await Statistic.getDebtList();
+    const boughtList=await Statistic.getBoughtList();
+    res.render('statistic/debt',{
+        debtList,
+        boughtList
+    })
+}
+
 module.exports = {
     showPackageConsumptionPage,
     showProductConsumptionPage,
     showTotalCasesPage,
     showStatusChangePage,
+    showPaymentStatisticPage
 };
