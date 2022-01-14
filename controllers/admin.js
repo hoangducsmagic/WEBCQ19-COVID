@@ -9,8 +9,9 @@ async function dummy(req, res) {
 }
 
 async function lockUser(req, res) {
-    
-    var data = await Admin.lockUser(req.query);
+    if (req.user.role!='admin')
+        return res.redirect('/');
+    var data = await admin.lockUser(req.query);
     res.render("admin/lockUser", { ...data,keyword:req.query.keyword });
 }
 
