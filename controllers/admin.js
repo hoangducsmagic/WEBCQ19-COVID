@@ -1,4 +1,4 @@
-const Admin = require("../models/adminModel");
+const Patient = require("../models/adminModel");
 const Facility = require('../models/facilityModel')
 const Manager = require('../models/managerModel')
 const accountModel = require('../models/accountModel');
