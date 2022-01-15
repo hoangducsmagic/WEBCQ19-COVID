@@ -3,9 +3,10 @@ const patientUserController = require('../controllers/patientUserController');
 
 const router = express.Router();
 
-router.get("/charge", patientUserController.showChargingPage);
-router.post("/charge", patientUserController.charging);
-router.get("/payoffdept", patientUserController.showPayOffDeptPage);
-router.post("/payoffdept", patientUserController.payOffDept);
+router.get('/accountDetail', patientUserController.showAccountDetail);
+router.get('/charge', patientUserController.showChargingPage);
+router.post('/charge', patientUserController.charging);
+router.get('/payoffdept', patientUserController.showPayOffDeptPage);
+router.post('/payoffdept', patientUserController.payOffDept);
 
 module.exports = router;
