@@ -54,6 +54,7 @@
 								<th scope="col">Phân quyền</th>
 								<th scope="col">Bị khóa</th>
 								<th scope="col"></th>
+								<th scope="col"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -62,10 +63,18 @@
 								<td>{{username}}</td>
 								<td>Manager</td>
 								<td>{{#if locked}}Locked{{else}}-{{/if}}</td>
+
 								<td class="text-center">
 									<a href="managers/{{username}}/accountHistory">
 										<button type="button" class="btn btn-info">
 											Lịch sử hoạt động
+										</button>
+									</a>
+								</td>
+								<td class="text-center">
+									<a href="/admin/lockuser?username={{username}}">
+										<button type="button" class="btn btn-danger">
+											Khóa
 										</button>
 									</a>
 								</td>
