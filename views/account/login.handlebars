@@ -1,20 +1,84 @@
+<nav
+	class='navbar navbar-expand-sm navbar-light'
+	style='background-color: #e3f2fd'
+>
+	<a class='navbar-brand' href='#'>Người dùng Covid</a>
+	<button
+		class='navbar-toggler'
+		type='button'
+		data-toggle='collapse'
+		data-target='#navbarNavDropdown'
+		aria-controls='navbarNavDropdown'
+		aria-expanded='false'
+		aria-label='Toggle navigation'
+	>
+		<span class='navbar-toggler-icon'></span>
+	</button>
+	<div class='collapse navbar-collapse' id='navbarNavDropdown'>
+		<ul class='navbar-nav mr-auto'>
+			<li class='nav-item'>
+				<a class='nav-link' href='../patientUser/accountDetail'>Thông tin cá
+					nhân</a>
+			</li>
+			<li class='nav-item'>
+				<a class='nav-link' href='#'>Mua nhu yếu phẩm</a>
+			</li>
+			<li class='nav-item dropdown'>
+				<a
+					class='nav-link dropdown-toggle'
+					href='#'
+					id='navbarDropdownMenuLink'
+					data-toggle='dropdown'
+					aria-haspopup='true'
+					aria-expanded='false'
+				>
+					Thanh toán
+				</a>
+				<div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
+					<a class='dropdown-item' href='../patientUser/charge'>Nạp tiền</a>
+					<a class='dropdown-item' href='../patientUser/payoffdept'>Trả nợ</a>
+				</div>
+			</li>
+		</ul>
 
-<div class="container">
-    <div class="card mx-auto">
-        <div class="card-body">
-            <form method="POST" >
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Username</label>
-                    <input type="text" class="form-control" name="username" placeholder="Enter username">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" name="password" placeholder="Password">
-                </div>
-                <div class="form-group text-center"><small id="emailHelp" class="form-text text-danger">{{error}}</small></div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-        </div>
-    </div>
+	</div>
+</nav>
+
+<div class='container'>
+	<div class='row justify-content-center mt-3'>
+		<h1>Đăng nhập</h1>
+	</div>
+
+	<div class='row'>
+		<div class='card w-25 mx-auto'>
+			<div class='card-body'>
+				<form method='POST'>
+					<div class='form-group'>
+						<label for='exampleInputEmail1'>Username</label>
+						<input
+							type='text'
+							class='form-control'
+							name='username'
+							placeholder='Enter username'
+						/>
+					</div>
+					<div class='form-group'>
+						<label for='exampleInputPassword1'>Password</label>
+						<input
+							type='password'
+							class='form-control'
+							name='password'
+							placeholder='Password'
+						/>
+					</div>
+					<div class='form-group text-center'><small
+							id='emailHelp'
+							class='form-text text-danger'
+						>{{error}}</small></div>
+					<button type='submit' class='btn btn-primary'>Login</button>
+				</form>
+			</div>
+		</div>
+	</div>
 
 </div>
