@@ -1,5 +1,39 @@
-{{> patientNavP}}
+{{> patientNavP }}
 <div class='container'>
+	{{!-- Thông báo thiếu nợ --}}
+	<div class="row mt-3">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		Thông báo 
+		{{#if debt}}
+		<span class="badge badge-danger">1</span>
+		{{/if}}
+		</button>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{{#if debt}}
+					Bạn đang nợ hệ thống {{debt}} đồng, vui lòng thanh toán trước {{dueDate}}
+				{{else}}
+					Không có thông báo để hiển thị
+				{{/if}}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+			</div>
+			</div>
+		</div>
+		</div>
+	</div>
+
+
 	<div class='row my-3 no-gutters'>
 		<div class='col-lg-6'>
 			<h2 class='mb-4'>Thông tin tài khoản</h2>
@@ -13,13 +47,17 @@
 					<h6>Trạng thái hiện tại:</h6>
 					<h6>Nơi đang điều trị:</h6>
 				</div>
-				<div class='col-8'>
-					<h6>Nguyễn Văn A</h6>
-					<h6>123456</h6>
-					<h6>1/1/1990</h6>
-					<h6>An Hòa, Bảo Lộc, Lâm Đồng</h6>
-					<h6>F1</h6>
-					<h6>Facility_Name</h6>
+				<div class="col-8">
+					<h6>{{patientName}}</h6>
+					<h6>{{patientCitizenId}}</h6>
+					<h6>{{patientBirthday}}</h6>
+					<h6>{{wardName}}, {{districtName}}, {{provinceName}}</h6>
+					{{#ifEqual patientStatus -1}}
+					<h6>Khỏi bệnh</h6>
+					{{/ifEqual}} {{#ifNotEqual patientStatus -1}}
+					<h6>F{{patientStatus}}</h6>
+					{{/ifNotEqual}}
+					<h6>{{facilityName}}</h6>
 				</div>
 			</div>
 		</div>
@@ -36,62 +74,53 @@
 							<th scope='col'>Ngày chuyển</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>F2</td>
-							<td>F1</td>
-							<td>2021-12-12</td>
-						</tr>
-						<tr>
-							<td>F2</td>
-							<td>F1</td>
-							<td>2021-12-12</td>
-						</tr>
-						<tr>
-							<td>F1</td>
-							<td>F0</td>
-							<td>2021-12-20</td>
-						</tr>
-					</tbody>
+						<tbody>
+							{{#each statusChangeList}}
+							<tr>
+								<td>F{{this.statusFrom}}</td>
+								{{#ifEqual this.statusTo -1}}
+								<td>Khỏi bệnh</td>
+								{{/ifEqual}} {{#ifNotEqual this.statusTo -1}}
+								<td>F{{this.statusTo}}</td>
+								{{/ifNotEqual}}
+								<td>{{this.date}}</td>
+							</tr>
+							{{/each}}
+						</tbody>
 				</table>
+				<p style="text-align: center; display: {{#if statusChangeList}}none{{else}}block{{/if}};">Không có lịch sử chuyển trạng thái</p>
 			</div>
 		</div>
 	</div>
 
 	<!-- Lịch sử chuyển nơi điều trị -->
-	<div class='row mb-3'>
-		<h3>Lịch sử chuyển nơi điều trị</h3>
-	</div>
-	<div class='row justify-content-center'>
-		<div class='table-responsive' style='max-height: 250px'>
-			<table class='table'>
-				<thead>
-					<tr>
-						<th scope='col'>Chuyển cơ sở từ</th>
-						<th scope='col'>Đến</th>
-						<th scope='col'>Ngày chuyển</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Bệnh viện Chợ Rẫy</td>
-						<td>Khu cách ly số 1</td>
-						<td>2021-12-12</td>
-					</tr>
-					<tr>
-						<td>Khu cách ly số 1</td>
-						<td>Bệnh viện giã chiến Thủ Đức</td>
-						<td>2021-12-20</td>
-					</tr>
-					<tr>
-						<td>Khu cách ly số 1</td>
-						<td>Bệnh viện giã chiến Thủ Đức</td>
-						<td>2021-12-20</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+			<div class="row mb-3">
+				<h3>Lịch sử chuyển nơi điều trị</h3>
+			</div>
+			<div class="row justify-content-center">
+				<div class="table-responsive" style="max-height: 250px">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Chuyển cơ sở từ</th>
+								<th scope="col">Đến</th>
+								<th scope="col">Ngày chuyển</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#each facilityChangeList}}
+							<tr>
+								<td>{{this.facilityFromName}}</td>
+								<td>{{this.facilityToName}}</td>
+								<td>{{this.date}}</td>
+							</tr>
+							{{/each}}
+						</tbody>
+					</table>
+					<p style="text-align: center; display: {{#if facilityChangeList}}none{{else}}block{{/if}};">Không có lịch sử chuyển nơi điều trị</p>
+
+				</div>
+			</div>
 
 	{{!-- Thống kê thanh toán --}}
 	<div class='row mt-3'>

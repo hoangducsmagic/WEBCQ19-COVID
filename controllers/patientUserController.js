@@ -1,6 +1,10 @@
+const { getPatientInfoByUsername } = require('../models/patientModel');
+
 async function showAccountDetail(req, res) {
 	if (req.user.role !== 'patient') res.redirect('/');
-	res.render('patientUser/accountDetail');
+	var data = await getPatientInfoByUsername(req.params.id);
+
+	res.render('patientUser/accountDetail', data);
 }
 async function showChargingPage(req, res) {
 	res.render('account/addFund');

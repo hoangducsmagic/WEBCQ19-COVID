@@ -96,7 +96,7 @@ app.use(
 app.get('/', mdwAdmin.checkAdmin, mdwAccount.checkLogin, (req, res) => {
 	if (req.user.role === 'manager') return res.redirect('/patients');
 	if (req.user.role === 'admin') return res.redirect('/admin');
-	res.redirect('/patientUser/accountDetail');
+	res.redirect(`/patientUser/accountDetail/${req.user.username}`);
 });
 
 app.get('/check', mdwAdmin.checkAdmin, mdwAccount.checkLogin, (req, res) => {
