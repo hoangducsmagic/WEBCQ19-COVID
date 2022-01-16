@@ -63,7 +63,7 @@ app.use("/facilities", mdwAdmin.checkAdmin, mdwAccount.checkLogin, facilityRoute
 app.use("/managers", mdwAdmin.checkAdmin, mdwAccount.checkLogin, managerRouter);
 app.use('/account', mdwAdmin.checkAdmin, accountRouter);
 app.use('/admin', mdwAccount.checkLogin, adminRouter);
-app.use('/patientUser',patientUserRouter);
+app.use('/patientUser',mdwAdmin.checkAdmin, mdwAccount.checkLogin,patientUserRouter);
 
 app.get("/", mdwAdmin.checkAdmin, mdwAccount.checkLogin, (req, res) => {
     if (req.user.role === 'manager') return res.redirect("/patients");

@@ -1,8 +1,11 @@
+const axios=require('axios')
+
 async function showChargingPage (req, res) {
   res.render("account/addFund");
 };
 
 async function charging  (req, res)  {
+  console.log(req.cookies.token,req.body.amountInput);
   axios({
     method: "post",
     url: "https://mysterious-coast-09473.herokuapp.com/payment/charge",
