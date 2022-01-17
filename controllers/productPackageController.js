@@ -52,3 +52,43 @@ exports.productPackageDetail = async (req, res) => {
     else
     res.render('productPackages/productPackageDetail', {doNot: true});
 }
+
+async function showCreateProductPackagePage(req, res) {
+    res.render('productPackages/createProductPackage');
+}
+
+
+async function createProductPackage(req, res) {
+    const {name, time_limit, limit_per_person} = req.body;
+    await productPackageModel.createProductPackage(name, time_limit, limit_per_person);
+    res.redirect('/productPackages');
+}
+
+async function showEditProductPackagePage(req, res){
+    let productPackageInfo = await productPackageModel.getProductPackageById(req.params.id);
+    res.render('productPackages/editProductPackage', {
+        ...productPackageInfo,
+        productPackageId:req.params.id
+    })
+}
+
+async function editProductPackage(req, res) {
+    const productPackageId = req.params.id;
+    const {name, time_limit, limit_per_person} = req.body;
+    await productPackageModel.editProductPackage(productPackageId, name, time_limit, limit_per_person);
+    res.redirect('/productPackages');
+}
+
+async function deleteProductPackage(req, res) {
+    const productPackageId = req.params.id;
+    await productPackageModel.deleteProductPackage(productPackageId);
+    res.redirect('/productPackages');
+}
+
+module.exports={
+    showCreateProductPackagePage,
+    showEditProductPackagePage,
+    createProductPackage,
+    editProductPackage,
+    deleteProductPackage
+}

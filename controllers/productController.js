@@ -44,3 +44,45 @@ exports.listProduct = async (req, res) => {
     else 
     res.render('products/productListManage', {doNotList: true});
 }
+
+async function showCreateProductPage(req, res) {
+    res.render('product/createProduct')
+}
+
+
+async function createProduct(req, res) {
+    const {productName, price, unit} = req.body;
+    await productModel.createProduct(productName, price, unit);
+    res.redirect('/product');
+}
+
+async function showUpdateProductPage(req, res){
+    let productInfo = await productModel.getProductById(req.params.id);
+    res.render('product/editProduct', {
+        ...productInfo,
+        productId:req.params.id
+    })
+}
+
+async function editProduct(req, res) {
+    const productId = req.params.id;
+    const {productName, price, unit} = req.body;
+    await productModel.editProduct(productId, productName, price, unit);
+    res.redirect('/product');
+}
+
+async function deleteProduct(req, res) {
+    const productId = req.params.id;
+    await productModel.deleteProduct(productId);
+    res.redirect('/product');
+}
+
+
+
+module.exports={
+    showCreateProductPage,
+    createProduct,
+    editProduct,
+    deleteProduct,
+    showUpdateProductPage
+}
