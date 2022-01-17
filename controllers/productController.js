@@ -22,8 +22,11 @@ exports.listProduct = async (req, res) => {
     if (req.query.by && req.query.by!='') by='&by='+req.query.by;
     if (req.query.min) min='&min='+req.query.min;
     if (req.query.max) max='&max='+req.query.max;
+    let viewUrlName = 'productList';
+    if (req.user.role === 'manager')
+        viewUrlName = 'productListManage'
     if (listProduct && listProduct.count > 0)
-    res.render('products/productListManage', {listProduct: listProduct, 
+    res.render('products/'+viewUrlName, {listProduct: listProduct, 
         s: s,
         search: req.query.s || "",
         min: min,
@@ -42,7 +45,7 @@ exports.listProduct = async (req, res) => {
         perPage: perPage
     });
     else 
-    res.render('products/productListManage', {doNotList: true});
+    res.render('products/'+viewUrlName, {doNotList: true});
 }
 
 async function showCreateProductPage(req, res) {
