@@ -80,8 +80,6 @@ async function deleteProduct(req, res) {
     res.redirect('/product');
 }
 
-
-
 module.exports={
     showCreateProductPage,
     createProduct,
