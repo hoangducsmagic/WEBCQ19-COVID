@@ -1,6 +1,7 @@
 const {db, pgp} = require('./db');
 const _db = require('./db');
 const imageModel = require('./imageModel');
+const DB = require('./db');
 
 exports.listProductPackage = async(min, max,s, sort,by, qPage) =>{
     const q = `select count(*) from productpackage_detail pd where p.productpackage_id = pd.productpackage_id`;
@@ -41,4 +42,51 @@ exports.productPackageDetailList = async(id) =>{
 
     } catch(e){console.log(e)}
     return null;
+}
+
+function productPackageIdGeneration() {
+    return `PT${Date.now().toString(16)}`
+}
+
+async function createProductPackage(ppName, ppTimeLimit, ppLimitPerPerson) {
+    let newProductId = productPackageIdGeneration();
+    let createProductPackageQuery = `
+        INSERT INTO product (product_id,name,time_limt,limit_per_person)
+        VALUES ('${newProductId}','${ppName}','${ppTimeLimit}','${ppLimitPerPerson})    
+    `
+    await DB.executeQuery(createProductPackageQuery);
+}
+
+async function editProductPackage(productPackageId, ppName, ppTimeLimit, ppLimitPerPerson) {
+    let editProductPackageQuery = `
+        UPDATE product
+        SET name='${ppName}', time_limit=${ppTimeLimit}, limit_per_person=${ppLimitPerPerson}
+        WHERE productpackage_id='${productPackageId}';
+    `
+    await DB.executeQuery(editProductPackageQuery);
+}
+
+async function getProductPackageById(productPackageId) {
+    let query=`
+        SELECT productpackage_id as "productPackageId", name, time_limit, limit_per_person  
+        FROM productpackage
+        WHERE productpackage_id='${productPackageId}'
+    `
+    let data = await DB.getOne(query);
+    return data;
+}
+
+async function deleteProductPackage(productPackageId){
+    let deleteProductPackageQuery = `
+        DELETE FROM productpackage
+        WHERE productpackage_id='${productPackageId}';
+    `
+    await DB.executeQuery(deleteProductPackageQuery);
+}
+
+module.exports={
+    createProductPackage,
+    editProductPackage,
+    deleteProductPackage,
+    getProductPackageById
 }
