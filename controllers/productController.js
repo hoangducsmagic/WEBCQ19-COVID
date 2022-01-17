@@ -48,6 +48,8 @@ exports.listProduct = async (req, res) => {
     res.render('products/'+viewUrlName, {doNotList: true});
 }
 
+
+
 async function showCreateProductPage(req, res) {
     res.render('product/createProduct')
 }
