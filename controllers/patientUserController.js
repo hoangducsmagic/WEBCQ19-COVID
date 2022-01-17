@@ -16,7 +16,6 @@ async function charging  (req, res)  {
   })
     .then((raw) => raw.data)
     .then((response) => {
-      console.log(response);
       res.redirect("/");
     })
     .catch((err) => {

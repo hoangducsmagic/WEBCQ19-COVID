@@ -3,12 +3,6 @@ const Facility = require("../models/facilityModel");
 const Location = require("../models/locationModel");
 const accountM=require('../models/accountModel')
 
-async function dummy(req, res) {
-    var data = await getAllPatients();
-    console.log(data);
-    res.send("dummy");
-}
-
 // [GET] /patients/
 async function showPatientList(req, res) {
     if (req.user.role!='manager')
@@ -104,7 +98,6 @@ async function addPatient(req, res) {
 }
 
 module.exports = {
-    dummy,
     showPatientList,
     showPatientDetail,
     showAddPage,

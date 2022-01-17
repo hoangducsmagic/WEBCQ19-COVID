@@ -1,4 +1,5 @@
 const db = require("./db");
+const utils=require('../utils/utils')
 
 function patientIdGeneration() {
     return `PT${Date.now().toString(16)}`
@@ -7,6 +8,8 @@ function patientIdGeneration() {
 async function getAllPatients(requestQuery) {
     if (requestQuery)
         var { keyword, sortby, order } = requestQuery;
+
+    if (keyword) keyword=utils.removeAccents(keyword.toLowerCase());
 
     var query = `
     SELECT p.patient_id as "patientId", p.name as "patientName", p.status as "patientStatus", f.name as "facilityName", p.citizen_id as "citizenId"
