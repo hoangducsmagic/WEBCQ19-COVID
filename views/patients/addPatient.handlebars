@@ -15,6 +15,7 @@
 							class="form-control"
 							id="inputName"
 							name="name"
+							required
 							placeholder="Họ và tên"
 						/>
 					</div>
@@ -31,19 +32,16 @@
 							id="inputCitizenID"
 							name="citizenID"
 							placeholder="CMND"
+							required
 						/>
 							<div class='form-group'><small
 							id='citizenIdExistedAlert'
 							class='form-text text-danger'
+							style="display: none;"
 						>Citizen id is existed!</small></div>
 					</div>
 				
 				</div>
-				
-					
-					
-
-				
 
 				<div class="row form-group">
 					<div class="col-3"></div>
@@ -51,7 +49,7 @@
 						><h6>Ngày sinh:</h6>
 					</label>
 					<div class="col-sm-3">
-						<input type="date" class="form-control" id="inputDOB" name="dob" />
+						<input type="date" class="form-control" id="inputDOB" name="dob" required />
 					</div>
 				</div>
 
@@ -124,7 +122,7 @@
 					<table class="table w-50">
 						<thead>
 							<tr>
-								<th scope="col">ID</th>
+								<th scope="col">Mã bệnh nhân</th>
 								<th scope="col">Họ tên</th>
 								<th scope="col">Trạng thái</th>
 								<th scope="col"></th>
@@ -135,14 +133,7 @@
 							<tr>
 								<th scope="row">{{this.patientId}}</th>
 								<td>{{this.patientName}}</td>
-								{{#ifEqual this.patientStatus -1}}
-									<td>Khỏi bệnh</td>
-								{{/ifEqual}}
-								{{#ifNotEqual this.patientStatus -1}}
-									<td>F{{this.patientStatus}}</td>
-								{{/ifNotEqual}}
-								
-
+								<td>{{statusConvert this.patientStatus}}</td>					
 								<td class="text-center">
 									<input
 										type="checkbox"
