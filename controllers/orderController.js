@@ -1,5 +1,4 @@
 const orderModel = require('../models/managerModel');
-
 class OrderController {
     // [get], /order
 
@@ -7,6 +6,7 @@ class OrderController {
         res.render('order', { style: ['order.css'], js: ['order.js'] });
     }    
 }
+
 
 async function showOrder(req, res) {
     var data = await admin.lockUser(req.query);

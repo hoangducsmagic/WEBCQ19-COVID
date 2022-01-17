@@ -5,7 +5,7 @@ async function showChargingPage (req, res) {
 };
 
 async function charging  (req, res)  {
-  console.log(req.cookies.token,req.body.amountInput);
+ 
   axios({
     method: "post",
     url: "https://mysterious-coast-09473.herokuapp.com/payment/charge",
@@ -29,9 +29,23 @@ async function showPayOffDeptPage(req, res)  {};
 
 async function payOffDept  (req, res)  {};
 
-module.exports={
-    showChargingPage,
-    charging,
-    showPayOffDeptPage,
-    payOffDept
+
+async function showAccountDetail(req, res) {
+	if (req.user.role !== 'patient') res.redirect('/');
+	res.render('patientUser/accountDetail');
 }
+async function showChargingPage(req, res) {
+	res.render('account/addFund');
+}
+
+async function showPayOffDeptPage(req, res) {}
+
+async function payOffDept(req, res) {}
+
+module.exports = {
+	showChargingPage,
+	charging,
+	showPayOffDeptPage,
+	payOffDept,
+	showAccountDetail,
+};

@@ -9,7 +9,7 @@ async function getAllPatients(requestQuery) {
         var { keyword, sortby, order } = requestQuery;
 
     var query = `
-    SELECT p.patient_id as "patientId", p.name as "patientName", p.status as "patientStatus", f.name as "facilityName"
+    SELECT p.patient_id as "patientId", p.name as "patientName", p.status as "patientStatus", f.name as "facilityName", p.citizen_id as "citizenId"
     FROM patient p
     JOIN facility f on p.current_facility_id=f.facility_id
     `;
@@ -121,7 +121,7 @@ async function getPatientInfo(patientId) {
 
 
 
-async function changeFacility(patientId, oldFacility, newFacility,date) {
+async function changeFacility(patientId, oldFacility, newFacility,date,changerUsername) {
     if (oldFacility == newFacility) return;
     var newTransferId=Date.now().toString(16);
     var query1 = `
@@ -138,8 +138,8 @@ async function changeFacility(patientId, oldFacility, newFacility,date) {
     await db.executeQuery(query3);
     
     var query4 = `
-        INSERT INTO transferhistory (transfer_id,patient_id,from_facility_id,to_facility_id,date)
-        VALUES ('${newTransferId}','${patientId}','${oldFacility}','${newFacility}','${date}')
+        INSERT INTO transferhistory (transfer_id,patient_id,from_facility_id,to_facility_id,date,changer_username)
+        VALUES ('${newTransferId}','${patientId}','${oldFacility}','${newFacility}','${date}','${changerUsername}')
     `
     await db.executeQuery(query4);
 }
@@ -188,33 +188,34 @@ async function setStatus(patientId, status) {
     await db.executeQuery(query);
 }
 
-async function addStatusHistory(patientId, oldStatus, newStatus, date) {
+async function addStatusHistory(patientId, oldStatus, newStatus, date,changerUsername) {
     var newStatusChangeId = Date.now().toString(16);
     var statusChangeQuery = `
-    INSERT INTO statushistory (status_change_id,patient_id,status_from,status_to,date)
-    VALUES ('${newStatusChangeId}','${patientId}',${oldStatus},${newStatus},'${date}')
+    INSERT INTO statushistory (status_change_id,patient_id,status_from,status_to,date,changer_username)
+    VALUES ('${newStatusChangeId}','${patientId}',${oldStatus},${newStatus},'${date}','${changerUsername}')
     `
     await db.executeQuery(statusChangeQuery);
 }
 
-async function updateStatus(patient, oldStatus, newStatus,date) {   
+async function updateStatus(patient, oldStatus, newStatus,date,changerUsername) {   
     // Đây là hàm đệ quy dùng trong chuyển từ F lớn sang F nhỏ
     var delta = oldStatus - newStatus;
     if (delta<=0) return;
     await setStatus(patient, newStatus);
-    await addStatusHistory(patient, oldStatus, newStatus, date);
+    await addStatusHistory(patient, oldStatus, newStatus, date,changerUsername);
     var relatedList = await getRelatedById(patient);
     for (let person of relatedList) {
         if (person.patientStatus > oldStatus) {
-            updateStatus(person.patientId,person.patientStatus,person.patientStatus-delta)
+            if (!changerUsername.includes('(auto)')) changerUsername+=' (auto)';
+            updateStatus(person.patientId,person.patientStatus,person.patientStatus-delta,date,changerUsername);
         }
     }
 }
 
-async function unDoubt(parentId, currentId, currentStatus, date) {
+async function unDoubt(parentId, currentId, currentStatus, date,changerUsername) {
     var relatedList = await getRelatedById(currentId);
     if (currentId == parentId) {
-        await cured(currentId, date);
+        await cured(currentId, date,changerUsername);
     } else {
         var tmp = true;
         
@@ -225,19 +226,21 @@ async function unDoubt(parentId, currentId, currentStatus, date) {
             }
         }
         if (tmp == false) return;
-        await cured(currentId, date);
+        if (!changerUsername.includes('(auto)')) changerUsername+=' (auto)';
+        await cured(currentId, date,changerUsername);
     }
     for (let person of relatedList) {
         if (person.patientStatus > currentStatus) {
-            unDoubt(currentId, person.patientId,person.patientStatus,date);
+            if (!changerUsername.includes('(auto)')) changerUsername+=' (auto)';
+            unDoubt(currentId, person.patientId,person.patientStatus,date.changerUsername);
         }
     }
 }
 
-async function cured(patientId, date) {   // khỏi bệnh
+async function cured(patientId, date,changerUsername) {   // khỏi bệnh
     var patientInfo = await getPatientById(patientId);
     await setStatus(patientId, -1);
-    await addStatusHistory(patientId, patientInfo.patientStatus, -1, date);
+    await addStatusHistory(patientId, patientInfo.patientStatus, -1, date,changerUsername);
     var facilityQuery = `
         UPDATE facility
         SET current_amount=current_amount-1
@@ -246,22 +249,22 @@ async function cured(patientId, date) {   // khỏi bệnh
     await db.executeQuery(facilityQuery);
 }
 
-async function changeStatus(patientId, oldStatus, newStatus,date) {
+async function changeStatus(patientId, oldStatus, newStatus,date,changerUsername) {
     // ============= F0 sang khỏi bệnh==================
     if (oldStatus == 0 && newStatus == -1) {
-        await cured(patientId, date);
+        await cured(patientId, date,changerUsername);
         return;
     }
 
     // ============= F lớn sang F nhỏ================== 
     if (oldStatus > newStatus && newStatus != -1) {
-        updateStatus(patientId, oldStatus, newStatus, date);
+        updateStatus(patientId, oldStatus, newStatus, date,changerUsername);
         return;
     }    
 
     // ============= Fx sang khỏi bệnh================== 
     if (oldStatus > 0 && newStatus == -1) {
-        unDoubt(patientId, patientId, oldStatus,date);
+        unDoubt(patientId, patientId, oldStatus,date,changerUsername);
         return;
     }    
 

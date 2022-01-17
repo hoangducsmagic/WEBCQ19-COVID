@@ -32,10 +32,13 @@ async function showAddPage(req, res) {
     var provinces = await Location.getAllProvinces();
     var facilities = await Facility.getAllFacilities();
     var patients = await Patient.getAllPatients();
+
+    patientList=JSON.stringify(patients.patients);
     res.render("patients/addPatient", {
         provinces,
         facilities,
-        patients:patients.patients
+        patients:patients.patients,
+        patientList
     });
 }
 
@@ -59,7 +62,8 @@ async function updatePatient(req, res) {
         req.body.patientId,
         currentData.facilityId,
         req.body.newFacility,
-        today
+        today,
+        req.user.username
     );
 
     // change status
@@ -67,7 +71,8 @@ async function updatePatient(req, res) {
         req.body.patientId,
         currentData.patientStatus,
         req.body.newStatus,
-        today
+        today,
+        req.user.username
     );
     
     res.send(); // redirect is doing in js file

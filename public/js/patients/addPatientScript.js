@@ -43,3 +43,21 @@ document.getElementById('district').onchange = async function () {
     }
 }
 
+const citizenIdList=patientList.map(patient=>patient.citizenId);
+
+
+document.getElementById("inputCitizenID").onkeyup=function(){
+    var citizenInput=document.getElementById("inputCitizenID").value;
+   
+    if (citizenIdList.includes(citizenInput)){
+        document.getElementById("citizenIdExistedAlert").style.display="inline-block";
+        document.getElementById("submitButton").disabled=true;
+       
+    } else {
+        document.getElementById("citizenIdExistedAlert").style.display="none";
+        document.getElementById("submitButton").disabled=false;
+    }
+}
+
+
+

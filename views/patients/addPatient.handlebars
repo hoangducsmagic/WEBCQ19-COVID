@@ -32,8 +32,18 @@
 							name="citizenID"
 							placeholder="CMND"
 						/>
+							<div class='form-group'><small
+							id='citizenIdExistedAlert'
+							class='form-text text-danger'
+						>Citizen id is existed!</small></div>
 					</div>
+				
 				</div>
+				
+					
+					
+
+				
 
 				<div class="row form-group">
 					<div class="col-3"></div>
@@ -147,9 +157,12 @@
 					</table>
 				</div>
 				<div class="row justify-content-center">
-					<button class="btn btn-primary" type="submit">Thêm bệnh nhân</button>
+					<button id="submitButton" class="btn btn-primary" type="submit">Thêm bệnh nhân</button>
 				</div>
 			</form>
 		</div>
 
+	<script>
+		var patientList={{{patientList}}}
+	</script>
 	<script src="/js/patients/addPatientScript.js"></script>
