@@ -5,10 +5,14 @@ async function dummy(req, res) {
 }
 
 async function showCreateFacilityPage(req, res) {
+    if (req.user.role!='admin')
+        return res.redirect('/');
     res.render('admin/addFacility')
 }
 
 async function createFacility(req, res) {
+    if (req.user.role!='admin')
+        return res.redirect('/');
     const { facilityName, capacity } = req.body;
 
     await Facility.addFacility(facilityName, capacity, 0);
@@ -16,6 +20,8 @@ async function createFacility(req, res) {
 }
 
 async function updateFacility(req, res) {
+    if (req.user.role!='admin')
+        return res.redirect('/');
     
     const facilityId = req.params.id;
     const { facilityName, capacity } = req.body;
@@ -24,6 +30,8 @@ async function updateFacility(req, res) {
 }
 
 async function showUpdateFacilityPage(req, res) {
+    if (req.user.role!='admin')
+        return res.redirect('/');
     var facilityInfo = await Facility.getFacilityById(req.params.id);
     res.render('admin/editFacility', {
         ...facilityInfo,

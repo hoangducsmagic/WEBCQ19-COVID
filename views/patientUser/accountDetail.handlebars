@@ -1,0 +1,158 @@
+{{> patientNavP }}
+<div class='container'>
+	{{!-- Thông báo thiếu nợ --}}
+	<div class="row mt-3">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		Thông báo 
+		{{#if debt}}
+		<span class="badge badge-danger">1</span>
+		{{/if}}
+		</button>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{{#if debt}}
+					Bạn đang nợ hệ thống {{debt}} đồng, vui lòng thanh toán trước {{dueDate}}
+				{{else}}
+					Không có thông báo để hiển thị
+				{{/if}}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+			</div>
+			</div>
+		</div>
+		</div>
+	</div>
+
+
+	<div class='row my-3 no-gutters'>
+		<div class='col-lg-6'>
+			<h2 class='mb-4'>Thông tin tài khoản</h2>
+
+			<div class='row'>
+				<div class='col-4'>
+					<h6>Họ tên:</h6>
+					<h6>CMND:</h6>
+					<h6>Năm sinh:</h6>
+					<h6>Địa chỉ:</h6>
+					<h6>Trạng thái hiện tại:</h6>
+					<h6>Nơi đang điều trị:</h6>
+				</div>
+				<div class="col-8">
+					<h6>{{patientName}}</h6>
+					<h6>{{patientCitizenId}}</h6>
+					<h6>{{patientBirthday}}</h6>
+					<h6>{{wardName}}, {{districtName}}, {{provinceName}}</h6>
+					{{#ifEqual patientStatus -1}}
+					<h6>Khỏi bệnh</h6>
+					{{/ifEqual}} {{#ifNotEqual patientStatus -1}}
+					<h6>F{{patientStatus}}</h6>
+					{{/ifNotEqual}}
+					<h6>{{facilityName}}</h6>
+				</div>
+			</div>
+		</div>
+
+		<!-- Lịch sử chuyển trạng thái -->
+		<div class='col-lg-6'>
+			<h3>Lịch sử chuyển trạng thái</h3>
+			<div class='table-responsive' style='max-height: 250px'>
+				<table class='table'>
+					<thead>
+						<tr>
+							<th scope='col'>Từ trạng thái</th>
+							<th scope='col'>Chuyển sang</th>
+							<th scope='col'>Ngày chuyển</th>
+						</tr>
+					</thead>
+						<tbody>
+							{{#each statusChangeList}}
+							<tr>
+								<td>F{{this.statusFrom}}</td>
+								{{#ifEqual this.statusTo -1}}
+								<td>Khỏi bệnh</td>
+								{{/ifEqual}} {{#ifNotEqual this.statusTo -1}}
+								<td>F{{this.statusTo}}</td>
+								{{/ifNotEqual}}
+								<td>{{this.date}}</td>
+							</tr>
+							{{/each}}
+						</tbody>
+				</table>
+				<p style="text-align: center; display: {{#if statusChangeList}}none{{else}}block{{/if}};">Không có lịch sử chuyển trạng thái</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Lịch sử chuyển nơi điều trị -->
+			<div class="row mb-3">
+				<h3>Lịch sử chuyển nơi điều trị</h3>
+			</div>
+			<div class="row justify-content-center">
+				<div class="table-responsive" style="max-height: 250px">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Chuyển cơ sở từ</th>
+								<th scope="col">Đến</th>
+								<th scope="col">Ngày chuyển</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#each facilityChangeList}}
+							<tr>
+								<td>{{this.facilityFromName}}</td>
+								<td>{{this.facilityToName}}</td>
+								<td>{{this.date}}</td>
+							</tr>
+							{{/each}}
+						</tbody>
+					</table>
+					<p style="text-align: center; display: {{#if facilityChangeList}}none{{else}}block{{/if}};">Không có lịch sử chuyển nơi điều trị</p>
+
+				</div>
+			</div>
+
+	{{!-- Thống kê thanh toán --}}
+	<div class='row mt-3'>
+		<h3>Thống kê thanh toán</h3>
+	</div>
+
+	<div class='row justify-content-center'>
+		<div class='table-responsive'>
+			<table class='table' style='max-height: 300px'>
+				<thead>
+					<tr>
+						<th scope='col'>Họ tên</th>
+						<th scope='col'>Tên gói</th>
+						<th scope='col'>Số tiền phải thanh toán</th>
+						<th scope='col'>Ngày</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Nguyễn Văn Công A</td>
+						<td>Gói Covid 1</td>
+						<td>10000đ</td>
+						<td>2022-1-1</td>
+					</tr>
+					<tr>
+						<td>Trần Minh B</td>
+						<td>Gói Sinh Viên</td>
+						<td>300000đ</td>
+						<td>2022-1-1</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

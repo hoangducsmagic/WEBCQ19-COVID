@@ -2,7 +2,7 @@
 	class='navbar navbar-expand-sm navbar-light'
 	style='background-color: #e3f2fd'
 >
-	<a class='navbar-brand' href='/'>Quản lý Covid</a>
+	<a class='navbar-brand' href='/'>Người dùng Covid</a>
 	<button
 		class='navbar-toggler'
 		type='button'
@@ -17,10 +17,10 @@
 	<div class='collapse navbar-collapse' id='navbarNavDropdown'>
 		<ul class='navbar-nav mr-auto'>
 			<li class='nav-item'>
-				<a class='nav-link' href='/patients'>Danh sách người được quản lý</a>
+				<a class='nav-link' href='/'>Thông tin cá nhân</a>
 			</li>
 			<li class='nav-item'>
-				<a class='nav-link' href='/products'>Nhu yếu phẩm</a>
+				<a class='nav-link' href='#'>Mua nhu yếu phẩm</a>
 			</li>
 			<li class='nav-item dropdown'>
 				<a
@@ -31,24 +31,34 @@
 					aria-haspopup='true'
 					aria-expanded='false'
 				>
-					Thống kê
+					Thanh toán
 				</a>
 				<div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>
-					<a class='dropdown-item' href='/statistic/totalCases'>Số ca mắc</a>
-					<a class='dropdown-item' href='/statistic/statusChange'>Số chuyển
-						trạng thái</a>
-					<a class='dropdown-item' href='/statistic/packageConsumption'>Số lượng
-						gói nhu yếu phẩm tiêu thụ</a>
-					<a class='dropdown-item' href='/statistic/productConsumption'>Số lượng
-						nhu yếu phẩm tiêu thụ</a>
-					<a class='dropdown-item' href='#'>Dư nợ/Thanh toán</a>
+					<a class='dropdown-item' href='/account/charge'>Nạp tiền</a>
+					<a class='dropdown-item' href='/account/payoffdept'>Trả nợ</a>
 				</div>
 			</li>
 		</ul>
+
 		<ul class='navbar-nav'>
-			<a href='/account/logout'>
-				<button class='btn btn-danger'>Đăng xuất</button>
-			</a>
+			<li class='nav-item dropdown'>
+				<button
+					type='button'
+					class='btn btn-info dropdown-toggle'
+					data-toggle='dropdown'
+					aria-haspopup='true'
+					aria-expanded='false'
+				>
+					Tài khoản
+				</button>
+				<div
+					class='dropdown-menu dropdown-menu-right'
+					aria-labelledby='navbarDropdownMenuLink'
+				>
+					<a class='dropdown-item' href='/'>Thông tin cá nhân</a>
+					<a class='dropdown-item' href='/account/logout'>Đăng xuất</a>
+				</div>
+			</li>
 		</ul>
 	</div>
 </nav>
