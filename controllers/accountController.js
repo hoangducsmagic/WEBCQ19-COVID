@@ -46,6 +46,7 @@ exports.postChangePassword = async (req, res) => {
 
 exports.checkFirstLogin = async (req, res) => {
   if (!req.user) return res.redirect("/");
+  res.cookie("token", "");
   const checkFirstLogin = await accountModel.checkLogin(
     req.user.username,
     req.user.username
@@ -56,14 +57,12 @@ exports.checkFirstLogin = async (req, res) => {
 
 exports.loginPayment = (req, res) => {
   if (!req.user) return res.redirect("/");
-  // console.log(req.cookies.token);
   res.render("payment/loginPayment", { error: req.query.error });
 };
 
 exports.postLoginPayment = async (req, res) => {
   if (!req.user) return res.redirect("/");
   const token = await accountModel.loginPayment(req.body);
-  console.log(token);
   res.cookie("token", token);
   if (req.query.url) return res.redirect(req.query.url);
   res.redirect("/");

@@ -3,12 +3,6 @@ const Facility = require("../models/facilityModel");
 const Location = require("../models/locationModel");
 const accountM=require('../models/accountModel')
 
-async function dummy(req, res) {
-    var data = await getAllPatients();
-    console.log(data);
-    res.send("dummy");
-}
-
 // [GET] /patients/
 async function showPatientList(req, res) {
     if (req.user.role!='manager')
@@ -32,10 +26,13 @@ async function showAddPage(req, res) {
     var provinces = await Location.getAllProvinces();
     var facilities = await Facility.getAllFacilities();
     var patients = await Patient.getAllPatients();
+
+    patientList=JSON.stringify(patients.patients);
     res.render("patients/addPatient", {
         provinces,
         facilities,
-        patients:patients.patients
+        patients:patients.patients,
+        patientList
     });
 }
 
@@ -59,7 +56,8 @@ async function updatePatient(req, res) {
         req.body.patientId,
         currentData.facilityId,
         req.body.newFacility,
-        today
+        today,
+        req.user.username
     );
 
     // change status
@@ -67,7 +65,8 @@ async function updatePatient(req, res) {
         req.body.patientId,
         currentData.patientStatus,
         req.body.newStatus,
-        today
+        today,
+        req.user.username
     );
     
     res.send(); // redirect is doing in js file
@@ -99,7 +98,6 @@ async function addPatient(req, res) {
 }
 
 module.exports = {
-    dummy,
     showPatientList,
     showPatientDetail,
     showAddPage,

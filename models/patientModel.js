@@ -1,4 +1,5 @@
-const db = require('./db');
+const db = require("./db");
+const utils=require('../utils/utils')
 
 function patientIdGeneration() {
 	return `PT${Date.now().toString(16)}`;
@@ -7,8 +8,10 @@ function patientIdGeneration() {
 async function getAllPatients(requestQuery) {
 	if (requestQuery) var { keyword, sortby, order } = requestQuery;
 
-	var query = `
-    SELECT p.patient_id as "patientId", p.name as "patientName", p.status as "patientStatus", f.name as "facilityName"
+    if (keyword) keyword=utils.removeAccents(keyword.toLowerCase());
+
+    var query = `
+    SELECT p.patient_id as "patientId", p.name as "patientName", p.status as "patientStatus", f.name as "facilityName", p.citizen_id as "citizenId"
     FROM patient p
     JOIN facility f on p.current_facility_id=f.facility_id
     `;
@@ -120,10 +123,12 @@ async function getPatientInfo(patientId) {
 	return patientInfo;
 }
 
-async function changeFacility(patientId, oldFacility, newFacility, date) {
-	if (oldFacility == newFacility) return;
-	var newTransferId = Date.now().toString(16);
-	var query1 = `
+
+
+async function changeFacility(patientId, oldFacility, newFacility,date,changerUsername) {
+    if (oldFacility == newFacility) return;
+    var newTransferId=Date.now().toString(16);
+    var query1 = `
         UPDATE facility SET current_amount=current_amount-1 WHERE facility_id='${oldFacility}'
     `;
 	await db.executeQuery(query1);
@@ -133,14 +138,14 @@ async function changeFacility(patientId, oldFacility, newFacility, date) {
 	await db.executeQuery(query2);
 	var query3 = `
         UPDATE patient SET current_facility_id='${newFacility}' WHERE patient_id='${patientId}'
-    `;
-	await db.executeQuery(query3);
-
-	var query4 = `
-        INSERT INTO transferhistory (transfer_id,patient_id,from_facility_id,to_facility_id,date)
-        VALUES ('${newTransferId}','${patientId}','${oldFacility}','${newFacility}','${date}')
-    `;
-	await db.executeQuery(query4);
+    `
+    await db.executeQuery(query3);
+    
+    var query4 = `
+        INSERT INTO transferhistory (transfer_id,patient_id,from_facility_id,to_facility_id,date,changer_username)
+        VALUES ('${newTransferId}','${patientId}','${oldFacility}','${newFacility}','${date}','${changerUsername}')
+    `
+    await db.executeQuery(query4);
 }
 
 async function addPatient(data) {
@@ -186,66 +191,60 @@ async function setStatus(patientId, status) {
 	await db.executeQuery(query);
 }
 
-async function addStatusHistory(patientId, oldStatus, newStatus, date) {
-	var newStatusChangeId = Date.now().toString(16);
-	var statusChangeQuery = `
-    INSERT INTO statushistory (status_change_id,patient_id,status_from,status_to,date)
-    VALUES ('${newStatusChangeId}','${patientId}',${oldStatus},${newStatus},'${date}')
-    `;
-	await db.executeQuery(statusChangeQuery);
+async function addStatusHistory(patientId, oldStatus, newStatus, date,changerUsername) {
+    var newStatusChangeId = Date.now().toString(16);
+    var statusChangeQuery = `
+    INSERT INTO statushistory (status_change_id,patient_id,status_from,status_to,date,changer_username)
+    VALUES ('${newStatusChangeId}','${patientId}',${oldStatus},${newStatus},'${date}','${changerUsername}')
+    `
+    await db.executeQuery(statusChangeQuery);
 }
 
-async function updateStatus(patient, oldStatus, newStatus, date) {
-	// Đây là hàm đệ quy dùng trong chuyển từ F lớn sang F nhỏ
-	var delta = oldStatus - newStatus;
-	if (delta <= 0) return;
-	await setStatus(patient, newStatus);
-	await addStatusHistory(patient, oldStatus, newStatus, date);
-	var relatedList = await getRelatedById(patient);
-	for (let person of relatedList) {
-		if (person.patientStatus > oldStatus) {
-			updateStatus(
-				person.patientId,
-				person.patientStatus,
-				person.patientStatus - delta
-			);
-		}
-	}
+async function updateStatus(patient, oldStatus, newStatus,date,changerUsername) {   
+    // Đây là hàm đệ quy dùng trong chuyển từ F lớn sang F nhỏ
+    var delta = oldStatus - newStatus;
+    if (delta<=0) return;
+    await setStatus(patient, newStatus);
+    await addStatusHistory(patient, oldStatus, newStatus, date,changerUsername);
+    var relatedList = await getRelatedById(patient);
+    for (let person of relatedList) {
+        if (person.patientStatus > oldStatus) {
+            if (!changerUsername.includes('(auto)')) changerUsername+=' (auto)';
+            updateStatus(person.patientId,person.patientStatus,person.patientStatus-delta,date,changerUsername);
+        }
+    }
 }
 
-async function unDoubt(parentId, currentId, currentStatus, date) {
-	var relatedList = await getRelatedById(currentId);
-	if (currentId == parentId) {
-		await cured(currentId, date);
-	} else {
-		var tmp = true;
-
-		for (let person of relatedList) {
-			if (
-				person.patientId != parentId &&
-				person.patientStatus != -1 &&
-				person.patientStatus < currentStatus
-			) {
-				tmp = false;
-				break;
-			}
-		}
-		if (tmp == false) return;
-		await cured(currentId, date);
-	}
-	for (let person of relatedList) {
-		if (person.patientStatus > currentStatus) {
-			unDoubt(currentId, person.patientId, person.patientStatus, date);
-		}
-	}
+async function unDoubt(parentId, currentId, currentStatus, date,changerUsername) {
+    var relatedList = await getRelatedById(currentId);
+    if (currentId == parentId) {
+        await cured(currentId, date,changerUsername);
+    } else {
+        var tmp = true;
+        
+        for (let person of relatedList) {
+            if (person.patientId != parentId && person.patientStatus != -1 && person.patientStatus < currentStatus) {
+                tmp = false;
+                break;
+            }
+        }
+        if (tmp == false) return;
+        if (!changerUsername.includes('(auto)')) changerUsername+=' (auto)';
+        await cured(currentId, date,changerUsername);
+    }
+    for (let person of relatedList) {
+        if (person.patientStatus > currentStatus) {
+            if (!changerUsername.includes('(auto)')) changerUsername+=' (auto)';
+            unDoubt(currentId, person.patientId,person.patientStatus,date.changerUsername);
+        }
+    }
 }
 
-async function cured(patientId, date) {
-	// khỏi bệnh
-	var patientInfo = await getPatientById(patientId);
-	await setStatus(patientId, -1);
-	await addStatusHistory(patientId, patientInfo.patientStatus, -1, date);
-	var facilityQuery = `
+async function cured(patientId, date,changerUsername) {   // khỏi bệnh
+    var patientInfo = await getPatientById(patientId);
+    await setStatus(patientId, -1);
+    await addStatusHistory(patientId, patientInfo.patientStatus, -1, date,changerUsername);
+    var facilityQuery = `
         UPDATE facility
         SET current_amount=current_amount-1
         WHERE facility_id='${patientInfo.facilityId}'
@@ -253,24 +252,24 @@ async function cured(patientId, date) {
 	await db.executeQuery(facilityQuery);
 }
 
-async function changeStatus(patientId, oldStatus, newStatus, date) {
-	// ============= F0 sang khỏi bệnh==================
-	if (oldStatus == 0 && newStatus == -1) {
-		await cured(patientId, date);
-		return;
-	}
+async function changeStatus(patientId, oldStatus, newStatus,date,changerUsername) {
+    // ============= F0 sang khỏi bệnh==================
+    if (oldStatus == 0 && newStatus == -1) {
+        await cured(patientId, date,changerUsername);
+        return;
+    }
 
-	// ============= F lớn sang F nhỏ==================
-	if (oldStatus > newStatus && newStatus != -1) {
-		updateStatus(patientId, oldStatus, newStatus, date);
-		return;
-	}
+    // ============= F lớn sang F nhỏ================== 
+    if (oldStatus > newStatus && newStatus != -1) {
+        updateStatus(patientId, oldStatus, newStatus, date,changerUsername);
+        return;
+    }    
 
-	// ============= Fx sang khỏi bệnh==================
-	if (oldStatus > 0 && newStatus == -1) {
-		unDoubt(patientId, patientId, oldStatus, date);
-		return;
-	}
+    // ============= Fx sang khỏi bệnh================== 
+    if (oldStatus > 0 && newStatus == -1) {
+        unDoubt(patientId, patientId, oldStatus,date,changerUsername);
+        return;
+    }    
 }
 
 async function getPatientInfoByUsername(username) {

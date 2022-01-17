@@ -52,12 +52,7 @@
 						{{#each statusList}}
 						<tr>
 							<th scope="row">{{@index}}</th>
-							{{#ifEqual this.status -1}}
-								<td>Khỏi bệnh</td>
-							{{/ifEqual}}
-							{{#ifNotEqual this.status -1}}
-								<td>F{{this.status}}</td>
-							{{/ifNotEqual}}
+							<td>{{statusConvert this.status}}</td>
 							<td>{{this.amount}}</td>
 						</tr>
 						{{/each}}

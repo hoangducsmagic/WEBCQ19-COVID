@@ -46,15 +46,17 @@ const hbs = create({
 		ifEqual(a, b, option) {
 			if (a == b) return option.fn(this);
 		},
-		ifNotEqual(a, b, option) {
-			if (a != b) return option.fn(this);
-		},
 		ifLessThan(a, b, option) {
 			if (a < b) return option.fn(this);
 		},
 		ifLessThanOrEqual(a, b, option) {
 			if (a <= b) return option.fn(this);
 		},
+		sum:(a,b)=>a+b,
+		statusConvert:(x)=>{
+			if (x==-1) return "Khỏi bệnh";
+			else return `F${x}`;
+		}
 	},
 	defaultLayout: 'main',
 });
@@ -86,12 +88,7 @@ app.use(
 app.use('/managers', mdwAdmin.checkAdmin, mdwAccount.checkLogin, managerRouter);
 app.use('/account', mdwAdmin.checkAdmin, accountRouter);
 app.use('/admin', mdwAccount.checkLogin, adminRouter);
-app.use(
-	'/patientUser',
-	mdwAdmin.checkAdmin,
-	mdwAccount.checkLogin,
-	patientUserRouter
-);
+app.use('/patientUser',mdwAdmin.checkAdmin, mdwAccount.checkLogin,patientUserRouter);
 
 app.get('/', mdwAdmin.checkAdmin, mdwAccount.checkLogin, (req, res) => {
 	if (req.user.role === 'manager') return res.redirect('/patients');
