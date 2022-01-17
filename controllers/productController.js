@@ -48,22 +48,20 @@ exports.listProduct = async (req, res) => {
     res.render('products/'+viewUrlName, {doNotList: true});
 }
 
-
-
 async function showCreateProductPage(req, res) {
-    res.render('product/createProduct')
+    res.render('products/createProduct')
 }
 
 
 async function createProduct(req, res) {
     const {productName, price, unit} = req.body;
     await productModel.createProduct(productName, price, unit);
-    res.redirect('/product');
+    res.redirect('/products');
 }
 
 async function showUpdateProductPage(req, res){
     let productInfo = await productModel.getProductById(req.params.id);
-    res.render('product/editProduct', {
+    res.render('products/editProduct', {
         ...productInfo,
         productId:req.params.id
     })
@@ -73,13 +71,13 @@ async function editProduct(req, res) {
     const productId = req.params.id;
     const {productName, price, unit} = req.body;
     await productModel.editProduct(productId, productName, price, unit);
-    res.redirect('/product');
+    res.redirect('/products');
 }
 
 async function deleteProduct(req, res) {
     const productId = req.params.id;
     await productModel.deleteProduct(productId);
-    res.redirect('/product');
+    res.redirect('/products');
 }
 
 module.exports={
