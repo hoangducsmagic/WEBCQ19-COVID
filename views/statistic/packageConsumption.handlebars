@@ -3,6 +3,9 @@
 			<div class="row justify-content-center mt-3">
 				<h1>Thống kê gói nhu yếu phẩm tiêu thụ</h1>
 			</div>
+			<div class="row w-50 border mx-auto">
+				<canvas id="myChart"></canvas>
+			</div>
 			<div class="row justify-content-center my-5">
 				<table class="table w-75">
 					<thead>
@@ -24,3 +27,23 @@
 				</table>
 			</div>
 		</div>
+		<script>
+			let myChart = document.getElementById('myChart').getContext('2d');
+
+			let casesChart = new Chart(myChart,{
+				type:'bar',
+				data: {
+					labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+					datasets:[{
+						label: 'Gói nhu yếu phẩm tiêu thụ',
+						data: [65, 59, 80, 81, 56, 55, 40],
+						backgroundColor: [
+						"rgba(54, 162, 235, 0.2)",
+						],
+						borderColor: ["rgba(54, 162, 235)"],
+						borderWidth: 1,
+					}]},
+				options: {}
+				});
+
+		</script>

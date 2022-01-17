@@ -1,41 +1,45 @@
 {{> manageNavP}}
 
 		<div class="container">
-			<form action="">
-				<div class="row justify-content-center">
+				<div class="row justify-content-center mt-3">
 					<h1>Thống kê số ca mắc theo thời gian</h1>
 				</div>
-				<div class="row form-group my-2">
-					<label for="inputFromDate" class="col-sm-1 col-form-label">Từ:</label>
-					<div class="col-sm-3">
-						<input
-							type="date"
-							class="form-control"
-							id="inputFromDate"
-							name="inputFromDate"
-							{{#if dateFrom}}value="{{dateFrom}}"{{/if}}
-						/>
-					</div>
-				</div>
-				<div class="row form-group my-2">
-					<label for="inputToDate" class="col-sm-1 col-form-label">Đến:</label>
-					<div class="col-sm-3">
-						<input
-							type="date"
-							class="form-control"
-							id="inputToDate"
-							name="inputToDate"
-							{{#if dateTo}}value="{{dateTo}}"{{/if}}
-						/>
-					</div>
-				</div>
-				<div class="row form-group">
-					<button type="submit" class="btn btn-success">♻ Làm mới</button>
-				</div>
-			</form>
 
 			<div class="row justify-content-center my-5">
-				<table class="table w-75">
+				<!-- Bảng chọn ngày + bảng dữ liệu -->
+				<div class="col-8">
+					<form action="">
+							<div class="row form-group my-2">
+								<label for="inputFromDate" class="col-sm-1 col-form-label">Từ:</label>
+								<div class="col-sm-4">
+									<input
+										type="date"
+										class="form-control"
+										id="inputFromDate"
+										name="inputFromDate"
+										{{#if dateFrom}}value="{{dateFrom}}"{{/if}}
+									/>
+								</div>
+							</div>
+							<div class="row form-group my-2">
+								<label for="inputToDate" class="col-sm-1 col-form-label">Đến:</label>
+								<div class="col-sm-4">
+									<input
+										type="date"
+										class="form-control"
+										id="inputToDate"
+										name="inputToDate"
+										{{#if dateTo}}value="{{dateTo}}"{{/if}}
+									/>
+								</div>
+							</div>
+							<div class="row form-group">
+								<button type="submit" class="btn btn-success">♻ Làm mới</button>
+							</div>
+					</form>
+					<!-- Bảng thống kê -->
+					<div class="row">
+						<table class="table w-75">
 					<thead>
 						<tr>
 							<th scope="col">STT</th>
@@ -53,7 +57,37 @@
 						</tr>
 						{{/each}}
 					</tbody>
-				</table>
+						</table>
+					</div>
+				</div>
+				
+				<!-- Chart -->
+				<div class="col-4">
+					<canvas id="myChart"></canvas>
+				</div>
+
 				{{#ifEqual statusList.length 0}}<p>Không có dữ liệu thống kê trong thời gian này</p>{{/ifEqual}}
 			</div>
 		</div>
+
+		<script>
+			let myChart = document.getElementById('myChart').getContext('2d');
+
+			let casesChart = new Chart(myChart,{
+				type:'pie',
+				data: {
+					labels: ['Khỏi bệnh', 'F0', 'F1', 'F2', 'F3'],
+					datasets:[{
+						label: 'Trạng thái',
+						data: [{{chartData}}],
+						backgroundColor: [
+						'rgba(0, 255, 45, 0.8)',
+						'rgba(255, 81, 81, 0.82)',
+						'rgba(254, 172, 84, 0.97)',
+						'rgba(254, 235, 52, 0.97)',
+						'rgba(168, 254, 52, 0.97)',
+						]}]},
+				options: {}
+				});
+
+		</script>

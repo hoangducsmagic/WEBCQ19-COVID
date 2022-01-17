@@ -1,4 +1,5 @@
 const axios=require('axios')
+const { getPatientInfoByUsername } = require('../models/patientModel');
 
 async function showChargingPage (req, res) {
   res.render("account/addFund");
@@ -28,10 +29,11 @@ async function showPayOffDeptPage(req, res)  {};
 
 async function payOffDept  (req, res)  {};
 
-
 async function showAccountDetail(req, res) {
 	if (req.user.role !== 'patient') res.redirect('/');
-	res.render('patientUser/accountDetail');
+	var data = await getPatientInfoByUsername(req.params.id);
+
+	res.render('patientUser/accountDetail', data);
 }
 async function showChargingPage(req, res) {
 	res.render('account/addFund');
