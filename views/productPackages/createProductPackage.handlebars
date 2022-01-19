@@ -1,0 +1,72 @@
+{{> manageNavP}}
+		<div class="container">
+			<form action="/productPackages/create" method="post">
+				<div class="row justify-content-center my-3">
+					<h2>Thêm gói nhu yếu phẩm</h2>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="name" class="col-sm-2 col-form-label"
+						><h6>Tên gói:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="producPackagetName"
+							name="name"
+							placeholder="tên gói"
+						/>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="price" class="col-sm-2 col-form-label"
+						><h6>Mức giới hạn số lượng sản phẩm trong gói:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="ProductPackageQuantity"
+							name="quantity"
+							placeholder="1000"
+						/>
+					</div>
+				</div>
+				
+                <div class="row form-group">
+					<div class="col-3"></div>
+					<label for="unit" class="col-sm-2 col-form-label"
+						><h6>Mức giới hạn gói cho người sử dụng theo thời gian:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="productPackageLimitPerPerson"
+							name="limit_per_person"
+							placeholder="1000"
+						/>
+					</div>
+				</div>
+
+                 <div class="row form-group">
+					<div class="col-3"></div>
+					<label for="unit" class="col-sm-2 col-form-label"
+						><h6>Thời gian giới hạn:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="productPackageTimeLimit"
+							name="time_limit"
+							placeholder="7 ngày"
+						/>
+					</div>
+				</div>
+				
+				<div class="row justify-content-center">
+					<button class="btn btn-primary" type="submit">Thêm gói sản phẩm</button>
+				</div>
+			</form>
+		</div>

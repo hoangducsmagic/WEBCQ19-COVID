@@ -1,0 +1,73 @@
+{{> manageNavP}}
+		<div class="container">
+			<form action="/products/create" method="post">
+				<div class="row justify-content-center my-3">
+					<h2>Thêm nhu yếu phẩm</h2>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="name" class="col-sm-2 col-form-label"
+						><h6>Tên sản phẩm:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="productName"
+							name="name"
+							placeholder="tên sản phẩm"
+						/>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="price" class="col-sm-2 col-form-label"
+						><h6>Giá tiền:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="productPrice"
+							name="price"
+							placeholder="price"
+						/>
+					</div>
+				</div>
+				
+                <div class="row form-group">
+					<div class="col-3"></div>
+					<label for="unit" class="col-sm-2 col-form-label"
+						><h6>Đơn vị định lượng:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							class="form-control"
+							id="productUnit"
+							name="unit"
+							placeholder="unit"
+						/>
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="image" class="col-sm-2 col-form-label"
+						><h6>Hình ảnh:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input
+							type="image"
+							class="form-control"
+							id="productImage"
+							name="image"
+							placeholder="image"
+						/>
+					</div>
+				</div>
+				
+				<div class="row justify-content-center">
+					<button class="btn btn-primary" type="submit">Thêm sản phẩm</button>
+				</div>
+			</form>
+		</div>

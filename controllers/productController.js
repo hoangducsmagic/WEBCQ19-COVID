@@ -1,10 +1,10 @@
 const productModel = require('../models/productModel');
 
-exports.dummy = (req,res) => {
+async function dummy(req,res) {
     res.send("DUMMY FUNCTION")
 }
 
-exports.listProduct = async (req, res) => {
+async function listProduct(req, res) {
     const price = ` where price >` + (req.query.min || 0) + ` and price <` + (req.query.max || 1000000000);
     let s = ` and lower(khongdau(name)) like lower(khongdau('%` + req.query.s+`%'))`;
     if (!req.query.s) s=``;
@@ -46,4 +46,46 @@ exports.listProduct = async (req, res) => {
     });
     else 
     res.render('products/'+viewUrlName, {doNotList: true});
+}
+
+async function showCreateProductPage(req, res) {
+    res.render('products/createProduct')
+}
+
+
+async function createProduct(req, res) {
+    const {name, price, unit} = req.body;
+    await productModel.createProduct(name, price, unit);
+    res.redirect('/products');
+}
+
+async function showUpdateProductPage(req, res){
+    let productInfo = await productModel.getProductById(req.params.id);
+    res.render('products/editProduct', {
+        ...productInfo,
+        productId:req.params.id
+    })
+}
+
+async function editProduct(req, res) {
+    const productId = req.params.id;
+    const {name, price, unit} = req.body;
+    await productModel.editProduct(productId, name, price, unit);
+    res.redirect('/products');
+}
+
+async function deleteProduct(req, res) {
+    const productId = req.params.id;
+    await productModel.deleteProduct(productId);
+    res.redirect('/products');
+}
+
+module.exports={
+    showCreateProductPage,
+    createProduct,
+    editProduct,
+    deleteProduct,
+    showUpdateProductPage,
+    listProduct,
+    dummy
 }
