@@ -1,0 +1,35 @@
+{{> manageNavP}}
+		<div class="container">
+			<form>
+				<div class="row justify-content-center">
+					<h2>Điều chỉnh nhu yếu phẩm</h2>
+				</div>
+
+				<div class="row mt-3">
+					<div class="col-4"></div>
+					<div class="col-2">
+						<h6>Tên gói:</h6>
+						<h6>Mức giới hạn số lượng sản phẩm trong gói:</h6>
+						<h6>Mức giới hạn gói cho người sử dụng theo thời gian:</h6>
+                        <h6>Thời gian giới hạn:</h6>
+						<h6>Hình ảnh:</h6>
+					</div>
+					<div class="col-4">
+						<h6>{{name}}</h6>
+						<h6>{{quantity}}</h6>
+						<h6>{{limit_per_person}}</h6>
+                        <h6>{{time_limit</h6>
+						<h6>//</h6>
+					</div>
+					<div class="col-3"></div>
+				</div>
+		
+
+				<div class="row justify-content-center">
+					<button class="btn btn-primary" id="submitBtn" type="submit">Lưu thay đổi</button>
+				</div>
+			</form>
+		</div>
+
+	<h1 id="productId" style="display: none">{{product_package_id}}</h1>
+	<script src="/js/patients/editProductScript.js"></script>

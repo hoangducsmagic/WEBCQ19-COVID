@@ -1,8 +1,9 @@
 const {db, pgp} = require('./db');
 const _db = require('./db');
 const imageModel = require('./imageModel');
+const DB = require('./db');
 
-exports.listProductPackage = async(min, max,s, sort,by, qPage) =>{
+async function listProductPackage(min, max,s, sort,by, qPage) {
     const q = `select count(*) from productpackage_detail pd where p.productpackage_id = pd.productpackage_id`;
     let qSort = `khongdau(` + sort +`)`;
     if (sort === 'quantity') qSort = `(`+q+`)`;
@@ -18,7 +19,7 @@ exports.listProductPackage = async(min, max,s, sort,by, qPage) =>{
     return null;
 }
 
-exports.productPackageDetail = async(id) =>{
+async function productPackageDetail(id){
     const table = new pgp.helpers.TableName({table: 'productpackage', schema: 'public'})
     const qStr = pgp.as.format(`Select * From $1  where $2:name = $3`, [table, "productpackage_id", id]);
     try{
@@ -28,7 +29,7 @@ exports.productPackageDetail = async(id) =>{
     return null;
 }
 
-exports.productPackageDetailList = async(id) =>{
+async function productPackageDetailList(id){
     const qStr = `select * from productpackage_detail pd join product p on p.product_id = pd.product_id 
     where pd.productpackage_id = '`+id+`'`;
     try{
@@ -41,4 +42,54 @@ exports.productPackageDetailList = async(id) =>{
 
     } catch(e){console.log(e)}
     return null;
+}
+
+function productPackageIdGeneration() {
+    return `PT${Date.now().toString(16)}`
+}
+
+async function createProductPackage(ppName, ppQuantity, ppTimeLimit, ppLimitPerPerson) {
+    let newProductId = productPackageIdGeneration();
+    let createProductPackageQuery = `
+        INSERT INTO product (product_id,name,quantity,time_limit,limit_per_person)
+        VALUES ('${newProductId}','${ppName}','${ppQuantity}','${ppTimeLimit}','${ppLimitPerPerson})    
+    `
+    await DB.executeQuery(createProductPackageQuery);
+}
+
+async function editProductPackage(productPackageId, ppName, ppQuantity, ppTimeLimit, ppLimitPerPerson) {
+    let editProductPackageQuery = `
+        UPDATE product
+        SET name='${ppName}', quantity=${ppQuantity}, time_limit=${ppTimeLimit}, limit_per_person=${ppLimitPerPerson}
+        WHERE productpackage_id='${productPackageId}';
+    `
+    await DB.executeQuery(editProductPackageQuery);
+}
+
+async function getProductPackageById(productPackageId) {
+    let query=`
+        SELECT productpackage_id as "productPackageId", name, quantity, time_limit, limit_per_person  
+        FROM productpackage
+        WHERE productpackage_id='${productPackageId}'
+    `
+    let data = await DB.getOne(query);
+    return data;
+}
+
+async function deleteProductPackage(productPackageId){
+    let deleteProductPackageQuery = `
+        DELETE FROM productpackage
+        WHERE productpackage_id='${productPackageId}';
+    `
+    await DB.executeQuery(deleteProductPackageQuery);
+}
+
+module.exports={
+    listProductPackage,
+    productPackageDetailList,
+    productPackageDetail,
+    createProductPackage,
+    editProductPackage,
+    deleteProductPackage,
+    getProductPackageById
 }
