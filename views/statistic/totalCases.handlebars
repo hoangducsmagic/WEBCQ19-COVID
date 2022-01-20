@@ -58,15 +58,15 @@
 						{{/each}}
 					</tbody>
 						</table>
+						{{#ifEqual statusList.length 0}}<p>Không có dữ liệu thống kê trong thời gian này</p>{{/ifEqual}}
 					</div>
 				</div>
 				
 				<!-- Chart -->
 				<div class="col-4">
-					<canvas id="myChart"></canvas>
+					<canvas {{#ifEqual statusList.length 0}} style="display: none" {{/ifEqual}} id="myChart"></canvas>
 				</div>
 
-				{{#ifEqual statusList.length 0}}<p>Không có dữ liệu thống kê trong thời gian này</p>{{/ifEqual}}
 			</div>
 		</div>
 
