@@ -44,7 +44,7 @@ async function createProduct(name,price,unit) {
 
     let imageChangeQuery = `
         INSERT INTO image (image_id, product_id, url)
-        VALUES ('${image_id}','${productId}','${imageUrl}')
+        VALUES ('${image_id}','${newProductId}','${imageUrl}')
     `
     await DB.executeQuery(imageChangeQuery);
 }

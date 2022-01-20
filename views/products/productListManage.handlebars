@@ -1,4 +1,4 @@
-{{> patientNavP}}
+{{> manageNavP}}
 	<div class="container">
 			<div class="row">
 				<div class="col-8">
@@ -58,9 +58,11 @@
                     </div>
 				</div>
 				<div class="col-4 text-center my-2">
-					<button type="button" class="btn btn-success">
-						+ Thêm nhu yếu phẩm
-					</button>
+                    <a href="/products/create">
+                        <button type="button" class="btn btn-success">
+                            + Thêm nhu yếu phẩm
+                        </button>
+                    </a>
 				</div>
 			</div>
             {{#if doNotList}}
@@ -104,6 +106,11 @@
                                         <th scope="col">{{unit}}</th>
                                         <th scope="col"><a href="/products/detail/{{product_id}}"><button class="btn btn-primary">Chi tiết</button></a></th>
                                         <th scope="col"><a href="/products/edit/{{product_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
+                                        <th scope="col">
+                                            <form action="/products/delete/{{product_id}}?_method=DELETE" method="post">
+                                                <button type="submit" class="btn btn-danger">Xóa</button>
+                                            </form>
+                                        </th>
                                     </tr>
                                     {{/each}}
                                 </tbody>
