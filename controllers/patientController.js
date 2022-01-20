@@ -1,4 +1,5 @@
 const Patient = require("../models/patientModel");
+const Statistic = require("../models/statisticModel");
 const Facility = require("../models/facilityModel");
 const Location = require("../models/locationModel");
 const accountM = require("../models/accountModel");
@@ -111,6 +112,11 @@ async function changeDueDay(req, res) {
   });
 }
 
+async function debtInfo(req,res){
+  const debtList = await Statistic.getDebtList();
+  res.render('patients/debt',{debtList})
+}
+
 module.exports = {
   showPatientList,
   showPatientDetail,
@@ -121,4 +127,5 @@ module.exports = {
   addPatient,
   showChangeDueDayPage,
   changeDueDay,
+  debtInfo
 };
