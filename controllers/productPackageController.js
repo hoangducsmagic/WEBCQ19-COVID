@@ -20,7 +20,7 @@ async function listProductPackage(req, res) {
     if (req.query.min) min='&min='+req.query.min;
     if (req.query.max) max='&max='+req.query.max;
     let viewUrlName = 'productPackageList';
-    if (req.user.role === 'manage')
+    if (req.user.role === 'manager')
         viewUrlName = 'productPackageListManage'
     if (listProductPackage && listProductPackage.length > 0)
     res.render('productPackages/'+viewUrlName, {listProductPackage: listProductPackage, 
