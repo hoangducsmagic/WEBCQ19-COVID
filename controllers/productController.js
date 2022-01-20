@@ -6,7 +6,7 @@ async function dummy(req,res) {
 
 async function listProduct(req, res) {
     if (req.user.role!='manager') return redirect('/');
-    const price = ` where price >` + (req.query.min || 0) + ` and price <` + (req.query.max || 1000000000);
+    const price = ` where price >=` + (req.query.min || 0) + ` and price <=` + (req.query.max || 1000000000);
     let s = ` and lower(khongdau(name)) like lower(khongdau('%` + req.query.s+`%'))`;
     if (!req.query.s) s=``;
     let sort =  `order by khongdau("`+req.query.sort+`") `+ (req.query.by||``);

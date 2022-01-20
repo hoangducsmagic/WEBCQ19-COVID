@@ -8,7 +8,7 @@ async function listProductPackage(min, max,s, sort,by, qPage) {
     let qSort = `khongdau(` + sort +`)`;
     if (sort === 'quantity') qSort = `(`+q+`)`;
     const qStr = `select p.*, (`+q+`) as quantity from productpackage p
-    where (`+q+`) >`+min+` and (`+q+`) < ` + max + s +`
+    where (`+q+`) >=`+min+` and (`+q+`) <= ` + max + s +`
     order by ` + qSort + by;
     try{
         const listProductPackage  =  await _db.getQuery(qStr+qPage);
@@ -48,19 +48,19 @@ function productPackageIdGeneration() {
     return `PT${Date.now().toString(16)}`
 }
 
-async function createProductPackage(ppName, ppQuantity, ppTimeLimit, ppLimitPerPerson) {
-    let newProductId = productPackageIdGeneration();
+async function createProductPackage(name, quantity, time_limit, limit_per_person) {
+    let newProductPackageId = productPackageIdGeneration();
     let createProductPackageQuery = `
         INSERT INTO product (product_id,name,quantity,time_limit,limit_per_person)
-        VALUES ('${newProductId}','${ppName}','${ppQuantity}','${ppTimeLimit}','${ppLimitPerPerson})    
+        VALUES ('${newProductPackageId}','${name}',${quantity},${time_limit},${limit_per_person})    
     `
     await DB.executeQuery(createProductPackageQuery);
 }
 
-async function editProductPackage(productPackageId, ppName, ppQuantity, ppTimeLimit, ppLimitPerPerson) {
+async function editProductPackage(productPackageId, name, quantity, time_limit, limit_per_person) {
     let editProductPackageQuery = `
         UPDATE product
-        SET name='${ppName}', quantity=${ppQuantity}, time_limit=${ppTimeLimit}, limit_per_person=${ppLimitPerPerson}
+        SET name='${name}', quantity=${quantity}, time_limit=${time_limit}, limit_per_person=${imit_per_person}
         WHERE productpackage_id='${productPackageId}';
     `
     await DB.executeQuery(editProductPackageQuery);

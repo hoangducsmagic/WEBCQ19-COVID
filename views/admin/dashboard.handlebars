@@ -35,6 +35,11 @@
 										Chỉnh sửa
 									</button>
 								</a>
+								<a {{#ifEqual current_amount 0}}href="/facilities/delete/{{facility_id}}"{{/ifEqual}}>
+									<button {{#ifNotEqual current_amount 0}}disabled{{/ifNotEqual}} type="button" class="btn btn-danger">
+										Xóa
+									</button>
+								</a>
 							</td>
 						</tr>
 						{{/each}}
