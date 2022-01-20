@@ -88,17 +88,16 @@ exports.get = async (username) =>{
 }
 
 exports.loginPayment = async(user) =>{
+    let token = null;
     await nFetch('https:/mysterious-coast-09473.herokuapp.com/account/login', {method: 'POST',
         headers: {"Accept": "application/json","Content-Type": "application/json"},
         body: JSON.stringify({
             username: user.username,
             password: user.password
         }),
-        }).then(async(response)=>{const token = await response.json();console.log(token); setToken(token.data.authToken); })
+        }).then(async(response)=>{const result = await response.json(); token = result.data.authToken; })
+        .catch(error=>{
+            console.log(error);
+        })
     return token;
-}
-
-let token = null;
-function setToken(k){
-    token = k;
 }

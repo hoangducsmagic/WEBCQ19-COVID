@@ -71,7 +71,7 @@ async function getRelatedById(patientId) {
 async function getPatientById(patientId) {
 	// This function will return just the basic info, not related person
 	var query = `
-    SELECT pt.patient_id as "patientId", pt.name as "patientName", pt.citizen_id as "patientCitizenId", pv.name as "provinceName", dt.name as "districtName", wa.name as "wardName", pt.status as "patientStatus", pt.username as "patientUsername",fc.name as "facilityName", fc.facility_id as "facilityId",to_char(pt.dob,'dd/mm/yyyy') as "patientBirthday" 
+    SELECT pt.patient_id as "patientId", pt.name as "patientName", pt.citizen_id as "patientCitizenId", pv.name as "provinceName", dt.name as "districtName", wa.name as "wardName", pt.status as "patientStatus", pt.username as "patientUsername",fc.name as "facilityName", fc.facility_id as "facilityId",to_char(pt.dob,'dd/mm/yyyy') as "patientBirthday",pt.debt as "debt", to_char(pt.debt_duedate,'dd/mm/yyyy') as "dueDate"
     FROM patient pt
     JOIN province pv on pt.province_id=pv.province_id
     JOIN district dt on pt.district_id=dt.district_id
@@ -276,7 +276,7 @@ async function getPatientInfoByUsername(username) {
 	var { debt, dueDate } = await getPatientDebtInfoByUsername(username);
 	var { patientId } = await getPatientIdByUsername(username);
 	var data = await getPatientInfo(patientId);
-	data = { ...data, debt, dueDate: dueDate.toLocaleString() };
+	data = { ...data, debt, dueDate: dueDate };
 	return data;
 }
 
@@ -292,7 +292,7 @@ async function getPatientIdByUsername(username) {
 
 async function getPatientDebtInfoByUsername(username) {
 	var query = `
-        SELECT pt.debt as "debt", pt.debt_duedate as "dueDate"
+        SELECT pt.debt as "debt", to_char(pt.debt_duedate,'dd/mm/yyyy') as "dueDate"
         FROM patient pt
         where pt.username='${username}'
     `;
@@ -300,13 +300,54 @@ async function getPatientDebtInfoByUsername(username) {
 	return data[0];
 }
 
+async function getDueDay(){
+    var query=`
+        SELECT max_debt_day as "dueDay"
+        FROM global_variable
+    `
+    var data=await db.getOne(query);
+    return data.dueDay;
+}
+
+async function setDueDay(dayInput){
+    var query=`
+        UPDATE global_variable
+        SET max_debt_day=${dayInput}
+    `
+    await db.executeQuery(query);
+}
+
+async function updateDebtByUsername(newDebt,username){
+    var query;
+    if (newDebt==0){
+        query=`
+            UPDATE patient
+            SET debt=${newDebt},
+                debt_duedate=null
+            WHERE username='${username}'
+        `
+    } else {
+        query=`
+        UPDATE patient
+        SET debt=${newDebt}
+        WHERE username='${username}'
+        `
+    }
+
+    await db.executeQuery(query);
+}
+
 module.exports = {
 	getAllPatients,
 	getRelatedById,
 	getPatientInfo,
 	getPatientInfoByUsername,
+    getPatientDebtInfoByUsername,
 	getPatientById,
 	changeStatus,
 	changeFacility,
 	addPatient,
-};
+    getDueDay,
+    setDueDay,
+    updateDebtByUsername
+}

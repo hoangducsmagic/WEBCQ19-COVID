@@ -1,4 +1,4 @@
-{{> patientNavP}}
+{{> manageNavP}}
 	<div class="container">
             {{#if doNot}}
             <div class="row">
@@ -20,6 +20,7 @@
                                         <th scope="col" class="text-center">Giới hạn cho mỗi người</th>
                                         <th scope="col" class="text-center">Thời gian sử dụng</th>
                                         <th scope="col"></th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -29,7 +30,8 @@
                                         <th scope="col" class="text-center"></th>
                                         <th scope="col" class="text-center">{{productPackage.limit_per_person}}</th>
                                         <th scope="col" class="text-center">{{productPackage.time_limit}}</th>
-                                        <th scope="col"><a href="/order/{{productPackage.productpackage_id}}"><button class="btn btn-warning">Mua</button></a></th>
+                                        <th scope="col"><a href="/productPackages/edit/{{productPackage.productpackage_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
+                                        <th scope="col"><a href="/productPackages/delete/{{productPackage.productpackage_id}}"><button class="btn btn-warning">Xoá</button></a></th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -62,7 +64,7 @@
                             <h5 class="card-title">{{name}}</h5>
                             <p class="card-text priceUnit">{{price}}vnđ</p>
                             <p class="card-text">{{unit}}</p>
-                            <p class="card-text amountUnit">số lượng <input min="0" max="{{max_amount}}" value="1" type="number"></p>
+                            <p class="card-text amountUnit">số lượng tối đa: {{max_amount}}</p>
                         </div>
                     </div>
                 </div>

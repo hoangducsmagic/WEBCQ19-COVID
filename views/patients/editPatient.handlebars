@@ -46,7 +46,7 @@
 					<div class="col-sm-3">
 						<select name="facility" id="facility" class="form-control">
 							{{#each facilities}}
-							<option value="{{this.facility_id}}" {{#ifEqual this.facility_id ../facilityId}}selected{{/ifEqual}} {{#ifEqual this.capability this.current_amount}}disabled{{/ifEqual}}>{{this.name}}</option>
+							<option value="{{this.facility_id}}" {{#ifEqual this.facility_id ../facilityId}}selected{{/ifEqual}} {{#ifEqual this.capacity this.current_amount}}disabled{{/ifEqual}}>{{this.name}} {{#ifEqual this.capacity this.current_amount}}(Hết chỗ){{/ifEqual}}</option>
 							{{/each}}
 						</select>
 					</div>

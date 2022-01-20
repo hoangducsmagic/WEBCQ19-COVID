@@ -19,8 +19,11 @@ async function listProductPackage(req, res) {
     if (req.query.by && req.query.by!='') by='&by='+req.query.by;
     if (req.query.min) min='&min='+req.query.min;
     if (req.query.max) max='&max='+req.query.max;
+    let viewUrlName = 'productPackageList';
+    if (req.user.role === 'manager')
+        viewUrlName = 'productPackageListManage'
     if (listProductPackage && listProductPackage.length > 0)
-    res.render('productPackages/productPackageListManage', {listProductPackage: listProductPackage, 
+    res.render('productPackages/'+viewUrlName, {listProductPackage: listProductPackage, 
         s: s,
         search: req.query.s || "",
         min: min,
@@ -39,18 +42,30 @@ async function listProductPackage(req, res) {
         perPage: perPage
     });
     else 
-    res.render('productPackages/productPackageList', {doNotList: true});
+    res.render('productPackages/'+viewUrlName, {doNotList: true});
 }
 
 async function productPackageDetail(req, res) {
     const id = req.params.id;
     const productPackage = await productPackageModel.productPackageDetail(id);
+    if (req.user.role === "manager")
+    {
+        if (productPackage){
+            const listProduct =  await productPackageModel.productPackageDetailList(id)
+            res.render('productPackages/productListOfPackageManage', {listProduct: listProduct, productPackage: productPackage[0]});
+        }
+        else
+        res.render('productPackages/productPackageDetailManage', {doNot: true});
+    }
+    else
+    {
     if (productPackage){
         const listProduct =  await productPackageModel.productPackageDetailList(id)
         res.render('productPackages/productListOfPackage', {listProduct: listProduct, productPackage: productPackage[0]});
     }
     else
     res.render('productPackages/productPackageDetail', {doNot: true});
+    }
 }
 
 async function showCreateProductPackagePage(req, res) {

@@ -19,6 +19,7 @@
 						<tr>
 							<th scope="col">Tên cơ sở</th>
 							<th scope="col">Sức chứa</th>
+							<th scope="col">Đang tiếp nhận</th>
 							<th scope="col"></th>
 						</tr>
 					</thead>
@@ -27,6 +28,7 @@
 						<tr>
 							<td>{{name}}</td>
 							<td>{{capacity}}</td>
+							<td>{{current_amount}}</td>
 							<td class="text-center">
 								<a href="/facilities/edit/{{facility_id}}">
 									<button type="button" class="btn btn-warning">
@@ -72,11 +74,19 @@
 									</a>
 								</td>
 								<td class="text-center">
+									{{#if locked}}
+									<a href="/admin/unlockuser?username={{username}}">
+										<button type="button" class="btn btn-success">
+											Mở khóa
+										</button>
+									</a>
+									{{else}}
 									<a href="/admin/lockuser?username={{username}}">
 										<button type="button" class="btn btn-danger">
 											Khóa
 										</button>
 									</a>
+									{{/if}}
 								</td>
 							</tr>
 							{{/each}}
