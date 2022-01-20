@@ -7,7 +7,7 @@ const mdwAccount = require('../middleware/init/account')
 const router  =  express.Router();
 
 router.get('/lockUser', mdwAdmin.checkAdmin, mdwAccount.checkLogin, admin.lockUser); 
-router.get('/lockUser', mdwAdmin.checkAdmin, mdwAccount.checkLogin, admin.unlockUser); 
+router.get('/unlockUser', mdwAdmin.checkAdmin, mdwAccount.checkLogin, admin.unlockUser); 
 router.get('/dashboard', mdwAdmin.checkAdmin, mdwAccount.checkLogin, admin.showDashboard); 
 
 router.get('/', mdwAdmin.checkAdmin, mdwAccount.checkLogin, admin.showDashboard); 
