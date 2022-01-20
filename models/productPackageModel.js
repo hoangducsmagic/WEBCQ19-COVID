@@ -48,19 +48,19 @@ function productPackageIdGeneration() {
     return `PT${Date.now().toString(16)}`
 }
 
-async function createProductPackage(ppName, ppQuantity, ppTimeLimit, ppLimitPerPerson) {
-    let newProductId = productPackageIdGeneration();
+async function createProductPackage(name, quantity, time_limit, limit_per_person) {
+    let newProductPackageId = productPackageIdGeneration();
     let createProductPackageQuery = `
         INSERT INTO product (product_id,name,quantity,time_limit,limit_per_person)
-        VALUES ('${newProductId}','${ppName}','${ppQuantity}','${ppTimeLimit}','${ppLimitPerPerson})    
+        VALUES ('${newProductPackageId}','${name}','${quantity}','${time_limit}','${limit_per_person})    
     `
     await DB.executeQuery(createProductPackageQuery);
 }
 
-async function editProductPackage(productPackageId, ppName, ppQuantity, ppTimeLimit, ppLimitPerPerson) {
+async function editProductPackage(productPackageId, name, quantity, time_limit, limit_per_person) {
     let editProductPackageQuery = `
         UPDATE product
-        SET name='${ppName}', quantity=${ppQuantity}, time_limit=${ppTimeLimit}, limit_per_person=${ppLimitPerPerson}
+        SET name='${name}', quantity=${quantity}, time_limit=${time_limit}, limit_per_person=${imit_per_person}
         WHERE productpackage_id='${productPackageId}';
     `
     await DB.executeQuery(editProductPackageQuery);
