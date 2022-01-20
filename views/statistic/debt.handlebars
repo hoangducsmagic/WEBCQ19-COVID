@@ -11,13 +11,15 @@
 							<tr>
 								<th scope="col">Họ tên</th>
 								<th scope="col">Số tiền nợ</th>
+								<th scope="col">Ngày đáo hạn</th>
 							</tr>
 						</thead>
 						<tbody>
 							{{#each debtList}}
 							<tr>
 								<td>{{patientName}}</td>
-								<td>{{dept}}đ</td>
+								<td>{{debt}}đ</td>
+								<td>{{date}}</td>
 							</tr>
 							{{/each}}
 						</tbody>

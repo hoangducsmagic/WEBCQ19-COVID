@@ -51,7 +51,7 @@
 						
 						{{#each statusList}}
 						<tr>
-							<th scope="row">{{@index}}</th>
+							<th scope="row">{{sum @index 1}}</th>
 							<td>{{statusConvert this.status}}</td>
 							<td>{{this.amount}}</td>
 						</tr>

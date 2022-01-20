@@ -86,7 +86,7 @@ async function getPackageConsumption() {
 
 async function getDebtList(){
     var debtQuery=`
-        SELECT patient_id as "patientId", name as "patientName", debt
+        SELECT patient_id as "patientId", name as "patientName", debt, to_char(debt_duedate,'dd/mm/yyyy') as "date"
         FROM patient
         WHERE debt>0
     `

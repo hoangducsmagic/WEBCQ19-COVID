@@ -1,52 +1,41 @@
-		{{> patientNavP}}
+{{> manageNavP}}
 		<div class="container">
 			<div class="row justify-content-center mt-3">
-				<h1>Trả nợ</h1>
+				<h1>Nạp tiền</h1>
 			</div>
-
-			<div class="row justify-content-center mx-auto mt-3">
-				<form id="payoffDebtForm" method="post" action="/patientUser/payoffdebt">
-					<div>
-						<label>Số tiền đang nợ: {{debt}}đ</label>
-					</div>
-					<div>
-						<label>Số dư hiện tại: {{balance}}đ</label>
-					</div>
-					<div>
-						<label>Ngày đáo hạn: {{dueDate}}</label>
-					</div>
-
-					<div class="form-group mt-3">
-						<label for="amountInput">Trả nợ:</label>
+			<div class="row justify-content-center mx-auto w-50 mt-3">
+				<form id="addFundForm" method="post" action="/patients/changeDueDay">
+					<div class="form-group">
+						<label for="amountInput">Hạn mức thanh toán hiện tại (số ngày): </label>
 						<input
 							type="number"
 							class="form-control"
 							id="amountInput"
-							name="amountInput"
+							name="dayInput"
 							aria-describedby="emailHelp"
-							placeholder="Nhập số tiền "
+							placeholder="Nhập số ngày nợ"
+							value="{{currentDueDay}}"
+							min="1"
+							required
 						/>
 					</div>
-
 					<button
 						type="button"
 						class="btn btn-success"
 						data-toggle="modal"
 						data-target="#exampleModal"
 					>
-						+ Nạp tiền trả nợ
+						+ Cập nhật
 					</button>
+					{{#if updateSuccess}}
+					<div class="alert alert-success mt-3" role="alert">
+  						Cập nhật thành công
+					</div>
+					{{/if}}
 				</form>
 			</div>
-
-			{{#if error}}
-			<div class="row justify-content-center">
-				<div class="alert alert-danger" role="alert">{{error}}</div>
-			</div>
-			{{/if}}
-
 			<div class="row">
-				<!-- Modal popup xác nhận nạp tiền -->
+				<!-- Modal -->
 				<div
 					class="modal fade"
 					id="exampleModal"
@@ -58,7 +47,7 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="exampleModalLabel">
-									Xác nhận nạp tiền
+									Xác nhận thay đổi số ngày giới hạn thanh toán
 								</h5>
 								<button
 									type="button"
@@ -70,7 +59,7 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								Bạn có chắc chắn muốn nạp số tiền đã nhập?
+								Bạn có chắc chắn muốn cập nhật số ngày giới hạn thanh toán?
 							</div>
 							<div class="modal-footer">
 								<button
@@ -82,7 +71,7 @@
 								</button>
 								<button
 									type="submit"
-									form="payoffDebtForm"
+									form="addFundForm"
 									class="btn btn-success"
 								>
 									Chắc chắn
