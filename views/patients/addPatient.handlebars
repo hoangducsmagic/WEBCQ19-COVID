@@ -59,7 +59,7 @@
 						><h6>Địa chỉ:</h6>
 					</label>
 					<div class="col-sm-2">
-						<select class="form-control" id="province" name="province">
+						<select class="form-control" id="province" name="province" required>
 							
 							<option value="" disabled selected>Tỉnh/thành phố</option>
 							{{#each provinces}}
@@ -68,16 +68,13 @@
 						</select>
 					</div>
 					<div class="col-sm-2">
-						<select class="form-control" id="district" name="district">
+						<select class="form-control" id="district" name="district" required>
 							<option value="" disabled selected>Quận/huyện</option>
-					
-							
 						</select>
 					</div>
 					<div class="col-sm-2">
-						<select class="form-control" id="ward" name="ward">
+						<select class="form-control" id="ward" name="ward" required>
 							<option value="" disabled selected>Phường/xã</option>
-							
 						</select>
 					</div>
 					
