@@ -3,11 +3,11 @@
 			<div class="row justify-content-center mt-3">
 				<h1>Thống kê gói nhu yếu phẩm tiêu thụ</h1>
 			</div>
-			<div class="row w-50 border mx-auto">
-				<canvas id="myChart"></canvas>
-			</div>
+
 			<div class="row justify-content-center my-5">
-				<table class="table w-75">
+				{{!-- Bảng dữ liệu --}}
+				<div class="col-8">
+					<table class="table w-75">
 					<thead>
 						<tr>
 							<th scope="col">ID</th>
@@ -24,10 +24,49 @@
 						</tr>
 						{{/each}}
 					</tbody>
-				</table>
+					</table>
+				</div>
+
+				<div class="col-4">
+					<canvas id="myChart"></canvas>
+				</div>
+				
 			</div>
 		</div>
+
 		<script>
+			let myChart = document.getElementById('myChart').getContext('2d');
+
+			let casesChart = new Chart(myChart,{
+				type:'pie',
+				data: {
+					labels: ['Gói sinh viên', 'Gói hỗ trợ khi ra ngoài', 'Gói ở nhà', 'Gói thịt', 'Gói vệ sinh'],
+					datasets:[{
+						label: 'Trạng thái',
+						data: [12, 44, 36, 31, 55, 5],
+						backgroundColor: [
+							'rgba(255, 99, 132, 0.2)',
+							'rgba(54, 162, 235, 0.2)',
+							'rgba(255, 206, 86, 0.2)',
+							'rgba(75, 192, 192, 0.2)',
+							'rgba(153, 102, 255, 0.2)',
+							'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+							'rgba(255, 99, 132, 1)',
+							'rgba(54, 162, 235, 1)',
+							'rgba(255, 206, 86, 1)',
+							'rgba(75, 192, 192, 1)',
+							'rgba(153, 102, 255, 1)',
+							'rgba(255, 159, 64, 1)'
+						]
+						}]},
+				options: {}
+				});
+
+		</script>
+
+		{{!-- <script>
 			let myChart = document.getElementById('myChart').getContext('2d');
 
 			let casesChart = new Chart(myChart,{
@@ -35,15 +74,26 @@
 				data: {
 					labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
 					datasets:[{
-						label: 'Gói nhu yếu phẩm tiêu thụ',
+						label: 'Gói sinh viên 1',
 						data: [65, 59, 80, 81, 56, 55, 40],
 						backgroundColor: [
 						"rgba(54, 162, 235, 0.2)",
 						],
 						borderColor: ["rgba(54, 162, 235)"],
 						borderWidth: 1,
-					}]},
+					},
+					{
+						label: 'Gói hỗ trợ khi ra ngoài',
+						data: [13, 80, 89, 76, 65, 40, 30],
+						backgroundColor: [
+						"rgba(0, 216, 128, 0.45)",
+						],
+						borderColor: ["rgba(0, 216, 128, 1)"],
+						borderWidth: 1,
+					},
+					
+					]},
 				options: {}
 				});
 
-		</script>
+		</script> --}}

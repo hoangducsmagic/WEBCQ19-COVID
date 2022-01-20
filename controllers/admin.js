@@ -16,6 +16,13 @@ async function lockUser(req, res) {
 	res.redirect('/admin');
 }
 
+async function unlockUser(req, res) {
+	if (req.user.role != 'admin') return res.redirect('/');
+
+	var data = await admin.unlockUser(req.query.username);
+	res.redirect('/admin');
+}
+
 async function showDashboard(req, res) {
 	if (req.user.role != 'admin') return res.redirect('/');
 	var facilities = await Facility.getAllFacilities();
@@ -43,6 +50,7 @@ module.exports = {
 	dummy,
 	//showPatientList,
 	lockUser,
+	unlockUser,
 	showDashboard,
 	create,
 	postCreate,
