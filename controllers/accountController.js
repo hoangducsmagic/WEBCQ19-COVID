@@ -46,7 +46,7 @@ exports.postChangePassword = async (req, res) => {
 
 exports.checkFirstLogin = async (req, res) => {
   if (!req.user) return res.redirect("/");
-  res.cookie("token", "");
+  res.cookie("token", null);
   const checkFirstLogin = await accountModel.checkLogin(
     req.user.username,
     req.user.username
@@ -63,9 +63,12 @@ exports.loginPayment = (req, res) => {
 exports.postLoginPayment = async (req, res) => {
   if (!req.user) return res.redirect("/");
   const token = await accountModel.loginPayment(req.body);
-  res.cookie("token", token);
-  if (req.query.url) return res.redirect(req.query.url);
-  res.redirect("/");
+  if (token){
+    res.cookie("token", token);
+    if (req.query.url) return res.redirect(req.query.url);
+    res.redirect("/");
+  }
+  else res.redirect('/account/loginPayment?error=tên tài khoản hoặc mật khẩu không chính xác')
 };
 
 
