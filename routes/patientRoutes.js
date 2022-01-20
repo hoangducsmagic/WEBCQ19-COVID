@@ -9,6 +9,8 @@ router.post('/create', patientController.addPatient);
 router.get('/edit/:id', patientController.showEditPage);
 router.put('/edit', patientController.updatePatient);
 router.get('/location', patientController.getLocationData);
+router.get('/changedueday', patientController.showChangeDueDayPage);    
+router.post('/changedueday', patientController.changeDueDay);    
 router.get('/', patientController.showPatientList);
 
 module.exports = router;

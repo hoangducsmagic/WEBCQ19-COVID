@@ -52,11 +52,7 @@
 					<h6>{{patientCitizenId}}</h6>
 					<h6>{{patientBirthday}}</h6>
 					<h6>{{wardName}}, {{districtName}}, {{provinceName}}</h6>
-					{{#ifEqual patientStatus -1}}
-					<h6>Khỏi bệnh</h6>
-					{{/ifEqual}} {{#ifNotEqual patientStatus -1}}
-					<h6>F{{patientStatus}}</h6>
-					{{/ifNotEqual}}
+					{{statusConvert patientStatus}}
 					<h6>{{facilityName}}</h6>
 				</div>
 			</div>
@@ -77,12 +73,8 @@
 						<tbody>
 							{{#each statusChangeList}}
 							<tr>
-								<td>F{{this.statusFrom}}</td>
-								{{#ifEqual this.statusTo -1}}
-								<td>Khỏi bệnh</td>
-								{{/ifEqual}} {{#ifNotEqual this.statusTo -1}}
-								<td>F{{this.statusTo}}</td>
-								{{/ifNotEqual}}
+								<td>{{statusConvert this.statusFrom}}</td>
+								{{statusConvert this.statusTo}}
 								<td>{{this.date}}</td>
 							</tr>
 							{{/each}}
