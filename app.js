@@ -17,6 +17,7 @@ const adminRouter = require('./routes/adminRoutes');
 const patientUserRouter = require('./routes/patientUserRoutes');
 const mdwAdmin = require('./middleware/init/admin');
 const mdwAccount = require('./middleware/init/account');
+const orderRouter = require('./routes/orderRoute');
 
 require('./models/db');
 // Start express app
@@ -89,6 +90,8 @@ app.use('/managers', mdwAdmin.checkAdmin, mdwAccount.checkLogin, managerRouter);
 app.use('/account', mdwAdmin.checkAdmin, accountRouter);
 app.use('/admin', mdwAccount.checkLogin, adminRouter);
 app.use('/patientUser',mdwAdmin.checkAdmin, mdwAccount.checkLogin,patientUserRouter);
+
+app.use('/order/', mdwAdmin.checkAdmin, mdwAccount.checkLogin, orderRouter);
 
 app.get('/', mdwAdmin.checkAdmin, mdwAccount.checkLogin, (req, res) => {
 	if (req.user.role === 'manager') return res.redirect('/patients');
