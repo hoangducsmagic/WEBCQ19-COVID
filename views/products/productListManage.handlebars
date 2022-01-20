@@ -73,69 +73,51 @@
             </div>
             {{else}}
             <div class="row">
-                <div class="col-md">
-                    <div class="card">
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Tên sản phẩm</th>
-                                        <th scope="col">Hình ảnh</th>
-                                        <th scope="col">Giá</th>
-                                        <th scope="col">Định lượng</th>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each listProduct}}
-                                    <tr>
-                                        <th scope="col">{{product_id}}</th>
-                                        <th scope="col">{{name}}</th>
-                                        <th scope="col">
-                                            <div class="row">
-                                                {{#each images}}
-                                                <div class="col">
-                                                    <img src={{url}} class="w10"/>
-                                                </div>
-                                                {{/each}}
-                                            </div>
-                                        </th>
-                                        <th scope="col">{{price}}</th>
-                                        <th scope="col">{{unit}}</th>
-                                        <th scope="col"><a href="/products/detail/{{product_id}}"><button class="btn btn-primary">Chi tiết</button></a></th>
-                                        <th scope="col"><a href="/products/edit/{{product_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
-                                        <th scope="col">
-                                            <form action="/products/delete/{{product_id}}?_method=DELETE" method="post">
-                                                <button type="submit" class="btn btn-danger">Xóa</button>
-                                            </form>
-                                        </th>
-                                    </tr>
+                {{#each listProduct}}
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="container">
+                            <div class="row">
+                                <img class="d-block w-100" src="{{image.url}}" id="img{{product_id}}" onmouseenter="setImage(this)"> 
+                            </div>
+                            <div class="row py-2">
+                                    {{#each images}}
+                                    <div class="col">
+                                    <img class="d-block w10" src="{{url}}" onmouseenter="setImage(this)" name="{{product_id}}">
+                                    </div>
                                     {{/each}}
-                                </tbody>
-                            </table>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text">{{price}}vnđ</p>
+                            <p class="card-text">{{unit}}</p>
+                            <th class="card-text"><a href="/products/detail/{{product_id}}"><button type="button" class="btn btn-primary">Chi tiết</button></a></th>
+                            <th class="card-text"><a href="/products/edit/{{product_id}}"><button type="button" class="btn btn-warning">Chỉnh sửa</button></a></th>
+                            <p class="card-text"><form method="post" action="/products/delete/{{product_id}}?_method=DELETE"><button class="btn btn-warning" type="submit">Xoá</button></a></p>
                         </div>
                     </div>
                 </div>
-                
+                {{/each}}
             </div>
             <div class="row py-2">
                 <div class="col-md text-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                            <a class="page-link" href="/products?perPage={{perPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">&laquo;</a>
-                            </li>
-                            {{#if hasPrevPage}}<li class="page-item"><a class="page-link" href="/products?perPage={{perPage}}&page={{prevPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">{{prevPage}}</a></li>{{/if}}
-                            <li class="page-item disabled active"><a class="page-link bg-primary" href="">{{curPage}}</a></li>
-                            {{#if hasNextPage}}<li class="page-item"><a class="page-link" href="/products?perPage={{perPage}}&page={{nextPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">{{nextPage}}</a></li>{{/if}}
-                            <li class="page-item">
-                            <a class="page-link" href="/products?perPage={{perPage}}&page={{lastPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">&raquo;</a>
-                            </li>
-                        </ul>
-                    </nav>
+                <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                    <a class="page-link" href="/products?perPage={{perPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">&laquo;</a>
+                    </li>
+                    {{#if hasPrevPage}}<li class="page-item"><a class="page-link" href="/products?perPage={{perPage}}&page={{prevPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">{{prevPage}}</a></li>{{/if}}
+                    <li class="page-item disabled active"><a class="page-link bg-primary" href="">{{curPage}}</a></li>
+                    {{#if hasNextPage}}<li class="page-item"><a class="page-link" href="/products?perPage={{perPage}}&page={{nextPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">{{nextPage}}</a></li>{{/if}}
+                    <li class="page-item">
+                    <a class="page-link" href="/products?perPage={{perPage}}&page={{lastPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">&raquo;</a>
+                    </li>
+                </ul>
+                </nav>
                 </div>
             </div>
             {{/if}}
 		</div>
+
+<script src='/js/product/script.js'></script>

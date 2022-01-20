@@ -51,7 +51,7 @@
                             <input name="s" value="{{search}}" hidden>
                             <label>Số sản phẩm trong gói ít nhât</label><br>
                             <input name="min"><br>
-                            <label>Số sản phẩm trong gói nhiều nhất</label><br>
+                            <label>Số sản phẩm trong gó nhiều nhất</label><br>
                             <input name="max"><br>
                             <button type="submit">Áp dụng</button>
                         </form>
@@ -73,60 +73,38 @@
             </div>
             {{else}}
             <div class="row">
-                <div class="col-md">
-                    <div class="card">
+                {{#each listProductPackage}}
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Tên gói</th>
-                                        <th scope="col" class="text-center">Số nhu yếu phẩm</th>
-                                        <th scope="col" class="text-center">Giới hạn cho mỗi người</th>
-                                        <th scope="col" class="text-center">Thời gian giới hạn</th>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each listProductPackage}}
-                                    <tr>
-                                        <th scope="col">{{productpackage_id}}</th>
-                                        <th scope="col">{{name}}</th>
-                                        <th scope="col" class="text-center">{{quantity}}</th>
-                                        <th scope="col" class="text-center">{{limit_per_person}}gói</th>
-                                        <th scope="col" class="text-center">{{time_limit}}ngày</th>
-                                        <th scope="col"><a href="/productPackages/detail/{{productpackage_id}}"><button class="btn btn-primary">Chi tiết</button></a></th>
-                                        <th scope="col"><a href="/productPackages/edit/{{productpackage_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
-                                        <th scope="col">
-                                            <form action="/productPackages/delete/{{productpackage_id}}?_method=DELETE" method="post">
-                                                <button type="submit" class="btn btn-danger">Xóa</button>
-                                            </form>
-                                        </th>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
+                            <a href="/productPackages/detail/{{productpackage_id}}">
+                                <h5 class="card-title">{{name}}</h5>
+                            </a>
+                            <p class="card-text">{{quantity}} nhu yếu phẩm</p>
+                            <p class="card-text">Giới hạn {{limit_per_person}} gói cho mỗi người trong thời gian {{time_limit}} ngày</p>
+                            <th class="card-text"><a href="/productPackages/detail/{{productpackage_id}}"><button type="button" class="btn btn-primary">Chi tiết</button></a></th>
+                            <th class="card-text"><a href="/productPackages/edit/{{productpackage_id}}"><button type="button" class="btn btn-warning">Chỉnh sửa</button></a></th>
+                            <th class="card-text"><form method="post" action="/productPackages/delete/{{productpackage_id}}?_method=DELETE"><button type="submit" class="btn btn-warning">Xoá</button></a></th>
                         </div>
                     </div>
                 </div>
-                
+                {{/each}}
             </div>
             <div class="row py-2">
                 <div class="col-md text-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                            <a class="page-link" href="/productPackages?perPage={{perPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">&laquo;</a>
-                            </li>
-                            {{#if hasPrevPage}}<li class="page-item"><a class="page-link" href="/productPackages?perPage={{perPage}}&page={{prevPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">{{prevPage}}</a></li>{{/if}}
-                            <li class="page-item disabled active"><a class="page-link bg-primary" href="">{{curPage}}</a></li>
-                            {{#if hasNextPage}}<li class="page-item"><a class="page-link" href="/productPackages?perPage={{perPage}}&page={{nextPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">{{nextPage}}</a></li>{{/if}}
-                            <li class="page-item">
-                            <a class="page-link" href="/productPackages?perPage={{perPage}}&page={{lastPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">&raquo;</a>
-                            </li>
-                        </ul>
-                    </nav>
+                <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                    <a class="page-link" href="/productPackages?perPage={{perPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">&laquo;</a>
+                    </li>
+                    {{#if hasPrevPage}}<li class="page-item"><a class="page-link" href="/productPackages?perPage={{perPage}}&page={{prevPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">{{prevPage}}</a></li>{{/if}}
+                    <li class="page-item disabled active"><a class="page-link bg-primary" href="">{{curPage}}</a></li>
+                    {{#if hasNextPage}}<li class="page-item"><a class="page-link" href="/productPackages?perPage={{perPage}}&page={{nextPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">{{nextPage}}</a></li>{{/if}}
+                    <li class="page-item">
+                    <a class="page-link" href="/productPackages?perPage={{perPage}}&page={{lastPage}}{{s}}{{min}}{{max}}{{sort}}{{by}}">&raquo;</a>
+                    </li>
+                </ul>
+                </nav>
                 </div>
             </div>
             {{/if}}

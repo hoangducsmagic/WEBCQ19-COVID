@@ -19,6 +19,23 @@ async function listProduct(price, s, sort, qPage) {
     return null;
 }  
 
+async function getProduct(id){
+    let str = `select * from product where product_id = '${id}'`;
+    let st = `select * from image where product_id = '${id}'`;
+    let pr = await DB.getQuery(str);
+    let product;
+    if (pr && pr.length > 0){
+        product = pr[0];
+        product.images = await DB.getQuery(st);
+        console.log(product.images);
+        if (product.images.length>0)
+        product.image = product.images[0];
+        return product;
+    }
+    else 
+    return null;
+}
+
 function productIdGeneration() {
     return `PT${Date.now().toString(16)}`
 }
@@ -81,5 +98,6 @@ module.exports={
     createProduct,
     editProduct,
     deleteProduct,
-    getProductById
+    getProductById,
+    getProduct
 }
