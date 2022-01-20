@@ -48,12 +48,24 @@ async function listProductPackage(req, res) {
 async function productPackageDetail(req, res) {
     const id = req.params.id;
     const productPackage = await productPackageModel.productPackageDetail(id);
+    if (req.user.role === "manager")
+    {
+        if (productPackage){
+            const listProduct =  await productPackageModel.productPackageDetailList(id)
+            res.render('productPackages/productListOfPackageManage', {listProduct: listProduct, productPackage: productPackage[0]});
+        }
+        else
+        res.render('productPackages/productPackageDetailManage', {doNot: true});
+    }
+    else
+    {
     if (productPackage){
         const listProduct =  await productPackageModel.productPackageDetailList(id)
         res.render('productPackages/productListOfPackage', {listProduct: listProduct, productPackage: productPackage[0]});
     }
     else
     res.render('productPackages/productPackageDetail', {doNot: true});
+    }
 }
 
 async function showCreateProductPackagePage(req, res) {

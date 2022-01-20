@@ -1,0 +1,37 @@
+{{> manageNavP}}
+	<div class="container">
+            {{#if doNotList}}
+            <div class="row">
+                <div class="col text-center">
+                    <h1>Không tìm thấy nhu yếu phẩm</h1>
+                </div>
+            </div>
+            {{else}}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="container">
+                            <div class="row">
+                                <img class="d-block w-100" src="{{product.image.url}}" id="img{{product.product_id}}" onmouseenter="setImage(this)"> 
+                            </div>
+                            <div class="row py-2">
+                                    {{#each product.images}}
+                                    <div class="col">
+                                    <img class="d-block w10" src="{{url}}" onmouseenter="setImage(this)" name="{{product_id}}">
+                                    </div>
+                                    {{/each}}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <p class="card-text">{{product.price}}vnđ</p>
+                            <p class="card-text">{{product.unit}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {{/if}}
+		</div>
+
+<script src='/js/product/script.js'></script>

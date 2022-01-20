@@ -1,0 +1,76 @@
+{{> manageNavP}}
+	<div class="container">
+            {{#if doNot}}
+            <div class="row">
+                <div class="col text-center">
+                    <h1>Không tìm thấy gói sản phẩm</h1>
+                </div>
+            </div>
+            {{else}}
+            <div class="row">
+                <div class="col-md">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tên gói</th>
+                                        <th scope="col">Tổng giá</th>
+                                        <th scope="col" class="text-center">Giới hạn cho mỗi người</th>
+                                        <th scope="col" class="text-center">Thời gian sử dụng</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="col">{{productPackage.productpackage_id}}</th>
+                                        <th scope="col">{{productPackage.name}}</th>
+                                        <th scope="col" class="text-center"></th>
+                                        <th scope="col" class="text-center">{{productPackage.limit_per_person}}</th>
+                                        <th scope="col" class="text-center">{{productPackage.time_limit}}</th>
+                                        <th scope="col"><a href="/productPackages/edit/{{productPackage.productpackage_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
+                                        <th scope="col"><a href="/productPackages/delete/{{productPackage.productpackage_id}}"><button class="btn btn-warning">Xoá</button></a></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-2">
+                <div class="col text-center">
+                    <h1>Danh sách nhu yếu phẩm trong gói</h1>
+                </div>
+            </div>
+            <div class="row py-2">
+                {{#each listProduct}}
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="container">
+                            <div class="row">
+                                <img class="d-block w-100" src="{{image.url}}" id="img{{product_id}}" onmouseenter="setImage(this)"> 
+                            </div>
+                            <div class="row py-2">
+                                    {{#each images}}
+                                    <div class="col">
+                                    <img class="d-block w10" src="{{url}}" onmouseenter="setImage(this)" name="{{product_id}}">
+                                    </div>
+                                    {{/each}}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{name}}</h5>
+                            <p class="card-text priceUnit">{{price}}vnđ</p>
+                            <p class="card-text">{{unit}}</p>
+                            <p class="card-text amountUnit">số lượng tối đa: {{max_amount}}</p>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}
+		</div>
+
+<script src='/js/product/script.js'></script>
