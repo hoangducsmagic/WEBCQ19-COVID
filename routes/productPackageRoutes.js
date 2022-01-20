@@ -8,7 +8,7 @@ router.get('/detail/:id', productPackageController.productPackageDetail); // chi
 router.get('/create', productPackageController.showCreateProductPackagePage)
 router.post('/create', productPackageController.createProductPackage); // thêm gói
 router.get('/edit/:id', productPackageController.showEditProductPackagePage); // thông tin để chỉnh sửa
-router.put('/edit/', productPackageController.editProductPackage); // thông tin để chỉnh sửa
-router.delete('/delete/:id', productPackageController.deleteProductPackage); // xóa gói
+router.put('/edit', productPackageController.editProductPackage); // thông tin để chỉnh sửa
+router.get('/delete/:id', productPackageController.deleteProductPackage); // xóa gói
 
 module.exports = router;

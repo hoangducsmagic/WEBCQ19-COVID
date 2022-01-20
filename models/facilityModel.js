@@ -6,7 +6,7 @@ function facilityIdGeneration() {
 }
 
 async function getAllFacilities() {
-    var query = 'SELECT * FROM facility';
+    var query = `SELECT * FROM facility WHERE deleted='false'`;
     var data = await db.getQuery(query);
     return data;
 }
@@ -14,8 +14,8 @@ async function getAllFacilities() {
 async function addFacility(facilityName, capacity, currentAmount) {
     var facilityId = facilityIdGeneration();
     var query = `
-        INSERT INTO facility (facility_id, name, capacity, current_amount)
-        VALUES ('${facilityId}','${facilityName}',${capacity},${currentAmount})
+        INSERT INTO facility (facility_id, name, capacity, current_amount,deleted)
+        VALUES ('${facilityId}','${facilityName}',${capacity},${currentAmount},'false')
     `
     await db.executeQuery(query);
 }
@@ -40,4 +40,14 @@ async function updateFacility(facilityId, facilityName, capacity) {
     await db.executeQuery(query);
 }
 
-module.exports={getAllFacilities,addFacility,getFacilityById,updateFacility}
+async function deleteFacility(facilityId){
+    var query=`
+        UPDATE facility
+        SET deleted='true'
+        WHERE facility_id='${facilityId}'
+    `
+
+    await db.executeQuery(query);
+}
+
+module.exports={getAllFacilities,addFacility,getFacilityById,updateFacility,deleteFacility}

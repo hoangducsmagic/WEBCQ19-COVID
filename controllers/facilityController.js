@@ -39,4 +39,10 @@ async function showUpdateFacilityPage(req, res) {
     })
 }
 
-module.exports={dummy,showCreateFacilityPage,createFacility,updateFacility,showUpdateFacilityPage}
+async function deleteFacility(req,res){
+    var id=req.params.id;
+    await Facility.deleteFacility(id);
+    res.redirect("/admin");
+}
+
+module.exports={dummy,showCreateFacilityPage,createFacility,updateFacility,showUpdateFacilityPage,deleteFacility}

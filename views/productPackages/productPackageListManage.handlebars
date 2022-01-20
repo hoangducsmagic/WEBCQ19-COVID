@@ -58,9 +58,11 @@
                     </div>
 				</div>
                 <div class="col-4 text-center my-2">
-					<button type="button" class="btn btn-success">
-						+ Thêm gói nhu yếu phẩm
-					</button>
+                    <a href="/productPackages/create">
+                        <button type="button" class="btn btn-success">
+                            + Thêm gói nhu yếu phẩm
+                        </button>
+                    </a>
 				</div>
 			</div>
             {{#if doNotList}}
@@ -80,9 +82,9 @@
                             </a>
                             <p class="card-text">{{quantity}} nhu yếu phẩm</p>
                             <p class="card-text">Giới hạn {{limit_per_person}} gói cho mỗi người trong thời gian {{time_limit}} ngày</p>
-                            <th class="card-text"><a href="/productPackages/detail/{{productpackage_id}}"><button class="btn btn-primary">Chi tiết</button></a></th>
-                            <th class="card-text"><a href="/productPackages/edit/{{productpackage_id}}"><button class="btn btn-warning">Chỉnh sửa</button></a></th>
-                            <th class="card-text"><form method="delete" action="/productPackages/delete/{{productpackage_id}}"><button class="btn btn-warning">Xoá</button></a></th>
+                            <th class="card-text"><a href="/productPackages/detail/{{productpackage_id}}"><button type="button" class="btn btn-primary">Chi tiết</button></a></th>
+                            <th class="card-text"><a href="/productPackages/edit/{{productpackage_id}}"><button type="button" class="btn btn-warning">Chỉnh sửa</button></a></th>
+                            <th class="card-text"><a href="/productPackages/delete/{{productpackage_id}}"><button type="submit" class="btn btn-warning">Xoá</button></a></th>
                         </div>
                     </div>
                 </div>

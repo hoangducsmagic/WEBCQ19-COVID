@@ -1,33 +1,6 @@
 {{> manageNavP}}
 		<div class="container">
 			<div class="row justify-content-center mt-3">
-				<h1>Thống kê dư nợ</h1>
-			</div>
-
-			<div class="row justify-content-center">
-				<div class="table-responsive">
-					<table class="table" style="max-height: 300px">
-						<thead>
-							<tr>
-								<th scope="col">Họ tên</th>
-								<th scope="col">Số tiền nợ</th>
-								<th scope="col">Ngày đáo hạn</th>
-							</tr>
-						</thead>
-						<tbody>
-							{{#each debtList}}
-							<tr>
-								<td>{{patientName}}</td>
-								<td>{{debt}}đ</td>
-								<td>{{date}}</td>
-							</tr>
-							{{/each}}
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<div class="row justify-content-center mt-3">
 				<h1>Thống kê thanh toán</h1>
 			</div>
 
@@ -51,12 +24,6 @@
 								<td>{{date}}</td>
 							</tr>
 							{{/each}}
-							<tr>
-								<td>Trần Minh B</td>
-								<td>Gói Sinh Viên</td>
-								<td>300000đ</td>
-								<td>1/1/2022</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
