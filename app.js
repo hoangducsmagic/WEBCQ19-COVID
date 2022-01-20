@@ -17,7 +17,7 @@ const adminRouter = require('./routes/adminRoutes');
 const patientUserRouter = require('./routes/patientUserRoutes');
 const mdwAdmin = require('./middleware/init/admin');
 const mdwAccount = require('./middleware/init/account');
-const orderRouter = require('./routes/orderRoute');
+const orderRouter = require('./routes/orderRoutes');
 
 require('./models/db');
 // Start express app
