@@ -43,6 +43,7 @@ document.getElementById('district').onchange = async function () {
     }
 }
 
+
 const citizenIdList=patientList.map(patient=>patient.citizenId);
 
 
