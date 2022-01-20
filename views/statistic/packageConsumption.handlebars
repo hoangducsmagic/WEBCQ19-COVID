@@ -3,10 +3,10 @@
 			<div class="row justify-content-center mt-3">
 				<h1>Thống kê gói nhu yếu phẩm tiêu thụ</h1>
 			</div>
-			<div class="row w-50 border mx-auto">
+			<div class="row w-50 border mx-auto mt-3">
 				<canvas id="myChart"></canvas>
 			</div>
-			<div class="row justify-content-center my-5">
+			<div class="row justify-content-center my-4">
 				<table class="table w-75">
 					<thead>
 						<tr>
@@ -35,14 +35,25 @@
 				data: {
 					labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
 					datasets:[{
-						label: 'Gói nhu yếu phẩm tiêu thụ',
+						label: 'Gói sinh viên 1',
 						data: [65, 59, 80, 81, 56, 55, 40],
 						backgroundColor: [
 						"rgba(54, 162, 235, 0.2)",
 						],
 						borderColor: ["rgba(54, 162, 235)"],
 						borderWidth: 1,
-					}]},
+					},
+					{
+						label: 'Gói hỗ trợ khi ra ngoài',
+						data: [13, 80, 89, 76, 65, 40, 30],
+						backgroundColor: [
+						"rgba(0, 216, 128, 0.45)",
+						],
+						borderColor: ["rgba(0, 216, 128, 1)"],
+						borderWidth: 1,
+					},
+					
+					]},
 				options: {}
 				});
 
