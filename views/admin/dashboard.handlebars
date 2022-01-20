@@ -74,11 +74,19 @@
 									</a>
 								</td>
 								<td class="text-center">
+									{{#if locked}}
+									<a href="">
+										<button type="button" class="btn btn-success">
+											Mở khóa
+										</button>
+									</a>
+									{{else}}
 									<a href="/admin/lockuser?username={{username}}">
 										<button type="button" class="btn btn-danger">
 											Khóa
 										</button>
 									</a>
+									{{/if}}
 								</td>
 							</tr>
 							{{/each}}
