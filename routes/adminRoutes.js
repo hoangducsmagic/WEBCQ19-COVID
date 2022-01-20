@@ -6,6 +6,7 @@ const mdwAdmin = require('../middleware/init/admin')
 const router  =  express.Router();
 
 router.get('/lockUser', mdwAdmin.checkAdmin, admin.lockUser); 
+router.get('/unlockUser', mdwAdmin.checkAdmin, admin.unlockUser); 
 router.get('/dashboard', mdwAdmin.checkAdmin, admin.showDashboard); 
 
 router.get('/', mdwAdmin.checkAdmin, admin.showDashboard); 
