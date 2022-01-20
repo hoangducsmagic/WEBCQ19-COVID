@@ -88,7 +88,7 @@ app.use(
 );
 app.use('/managers', mdwAdmin.checkAdmin, mdwAccount.checkLogin, managerRouter);
 app.use('/account', mdwAdmin.checkAdmin, accountRouter);
-app.use('/admin', mdwAccount.checkLogin, adminRouter);
+app.use('/admin', adminRouter);
 app.use('/patientUser',mdwAdmin.checkAdmin, mdwAccount.checkLogin, patientUserRouter);
 
 app.use('/order/', mdwAdmin.checkAdmin, mdwAccount.checkLogin, orderRouter);
