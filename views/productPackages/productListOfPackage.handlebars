@@ -16,7 +16,6 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Tên gói</th>
-                                        <th scope="col">Tổng giá</th>
                                         <th scope="col" class="text-center">Giới hạn cho mỗi người</th>
                                         <th scope="col" class="text-center">Thời gian sử dụng</th>
                                         <th scope="col"></th>
@@ -25,11 +24,10 @@
                                 <tbody>
                                     <tr>
                                         <th scope="col">{{productPackage.productpackage_id}}</th>
-                                        <th scope="col">{{productPackage.name}}</th>
-                                        <th scope="col" class="text-center"></th>
+                                        <th scope="col">{{productPackage.name}}</th>       
                                         <th scope="col" class="text-center">{{productPackage.limit_per_person}}</th>
                                         <th scope="col" class="text-center">{{productPackage.time_limit}}</th>
-                                        <th scope="col"><a href="/order/{{productPackage.productpackage_id}}"><button class="btn btn-warning">Mua</button></a></th>
+                                        <th scope="col"><form action="/order/{{productPackage.productpackage_id}}" method="post"><input hidden name='totalPrice' id='totalPrice'><button class="btn btn-warning" type="submit" onclick="calculator()">Mua</button></input></form></th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -62,7 +60,7 @@
                             <h5 class="card-title">{{name}}</h5>
                             <p class="card-text priceUnit">{{price}}vnđ</p>
                             <p class="card-text">{{unit}}</p>
-                            <p class="card-text amountUnit">số lượng <input min="0" max="{{max_amount}}" value="1" type="number"></p>
+                            <p class="card-text">số lượng <input class="quantity" min="0" max="{{max_amount}}" value="1" type="number"></p>
                         </div>
                     </div>
                 </div>
@@ -72,3 +70,4 @@
 		</div>
 
 <script src='/js/product/script.js'></script>
+<script src='/js/order/totalPrice.js'></script>

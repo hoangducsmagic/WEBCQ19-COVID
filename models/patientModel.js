@@ -344,6 +344,7 @@ module.exports = {
 	getPatientInfoByUsername,
     getPatientDebtInfoByUsername,
 	getPatientById,
+    getPatientIdByUsername,
 	changeStatus,
 	changeFacility,
 	addPatient,

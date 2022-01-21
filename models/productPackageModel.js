@@ -8,7 +8,7 @@ async function listProductPackage(min, max,s, sort,by, qPage) {
     let qSort = `khongdau(` + sort +`)`;
     if (sort === 'quantity') qSort = `(`+q+`)`;
     const qStr = `select p.*, (`+q+`) as quantity from productpackage p
-    where (`+q+`) >`+min+` and (`+q+`) < ` + max + s +`
+    where (`+q+`) >=`+min+` and (`+q+`) <= ` + max + s +`
     order by ` + qSort + by;
     try{
         const listProductPackage  =  await _db.getQuery(qStr+qPage);
@@ -58,7 +58,7 @@ async function createProductPackage(name, productId, quantity, time_limit, limit
 
     let createProductPackageDetailQuery = `
         INSERT INTO productpackage_detail (product_package_id,product_id,max_amount)
-        VALUES ('${newProductPackageId}','${productId}','${quantity}')
+        VALUES ('${newProductPackageId}','${productId}',${quantity})
     `
     await DB.executeQuery(createProductPackageDetailQuery);
 }

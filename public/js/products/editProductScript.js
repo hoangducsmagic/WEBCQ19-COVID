@@ -1,17 +1,17 @@
 const productId = document.getElementById('productId').innerText;
 document.getElementById("submitBtn").onclick = function (e) {
     e.preventDefault();
+    console.log(productId);
     fetch("/products/edit", {
         headers: {
             "Content-Type": "application/json",
         },
-
         method: "put",
         body: JSON.stringify({
             productId,
             name: document.getElementById("name").value,
             price: document.getElementById("price").value,
-            unit: document.getElementById("unit").value,
+            unit: document.getElementById("unit").value,     
         }),
-    }).then(() => { window.location.href = `/products/${productId}` })
+    }).then(() => { window.location.href = `/products/detail/${productId}` })
 };

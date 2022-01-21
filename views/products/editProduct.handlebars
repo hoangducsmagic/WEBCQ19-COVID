@@ -5,22 +5,46 @@
 					<h2>Điều chỉnh nhu yếu phẩm</h2>
 				</div>
 
-				<div class="row mt-3">
-					<div class="col-4"></div>
-					<div class="col-2">
+				<div class="row form-group">
+					<div class="col-3"></div>					
+					<label for="name" class="col-sm-2 col-form-label">
 						<h6>Tên sản phẩm:</h6>
-						<h6>Giá tiền:</h6>
-						<h6>Đơn vị định lượng:</h6>
-						<h6>Hình ảnh:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input id="name" value="{{this.name}}"/>
 					</div>
-					<div class="col-4">
-						<h6>{{name}}</h6>
-						<h6>{{price}}</h6>
-						<h6>{{unit}}</h6>
-						<h6>//</h6>
-					</div>
-					<div class="col-3"></div>
 				</div>
+				
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="price" class="col-sm-2 col-form-label">
+						<h6>Giá tiền:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input id="price" value="{{this.price}}">
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>					
+					<label for="unit" class="col-sm-2 col-form-label">
+						<h6>Đơn vị định lượng:</h6>
+					</label>
+					<div class="col-sm-3">
+						<input id="unit" value="{{this.unit}}">
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-3"></div>
+					<label for="image" class="col-sm-2 col-form-label">
+						<h6>Hình ảnh:</h6>
+					</label>
+					<div class="col-sm-3">
+						<div>IMAGE</div>	
+					</div>				
+				</div>
+
 		
 
 				<div class="row justify-content-center">
@@ -29,5 +53,5 @@
 			</form>
 		</div>
 
-	<h1 id="productId" style="display: none">{{product_id}}</h1>
-	<script src="js/products/editProductScript.js"></script>
+	<h1 id="productId" style="display: none">{{productId}}</h1>
+	<script src="/js/products/editProductScript.js"></script>

@@ -47,6 +47,9 @@ const hbs = create({
 		ifEqual(a, b, option) {
 			if (a == b) return option.fn(this);
 		},
+		ifNotEqual(a, b, option) {
+			if (a != b) return option.fn(this);
+		},
 		ifLessThan(a, b, option) {
 			if (a < b) return option.fn(this);
 		},
@@ -91,7 +94,7 @@ app.use('/account', mdwAdmin.checkAdmin, accountRouter);
 app.use('/admin', adminRouter);
 app.use('/patientUser',mdwAdmin.checkAdmin, mdwAccount.checkLogin, patientUserRouter);
 
-app.use('/order/', mdwAdmin.checkAdmin, mdwAccount.checkLogin, orderRouter);
+app.use('/order', mdwAdmin.checkAdmin, mdwAccount.checkLogin, orderRouter);
 
 app.get('/', mdwAdmin.checkAdmin, mdwAccount.checkLogin, (req, res) => {
 	if (req.user.role === 'manager') return res.redirect('/patients');
