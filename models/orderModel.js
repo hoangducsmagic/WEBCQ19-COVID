@@ -1,14 +1,16 @@
 const db = require('./db');
 
-async function showOrder(orderId) {
+function orderIdGeneration() {
+    return `PT${Date.now().toString(16)}`
+}
+
+async function showOrder(patient_id, productPackageId, total) {
+    orderId = orderIdGeneration();
     let query = `
-        UPDATE SET total = SUM(p.price*od.order_amount) FROM order 
-        INNER JOIN productpackage pp ON productpackage_id == pp.productpackage_id
-        INNER JOIN productpackage_detail ppd on pp.productpackage_id == ppd.productpackage_id
-        INNER JOIN product p on ppd.product_id == p.product_id
-        INNER JOIN order_detail od ON order_id == od.order_id
-        WHERE order_id = '`+orderId+`'`;
-    let data = await db.getQuery(query);
+        INSERT INTO public."order" (order_id, patient_id, productpackage_id, date, total)
+        VALUES ('${orderId}','${patient_id}','${productPackageId}','${new Date().toISOString().split("T")[0]}',${total})
+    `
+    let data = await db.executeQuery(query);
     return data;
 }
 

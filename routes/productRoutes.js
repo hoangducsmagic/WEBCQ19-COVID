@@ -8,7 +8,7 @@ router.get('/detail/:id', productController.productDetail);
 router.get('/create', productController.showCreateProductPage);
 router.post('/create', productController.createProduct);
 router.get('/edit/:id', productController.showUpdateProductPage);
-router.put('/edit', productController.editProduct);
+router.put('/edit/:id', productController.editProduct);
 router.get('/', productController.listProduct);
 router.get('/delete/:id', productController.deleteProduct);
 

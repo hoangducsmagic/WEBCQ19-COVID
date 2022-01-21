@@ -74,8 +74,8 @@ async function showCreateProductPackagePage(req, res) {
 
 
 async function createProductPackage(req, res) {
-    const {name, quantity, time_limit, limit_per_person} = req.body;
-    await productPackageModel.createProductPackage(name, quantity, time_limit, limit_per_person);
+    const {name, productId, quantity, time_limit, limit_per_person} = req.body;
+    await productPackageModel.createProductPackage(name, productId, quantity, time_limit, limit_per_person);
     res.redirect('/productPackages');
 }
 
@@ -89,8 +89,8 @@ async function showEditProductPackagePage(req, res){
 
 async function editProductPackage(req, res) {
     const productPackageId = req.params.id;
-    const {name, quantity, time_limit, limit_per_person} = req.body;
-    await productPackageModel.editProductPackage(productPackageId, name, quantity, time_limit, limit_per_person);
+    const {name, productId, quantity, time_limit, limit_per_person} = req.body;
+    await productPackageModel.editProductPackage(productPackageId,name,productId,quantity,time_limit,limit_per_person);
     res.redirect('/productPackages');
 }
 
