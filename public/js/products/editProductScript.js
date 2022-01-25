@@ -9,9 +9,9 @@ document.getElementById("submitBtn").onclick = function (e) {
         method: "put",
         body: JSON.stringify({
             productId,
-            newName: document.getElementById("name").value,
-            newPrice: document.getElementById("price").value,
-            newUnit: document.getElementById("unit").value,
+            name: document.getElementById("name").value,
+            price: document.getElementById("price").value,
+            unit: document.getElementById("unit").value,
         }),
     }).then(() => { window.location.href = `/products/${productId}` })
 };

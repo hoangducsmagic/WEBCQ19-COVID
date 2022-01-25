@@ -48,22 +48,35 @@ function productPackageIdGeneration() {
     return `PT${Date.now().toString(16)}`
 }
 
-async function createProductPackage(name, quantity, time_limit, limit_per_person) {
+async function createProductPackage(name, productId, quantity, time_limit, limit_per_person) {
     let newProductPackageId = productPackageIdGeneration();
     let createProductPackageQuery = `
-        INSERT INTO product (product_id,name,quantity,time_limit,limit_per_person)
-        VALUES ('${newProductPackageId}','${name}',${quantity},${time_limit},${limit_per_person})    
+        INSERT INTO productpackage (product_package_id,name,time_limit,limit_per_person)
+        VALUES ('${newProductPackageId}','${name}',${time_limit},${limit_per_person})    
     `
     await DB.executeQuery(createProductPackageQuery);
+
+    let createProductPackageDetailQuery = `
+        INSERT INTO productpackage_detail (product_package_id,product_id,max_amount)
+        VALUES ('${newProductPackageId}','${productId}','${quantity}')
+    `
+    await DB.executeQuery(createProductPackageDetailQuery);
 }
 
-async function editProductPackage(productPackageId, name, quantity, time_limit, limit_per_person) {
+async function editProductPackage(productPackageId, productId, name, quantity, time_limit, limit_per_person) {
     let editProductPackageQuery = `
-        UPDATE product
-        SET name='${name}', quantity=${quantity}, time_limit=${time_limit}, limit_per_person=${imit_per_person}
-        WHERE productpackage_id='${productPackageId}';
+        UPDATE productpackage
+        SET name='${name}', time_limit=${time_limit}, limit_per_person=${limit_per_person}
+        WHERE productpackage_id='${productPackageId}'
     `
     await DB.executeQuery(editProductPackageQuery);
+
+    let editProductPackageDetailQuery = `
+        UPDATE productpackage_detail
+        SET product_id='${productId}', max_amount=${quantity}
+        WHERE product_package_id='${productPackageId}'
+    `
+    await DB.executeQuery(editProductPackageDetailQuery);
 }
 
 async function getProductPackageById(productPackageId) {
